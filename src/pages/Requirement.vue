@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md">
   <div class="q-gutter-md">
-    <q-input autofocus autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter"/>
+    <q-input autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter"/>
     <div style="white-space: pre-wrap">{{OutputText}}</div>
   </div>
   </div>
