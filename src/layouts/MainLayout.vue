@@ -15,7 +15,7 @@
           DevAssistant
         </q-toolbar-title>
 
-        <div>By Zhiping Zhou</div>
+        <div>v0.0.1</div>
       </q-toolbar>
     </q-header>
 

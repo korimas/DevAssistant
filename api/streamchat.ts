@@ -8,7 +8,7 @@ export const config = {
     runtime: 'edge',
 };
 
-export type ChatGPTAgent = 'user' | 'system';
+export type ChatGPTAgent = 'user' | 'system' | 'assistant';
 
 export interface ChatGPTMessage {
     role: ChatGPTAgent;
@@ -19,12 +19,12 @@ export interface OpenAIStreamPayload {
     model: string;
     messages: ChatGPTMessage[];
     temperature: number;
-    top_p: number;
-    frequency_penalty: number;
-    presence_penalty: number;
-    max_tokens: number;
+    //top_p: number;
+    //frequency_penalty: number;
+    //presence_penalty: number;
+    //max_tokens: number;
     stream: boolean;
-    n: number;
+    //n: number;
 }
 
 async function OpenAIStream(payload: OpenAIStreamPayload) {
@@ -84,8 +84,7 @@ async function OpenAIStream(payload: OpenAIStreamPayload) {
 }
 
 const handler = async (req: Request): Promise<Response> => {
-    const payload = await req.json()
-    const token = req.headers.get('Authorization')
+    const recvPayload = await req.json()
     /*
     const payload: OpenAIStreamPayload = {
         model: "gpt-3.5-turbo",
@@ -100,17 +99,69 @@ const handler = async (req: Request): Promise<Response> => {
     };
     */
 
-    if (token != 'Bearer ' + process.env.PASSWORD) {
-        return new Response(JSON.stringify({
-            success:false,
-            message: '认证失败！'
-        }));
-    }
+  // const token = req.headers.get('Authorization')
+  // if (token != 'Bearer ' + process.env.PASSWORD) {
+  //       return new Response(JSON.stringify({
+  //           success:false,
+  //           message: '认证失败！'
+  //       }));
+  //   }
+    const requirementStr = recvPayload.requirement
+    const A1 = `需求: 车载以太网PHY主从模式设置为从设备（Slave）
 
-    const messageLength = payload.messages.length
-    if (messageLength > 7){
-        payload.messages = payload.messages.slice(messageLength-7);
-    }
+标题：
+车载以太网PHY主从模式设置
+
+概要:
+在车载以太网系统中，需求是将车载以太网PHY主从模式设置为从设备（Slave）。这要求PHY模块在车载以太网通信中扮演被动接收数据的角色。
+
+详细描述:
+确定车载以太网PHY模块的通信角色为从设备，即在车载以太网通信中作为被动接收数据的一方。
+确保车载以太网PHY模块能够正确识别并遵守主设备发出的指令和控制信号。
+验证车载以太网PHY模块能够正确接收和处理来自主设备的数据，并根据需求做出相应的响应。
+确保从设备模式下的车载以太网PHY模块能够与主设备之间建立稳定的通信连接。
+验证从设备模式下的车载以太网PHY模块的性能和稳定性满足系统的要求。
+
+约束和前提条件:
+车载以太网系统中存在一个或多个主设备，用于控制和与PHY模块进行通信。
+车载以太网PHY模块的硬件和软件设计已经支持从设备模式。
+
+验收准则:
+在从设备模式下，车载以太网PHY模块能够正确识别和响应来自主设备的指令和控制信号。
+车载以太网PHY模块能够正确接收和处理来自主设备的数据，并根据需求做出相应的响应。
+从设备模式下的通信连接稳定可靠，能够满足车载以太网系统的性能和可靠性要求。`
+
+    const GoodMessage: ChatGPTMessage[] = [
+      {
+        'role': 'user',
+        'content': '将以下内容转成软件需求的描述'
+      }, {
+        'role': 'assistant',
+        'content': '请提供具体的内容，我将帮助您将其转化为软件需求的描述。'
+      },
+      {
+        'role': 'user',
+        'content': '车载以太网PHY的主从模式须设置为Slave模式'
+      }, {
+        'role': 'assistant',
+        'content': A1
+      }, {
+        'role': 'user',
+        'content': requirementStr
+      }
+    ]
+
+    const payload: OpenAIStreamPayload = {
+      model: process.env.OPENAI_API_MODEL ?? 'gpt-3.5-turbo',
+      messages: GoodMessage,
+      temperature: 0.7,
+      //top_p: 1,
+      //frequency_penalty: 0,
+      //presence_penalty: 0,
+      //max_tokens: 200,
+      stream: true,
+      //n: 1,
+    };
 
     const stream = await OpenAIStream(payload);
     return new Response(stream);

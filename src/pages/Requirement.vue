@@ -16,10 +16,47 @@ export default defineComponent({
     let InputText = ref('')
     let OutputText = ref('')
 
+    async function RequirementAnasys() {
+      if (InputText.value == '') {
+        return
+      }
+
+      // request
+      const response = await fetch('/api/streamchat', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          //'Authorization': 'Bearer ' + Password.value
+        },
+        body: JSON.stringify({
+          //"model": "gpt-3.5-turbo",
+          //"model": "gpt-4",
+          'requirement': InputText.value,
+          //"stream": true,
+          //"temperature": 0.7,
+        })
+      })
+
+      const reader = response.body!.getReader()
+      const decoder = new TextDecoder('utf-8')
+
+      while (true) {
+        const {value, done} = await reader.read()
+
+        if (value) {
+          OutputText.value = OutputText.value + decoder.decode(value)
+        }
+
+        if (done) {
+          break
+        }
+      }
+    }
+
     function handleEnter(e: any) {
       if (e.ctrlKey) {
-        //StreamChat()
-        console.log("send")
+        RequirementAnasys()
+        console.log('send')
       }
     }
 
