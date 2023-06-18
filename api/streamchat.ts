@@ -106,7 +106,7 @@ const handler = async (req: Request): Promise<Response> => {
   //           message: '认证失败！'
   //       }));
   //   }
-    const requirementStr = recvPayload.requirement
+    const requirementStr = '请将内容"' + recvPayload.requirement + '"转成软件需求的描述，如果你认为该内容不属于软件需求，则不需要回答'
     const A1 = `标题：
 车载以太网PHY主从模式设置
 
@@ -139,7 +139,7 @@ const handler = async (req: Request): Promise<Response> => {
       },
       {
         'role': 'user',
-        'content': '车载以太网PHY的主从模式须设置为Slave模式'
+        'content': '请将内容"车载以太网PHY的主从模式须设置为Slave模式"转成软件需求的描述'
       }, {
         'role': 'assistant',
         'content': A1
