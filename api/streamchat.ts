@@ -123,6 +123,10 @@ const handler = async (req: Request): Promise<Response> => {
 
     const GoodMessage: ChatGPTMessage[] = [
       {
+        'role': 'system',
+        'content': '你是一个资深的车载激光雷达软件需求分析工程师，你可以将简单的内容进行合理的扩充并进行软件需求分析，最终输出优秀的软件需求描述。除了进行软件需求分析，你不会回答其他无关的问题。'
+      },
+      {
         'role': 'user',
         'content': '将以下内容转成软件需求的描述'
       }, {
