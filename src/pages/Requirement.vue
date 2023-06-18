@@ -1,9 +1,14 @@
 <template>
-  <div class="q-pa-md">
-  <div class="q-gutter-md">
-    <q-input autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter"/>
+  <div class="q-pa-md q-gutter-md">
+    <div class="row">
+      <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter"/>
+      <q-btn color="primary" style="margin-left: 10px" @click="RequirementAnasys">
+        <div class="text-center">
+          提交<br>Ctrl + Enter
+        </div>
+      </q-btn>
+    </div>
     <div style="white-space: pre-wrap">{{OutputText}}</div>
-  </div>
   </div>
 </template>
 
@@ -20,6 +25,8 @@ export default defineComponent({
       if (InputText.value == '') {
         return
       }
+
+      OutputText.value = ''
 
       // request
       const response = await fetch('/api/streamchat', {
@@ -63,7 +70,8 @@ export default defineComponent({
     return {
       InputText,
       OutputText,
-      handleEnter
+      handleEnter,
+      RequirementAnasys
     }
   }
 });
