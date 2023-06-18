@@ -20,13 +20,15 @@ export default defineComponent({
   setup() {
     let InputText = ref('')
     let OutputText = ref('')
+    let Chatting = false
 
     async function RequirementAnasys() {
-      if (InputText.value == '') {
+      if (InputText.value == '' || Chatting) {
         return
       }
 
       OutputText.value = ''
+      Chatting = true
 
       // request
       const response = await fetch('/api/streamchat', {
@@ -55,6 +57,7 @@ export default defineComponent({
         }
 
         if (done) {
+          Chatting = false
           break
         }
       }
