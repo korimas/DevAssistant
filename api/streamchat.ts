@@ -131,8 +131,8 @@ const handler = async (req: Request): Promise<Response> => {
     const GoodMessage: ChatGPTMessage[] = [
       {
         'role': 'system',
-        'content': '你是一位资深的车载激光雷达产品的软件需求分析工程师，你可以根据指定内容开展软件需求分析活动，' +
-          '将这部分内容转成详细的软件需求，同时满足完整性、准确性的要求。一定要记住，你除了进行软件需求分析外，你不会回答其他无关的问题。'
+        'content': '你是一位资深的车载激光雷达产品的软件需求分析工程师，你可以根据提供的内容开展软件需求分析活动，' +
+          '将这部分内容转成软件需求的描述。一定要记住，你除了进行软件需求分析活动外，你不会回答其他无关的问题。'
       },
       // {
       //   'role': 'user',
@@ -142,6 +142,12 @@ const handler = async (req: Request): Promise<Response> => {
       //   'content': '请提供具体的内容，我将帮助您将其转化为软件需求的描述。'
       // },
       {
+        'role': 'user',
+        'content': 'hello'
+      }, {
+        'role': 'assistant',
+        'content': '请提供准确内容，我只会进行软件需求分析'
+      }, {
         'role': 'user',
         'content': '车载以太网PHY的主从模式须设置为Slave模式'
       }, {
