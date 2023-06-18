@@ -106,7 +106,7 @@ const handler = async (req: Request): Promise<Response> => {
   //           message: '认证失败！'
   //       }));
   //   }
-    const requirementStr = '请将内容"' + recvPayload.requirement + '"转成软件需求的描述，如果你认为该内容不属于软件需求，则不需要回答'
+    const requirementStr = recvPayload.requirement
     const A1 = `标题：
 车载以太网PHY主从模式设置
 
@@ -128,21 +128,22 @@ const handler = async (req: Request): Promise<Response> => {
 在从设备模式下，车载以太网PHY模块能够正确识别和响应来自主设备的指令和控制信号。
 车载以太网PHY模块能够正确接收和处理来自主设备的数据，并根据需求做出相应的响应。
 从设备模式下的通信连接稳定可靠，能够满足车载以太网系统的性能和可靠性要求。`
+    const A2 = `将帮忙将指定内容转成软件需求的描述，如果指定的内容是打招呼或者提问，则不需要回答。
+软件需求描述请按照以下格式回答：
+标题：
+概要：
+详细描述：
+约束和前提条件：
+验证准则：
+`
 
     const GoodMessage: ChatGPTMessage[] = [
       {
         'role': 'user',
-        'content': '将以下内容转成软件需求的描述'
+        'content': A2
       }, {
         'role': 'assistant',
-        'content': '请提供具体的内容，我将帮助您将其转化为软件需求的描述。'
-      },
-      {
-        'role': 'user',
-        'content': '请将内容"车载以太网PHY的主从模式须设置为Slave模式"转成软件需求的描述'
-      }, {
-        'role': 'assistant',
-        'content': A1
+        'content': '好的，请提供具体的内容，我将按照你指定的格式帮助您将其转化为软件需求的描述。'
       }, {
         'role': 'user',
         'content': requirementStr
