@@ -51,8 +51,8 @@ import EssentialLink from 'components/EssentialLink.vue';
 
 const linksList = [
   {
-    title: '软件需求分析',
-    caption: '效率工具',
+    title: '软件需求',
+    caption: '借助GPT帮助软件需求分析',
     icon: 'school',
     link: '/requirement'
   },
