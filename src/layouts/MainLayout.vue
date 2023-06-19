@@ -58,7 +58,7 @@ const linksList = [
   },  {
     title: '测试用例分析',
     caption: '效率工具',
-    icon: 'school',
+    icon: 'preview',
     link: '/testcase'
   },
 ];
