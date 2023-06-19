@@ -1,5 +1,6 @@
 <template>
   <q-item
+    active-class="bg-grey-3 text-grey-8"
     clickable
     v-ripple
     :to="link"
