@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md q-gutter-md">
-    <h5>测试用例分析</h5>
+    <div class="text-h5">测试用例分析</div>
     <div class="row">
       <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter"/>
       <q-btn color="primary" style="margin-left: 10px" @click="TestAnasys">
@@ -32,7 +32,7 @@ export default defineComponent({
       Chatting = true
 
       // request
-      const response = await fetch('/api/streamtest', {
+      const response = await fetch('/api/stream-test', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',

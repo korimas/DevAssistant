@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md q-gutter-md">
-    <h5>软件需求分析分析</h5>
+    <div class="text-h5">软件需求分析</div>
     <div class="row">
       <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter"/>
       <q-btn color="primary" style="margin-left: 10px" @click="RequirementAnasys">
@@ -32,7 +32,7 @@ export default defineComponent({
       Chatting = true
 
       // request
-      const response = await fetch('/api/streamchat', {
+      const response = await fetch('/api/stream-requirement', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',

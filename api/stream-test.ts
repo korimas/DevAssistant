@@ -110,7 +110,7 @@ const handler = async (req: Request): Promise<Response> => {
     const GoodMessage: ChatGPTMessage[] = [
       {
         'role': 'system',
-        'content': '你是一位资深的测试分析工程师，可以根据给出的需求分析出对应的测试用例，考虑到各种场景、边界等情况'
+        'content': '你是一位资深的车载激光雷达产品的软件测试分析工程师，可以根据给出的软件需求分析出相关的测试用例'
       }, {
         'role': 'user',
         'content': recvPayload.requirement
