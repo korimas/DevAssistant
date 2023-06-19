@@ -1,9 +1,9 @@
 <template>
   <div class="q-pa-md q-gutter-md">
-    <h5>软件需求分析分析</h5>
+    <h5>测试用例分析</h5>
     <div class="row">
       <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter"/>
-      <q-btn color="primary" style="margin-left: 10px" @click="RequirementAnasys">
+      <q-btn color="primary" style="margin-left: 10px" @click="TestAnasys">
         <div class="text-center">
           提交<br>Ctrl + Enter
         </div>
@@ -17,13 +17,13 @@
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
-  name: 'RequirementPage',
+  name: 'TestCase',
   setup() {
     let InputText = ref('')
     let OutputText = ref('')
     let Chatting = false
 
-    async function RequirementAnasys() {
+    async function TestAnasys() {
       if (InputText.value == '' || Chatting) {
         return
       }
@@ -32,7 +32,7 @@ export default defineComponent({
       Chatting = true
 
       // request
-      const response = await fetch('/api/streamchat', {
+      const response = await fetch('/api/streamtest', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
@@ -66,7 +66,7 @@ export default defineComponent({
 
     function handleEnter(e: any) {
       if (e.ctrlKey) {
-        RequirementAnasys()
+        TestAnasys()
         console.log('send')
       }
     }
@@ -75,7 +75,7 @@ export default defineComponent({
       InputText,
       OutputText,
       handleEnter,
-      RequirementAnasys
+      TestAnasys
     }
   }
 });
