@@ -9,10 +9,18 @@
         </div>
       </q-btn>
     </div>
-    <div v-html="MarkdownText"></div>
+    <div v-html="MarkdownText" class="md-c"></div>
 <!--    <div style="white-space: pre-wrap">{{OutputText}}</div>-->
   </div>
 </template>
+
+<style>
+.md-c table { border-collapse: collapse; }
+.md-c. tr { border: solid 1px black; }
+.md-c td {border: solid 1px black;}
+.md-c th {border: solid 1px black;}
+.md-c tr:nth-child(even) {background-color: #f2f2f2;}
+</style>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
@@ -25,6 +33,11 @@ export default defineComponent({
     let OutputText = ref('')
     let MarkdownText = ref('')
     let Chatting = false
+
+//     MarkdownText.value=marked(`First Header | Second Header
+// ------------ | -------------
+// Content Cell | Content Cell
+// Content Cell | Content Cell`)
 
     async function RequirementAnasys() {
       if (InputText.value == '' || Chatting) {
