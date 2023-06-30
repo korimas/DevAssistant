@@ -9,7 +9,9 @@
         </div>
       </q-btn>
     </div>
-    <div v-html="MarkdownText" class="md-c"></div>
+    <div>
+      <div v-html="MarkdownText" class="markdown-body"></div>
+    </div>
   </div>
 </template>
 
@@ -24,6 +26,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import {marked} from 'marked';
+import 'github-markdown-css';
 
 export default defineComponent({
   name: 'TestCase',
