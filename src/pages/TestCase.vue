@@ -13,14 +13,24 @@
   </div>
 </template>
 
+<style>
+.md-c table { border-collapse: collapse; }
+.md-c. tr { border: solid 1px black; }
+.md-c td {border: solid 1px black;}
+.md-c th {border: solid 1px black;}
+.md-c tr:nth-child(even) {background-color: #f2f2f2;}
+</style>
+
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import {marked} from 'marked';
 
 export default defineComponent({
   name: 'TestCase',
   setup() {
     let InputText = ref('')
     let OutputText = ref('')
+    let MarkdownText = ref('')
     let Chatting = false
 
     async function TestAnasys() {
@@ -29,6 +39,7 @@ export default defineComponent({
       }
 
       OutputText.value = ''
+      MarkdownText.value = ''
       Chatting = true
 
       // request
@@ -55,6 +66,7 @@ export default defineComponent({
 
         if (value) {
           OutputText.value = OutputText.value + decoder.decode(value)
+          MarkdownText.value = marked(OutputText.value)
         }
 
         if (done) {
