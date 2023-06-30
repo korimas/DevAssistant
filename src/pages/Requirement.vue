@@ -9,18 +9,21 @@
         </div>
       </q-btn>
     </div>
-    <div style="white-space: pre-wrap">{{OutputText}}</div>
+    <div v-html="MarkdownText"></div>
+<!--    <div style="white-space: pre-wrap">{{OutputText}}</div>-->
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import {marked} from 'marked';
 
 export default defineComponent({
   name: 'RequirementPage',
   setup() {
     let InputText = ref('')
     let OutputText = ref('')
+    let MarkdownText = ref('')
     let Chatting = false
 
     async function RequirementAnasys() {
@@ -29,6 +32,7 @@ export default defineComponent({
       }
 
       OutputText.value = ''
+      MarkdownText.value = ''
       Chatting = true
 
       // request
@@ -55,6 +59,7 @@ export default defineComponent({
 
         if (value) {
           OutputText.value = OutputText.value + decoder.decode(value)
+          MarkdownText.value = marked(OutputText.value)
         }
 
         if (done) {
@@ -74,6 +79,7 @@ export default defineComponent({
     return {
       InputText,
       OutputText,
+      MarkdownText,
       handleEnter,
       RequirementAnasys
     }
