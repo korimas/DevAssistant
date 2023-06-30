@@ -27,7 +27,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import {marked} from 'marked';
-import 'github-markdown-css';
+import 'github-markdown-css/github-markdown-dark.css';
 
 export default defineComponent({
   name: 'RequirementPage',
