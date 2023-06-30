@@ -10,7 +10,7 @@
       </q-btn>
     </div>
     <div>
-      <div v-html="MarkdownText" class="markdown-body"></div>
+      <div v-html="MarkdownText" class="markdown-body" style="white-space: pre-wrap"></div>
     </div>
 <!--    <div style="white-space: pre-wrap">{{OutputText}}</div>-->
   </div>
