@@ -9,7 +9,7 @@
         </div>
       </q-btn>
     </div>
-    <div style="white-space: pre-wrap">{{OutputText}}</div>
+    <div v-html="MarkdownText" class="md-c"></div>
   </div>
 </template>
 
@@ -86,6 +86,7 @@ export default defineComponent({
     return {
       InputText,
       OutputText,
+      MarkdownText,
       handleEnter,
       TestAnasys
     }
