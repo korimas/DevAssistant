@@ -55,10 +55,15 @@ const linksList = [
     caption: '效率工具',
     icon: 'school',
     link: '/requirement'
-  },  {
+  }, {
+    title: '系统需求拆解',
+    caption: '效率工具',
+    icon: 'mediation',
+    link: '/systosw'
+  }, {
     title: '测试用例分析',
     caption: '效率工具',
-    icon: 'preview',
+    icon: 'saved_search',
     link: '/testcase'
   },
 ];
