@@ -65,6 +65,11 @@ const linksList = [
     caption: '效率工具',
     icon: 'saved_search',
     link: '/testcase'
+  }, {
+    title: '中英文翻译',
+    caption: '效率工具',
+    icon: 'translate',
+    link: '/translate'
   },
 ];
 

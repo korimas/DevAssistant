@@ -1,0 +1,107 @@
+<template>
+  <div class="q-pa-md q-gutter-md">
+    <div class="text-h5">软件需求分析</div>
+    <div class="row">
+      <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter"/>
+      <q-btn color="primary" style="margin-left: 10px" @click="RequirementAnasys">
+        <div class="text-center">
+          提交<br>Ctrl + Enter
+        </div>
+      </q-btn>
+    </div>
+    <div>
+      <div v-html="MarkdownText" class="markdown-body"></div>
+    </div>
+  </div>
+</template>
+
+<style>
+.md-c table { border-collapse: collapse; }
+.md-c. tr { border: solid 1px black; }
+.md-c td {border: solid 1px black;}
+.md-c th {border: solid 1px black;}
+.md-c tr:nth-child(even) {background-color: #f2f2f2;}
+</style>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+import {marked} from 'marked';
+import 'github-markdown-css';
+
+export default defineComponent({
+  name: 'TranslatePage',
+  setup() {
+    let InputText = ref('')
+    let OutputText = ref('')
+    let MarkdownText = ref('')
+    let Chatting = false
+
+//     MarkdownText.value=marked(`First Header | Second Header
+// ------------ | -------------
+// Content Cell | Content Cell
+// Content Cell | Content Cell`)
+
+    async function RequirementAnasys() {
+      if (InputText.value == '' || Chatting) {
+        return
+      }
+
+      OutputText.value = ''
+      MarkdownText.value = ''
+      Chatting = true
+
+      // request
+      const response = await fetch('/api/stream-translate', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          //'Authorization': 'Bearer ' + Password.value
+        },
+        body: JSON.stringify({
+          //"model": "gpt-3.5-turbo",
+          //"model": "gpt-4",
+          'requirement': InputText.value,
+          //"stream": true,
+          //"temperature": 0.7,
+        })
+      })
+
+      const reader = response.body!.getReader()
+      const decoder = new TextDecoder('utf-8')
+
+      while (true) {
+        const {value, done} = await reader.read()
+
+        if (value) {
+          OutputText.value = OutputText.value + decoder.decode(value)
+          MarkdownText.value = marked(OutputText.value)
+        }
+
+        if (done) {
+          Chatting = false
+          break
+        }
+      }
+    }
+
+    function handleEnter(e: any) {
+      if (e.ctrlKey) {
+        RequirementAnasys()
+        console.log('send')
+      }
+    }
+
+    return {
+      InputText,
+      OutputText,
+      MarkdownText,
+      handleEnter,
+      RequirementAnasys
+    }
+  }
+});
+</script>
+
+<style scoped>
+
+</style>
