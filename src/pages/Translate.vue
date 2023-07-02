@@ -2,7 +2,7 @@
   <div class="q-pa-md q-gutter-md">
     <div class="text-h5">中英文翻译</div>
     <div class="row">
-      <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter"/>
+      <q-input class="col" autogrow v-model="InputText" label="中文" @keydown.enter="handleEnter"/>
       <q-btn color="primary" style="margin-left: 10px" @click="RequirementAnasys">
         <div class="text-center">
           提交<br>Ctrl + Enter
