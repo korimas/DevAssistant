@@ -137,7 +137,7 @@ const handler = async (req: Request): Promise<Response> => {
       },
       {
         'role': 'user',
-        'content': recvPayload.requirement
+        'content': '翻译：' + recvPayload.requirement
       }
     ]
 
