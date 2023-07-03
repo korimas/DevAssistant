@@ -22,7 +22,7 @@ export interface OpenAIStreamPayload {
     //top_p: number;
     //frequency_penalty: number;
     //presence_penalty: number;
-    //max_tokens: number;
+    max_tokens: number;
     stream: boolean;
     //n: number;
 }
@@ -147,7 +147,7 @@ const handler = async (req: Request): Promise<Response> => {
       //top_p: 1,
       //frequency_penalty: 0,
       //presence_penalty: 0,
-      //max_tokens: 200,
+      max_tokens: 500,
       stream: true,
       //n: 1,
     };
