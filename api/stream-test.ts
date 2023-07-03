@@ -126,8 +126,8 @@ const handler = async (req: Request): Promise<Response> => {
           6. 因果图
       #11 测试用例必须以markdown table的形式输出，例如：
       """
-      | 编号 | 用例名称 | 用例描述 | 分析方法 |
-      | ---- | ------- | ------ | -------- |
+      | 编号 | 用例名称 | 分析方法 |
+      | ---- | ------- | ------- |
       """
     `
     const GoodMessage: ChatGPTMessage[] = [
