@@ -14,7 +14,7 @@
         <q-toolbar-title>
           DevAssistant
         </q-toolbar-title>
-        <div><q-select filled v-model="store.model" :options="store.modelOptions" label="Model" /></div>
+        <div style="min-width: 100px"><q-select filled v-model="store.model" :options="store.modelOptions" label="Model" /></div>
         <div style="width: 130px"><q-select filled v-model="store.temperature" :options="store.temperatureOptions" label="Temperature" /></div>
 
       </q-toolbar>
