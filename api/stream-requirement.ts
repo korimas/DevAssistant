@@ -127,17 +127,40 @@ const handler = async (req: Request): Promise<Response> => {
     #17 验证准则应清晰描述需求如何进行确认和验收。
     #18 如果软件需求中需要交代特定的条件，则必须在描述中写明条件。
     #19 软件需求描述的对象应该是"软件"，软件需求必须侧重于描述软件的行为。
-    #20 软件需求的描述可以借鉴以下几种表达模式：
+    #20 软件需求的描述可以借鉴以下几种表达方式：
     """
-    1. 谁须满足什么。（谁可以是软件或是具体的功能模块）
-    2. 在什么条件下，谁须满足什么。（谁可以是软件或是具体的功能模块）
-    3. 在什么时候，谁须满足什么。（谁可以是软件或是具体的功能模块）
+    表达方式1：谁须满足什么。（谁可以是软件或是具体的功能模块）
+    表达方式2：在什么条件下，谁须满足什么。（谁可以是软件或是具体的功能模块）
+    表达方式3：在什么时候，谁须满足什么。（谁可以是软件或是具体的功能模块）
     """
     #21 分析出来的每一条软件需求都必须满足规则12、13、14、15、16、17、18、19、20。
     #22 输出结果必须是markdown table，且必须遵循以下格式：
     """
     | 编号 | 标题 | 描述 | 验证准则 |
     | ---- | --- | ---- | ------ |
+    """
+    #23 软件需求的描述方式可以参考以下几个例子：
+    """
+    Example 1:
+    When SW mode is ACTIVe the applicative software shll set [UBAT_FLT] to the following range and characteristics:
+    Range: [0;20] volts
+    Precision: 100mv
+    Transfer function: the sliding average on 100ms +-10ms of [UBAT] acquired every 10ms
+
+    Example 2:
+    The applicative software shall send the following message sequence on I2C_BUS_1 within 300ms after receiving [IHU_REQUEST_DID] message on I2C_BUS_1:
+    1. [IHU_ANSWER_MESSAGE_1]
+    2. [IHU_ANSWER_MESSAGE_2]
+    3. [IHU_ANSWER_MESSAGE_3]
+
+    Example 3:
+    The software must clean the rolling code stored in EEPROM of the learned identifier.
+
+    Example 4:
+    The software must check if ID INDEX slot in IDE list is empty, if not, the routine execution must be finished with status "FALURE".
+
+    Example 5:
+    Warning X shall be set if XXX has been locked after power state = ON.
     """
     `
 
