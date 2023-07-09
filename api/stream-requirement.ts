@@ -156,6 +156,7 @@ const handler = async (req: Request): Promise<Response> => {
       stream: true,
       //n: 1,
     };
+    console.log(payload)
 
     const stream = await OpenAIStream(payload);
     return new Response(stream);
