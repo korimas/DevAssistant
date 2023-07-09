@@ -170,26 +170,9 @@ const handler = async (req: Request): Promise<Response> => {
 
 #17 软件需求的描述内容可以参考以下几个例子：
 """
-Example 1:
-When SW mode is ACTIVe the applicative software shll set [UBAT_FLT] to the following range and characteristics:
-Range: [0;20] volts
-Precision: 100mv
-Transfer function: the sliding average on 100ms +-10ms of [UBAT] acquired every 10ms
-
-Example 2:
-The applicative software shall send the following message sequence on I2C_BUS_1 within 300ms after receiving [IHU_REQUEST_DID] message on I2C_BUS_1:
-1. [IHU_ANSWER_MESSAGE_1]
-2. [IHU_ANSWER_MESSAGE_2]
-3. [IHU_ANSWER_MESSAGE_3]
-
-Example 3:
-The software must clean the rolling code stored in EEPROM of the learned identifier.
-
-Example 4:
-The software must check if ID INDEX slot in IDE list is empty, if not, the routine execution must be finished with status "FALURE".
-
-Example 5:
-Warning X shall be set if XXX has been locked after power state = ON.
+1. 网络配置需存储于配置文件中，每次修改网络配置，配置文件同步更新。
+2. 配置Netmask时须做以下校验： 子网掩码由4个十进制数字组成，每个数字范围为0-255，用点号"."分隔。
+3. 当存在网络配置修改时，软件须将修改后的网络信息和时间戳写入日志中。
 """
     `
     const GoodMessage: ChatGPTMessage[] = [
