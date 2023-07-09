@@ -14,9 +14,12 @@
         <q-toolbar-title>
           DevAssistant
         </q-toolbar-title>
+        <div><q-select filled v-model="store.model" :options="store.modelOptions" label="Model" /></div>
+        <div style="width: 130px"><q-select filled v-model="store.temperature" :options="store.temperatureOptions" label="Temperature" /></div>
 
-        <div>v0.0.1</div>
       </q-toolbar>
+
+
     </q-header>
 
     <q-drawer
@@ -47,6 +50,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import { useAPIStore } from 'stores/APIStore'
 import EssentialLink from 'components/EssentialLink.vue';
 
 const linksList = [
@@ -82,10 +86,12 @@ export default defineComponent({
 
   setup () {
     const leftDrawerOpen = ref(false)
+    const store = useAPIStore();
 
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
+      store,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       }

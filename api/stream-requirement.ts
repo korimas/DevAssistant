@@ -143,10 +143,12 @@ const handler = async (req: Request): Promise<Response> => {
       }
     ]
 
+    const defaultModel = process.env.OPENAI_API_MODEL ?? 'gpt-3.5-turbo'
+
     const payload: OpenAIStreamPayload = {
-      model: process.env.OPENAI_API_MODEL ?? 'gpt-3.5-turbo',
+      model: recvPayload.model ?? defaultModel,
       messages: GoodMessage,
-      temperature: 0.7,
+      temperature: recvPayload.temperature,
       //top_p: 1,
       //frequency_penalty: 0,
       //presence_penalty: 0,
