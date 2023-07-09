@@ -140,17 +140,19 @@ const handler = async (req: Request): Promise<Response> => {
       }
     ]
 
-    const payload: OpenAIStreamPayload = {
-      model: process.env.OPENAI_API_MODEL ?? 'gpt-3.5-turbo',
-      messages: GoodMessage,
-      temperature: 0.7,
-      //top_p: 1,
-      //frequency_penalty: 0,
-      //presence_penalty: 0,
-      //max_tokens: 200,
-      stream: true,
-      //n: 1,
-    };
+  const defaultModel = process.env.OPENAI_API_MODEL ?? 'gpt-3.5-turbo'
+
+  const payload: OpenAIStreamPayload = {
+    model: recvPayload.model ?? defaultModel,
+    messages: GoodMessage,
+    temperature: recvPayload.temperature,
+    //top_p: 1,
+    //frequency_penalty: 0,
+    //presence_penalty: 0,
+    //max_tokens: 200,
+    stream: true,
+    //n: 1,
+  };
 
     const stream = await OpenAIStream(payload);
     return new Response(stream);

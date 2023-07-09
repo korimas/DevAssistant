@@ -27,6 +27,7 @@
 import { defineComponent, ref } from 'vue';
 import {marked} from 'marked';
 import 'github-markdown-css';
+import { useAPIStore } from 'stores/APIStore'
 
 export default defineComponent({
   name: 'TestCase',
@@ -35,6 +36,7 @@ export default defineComponent({
     let OutputText = ref('')
     let MarkdownText = ref('')
     let Chatting = false
+    const store = useAPIStore();
 
     async function TestAnasys() {
       if (InputText.value == '' || Chatting) {
@@ -53,11 +55,9 @@ export default defineComponent({
           //'Authorization': 'Bearer ' + Password.value
         },
         body: JSON.stringify({
-          //"model": "gpt-3.5-turbo",
-          //"model": "gpt-4",
+          'model': store.model,
           'requirement': InputText.value,
-          //"stream": true,
-          //"temperature": 0.7,
+          'temperature': store.temperature,
         })
       })
 
