@@ -162,7 +162,7 @@ const handler = async (req: Request): Promise<Response> => {
 2. 验证准则中必须考虑到需要终点关注的场景。
 """
 
-#16 输出结果必须是markdown table，且必须遵循以下格式：
+#16 输出的所有的软件需求规格必须以markdown table展示，且必须遵循以下格式：
 """
 | 编号 | 标题 | 描述 | 验证准则 |
 | ---- | --- | ---- | ------ |
@@ -192,9 +192,6 @@ Example 5:
 Warning X shall be set if XXX has been locked after power state = ON.
 """
     `
-
-    const example1 = ``
-// #16 软件需求在描述过程中，必须以"软件"作为描述语句的主语，例如：软件须支持、软件须能够、软件须做xxx。
     const GoodMessage: ChatGPTMessage[] = [
       {
         'role': 'system',
