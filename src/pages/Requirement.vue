@@ -11,12 +11,13 @@
     </div>
     <div>
 
-      <q-list bordered class="rounded-borders">
+      <q-list bordered class="rounded-borders" v-show="requestReq || requestDetail">
         <q-expansion-item
           expand-separator
           label="Step1：补充实现细节"
           default-opened
           header-class="bg-grey-4"
+          v-show="requestDetail"
         >
           <q-card>
             <q-card-section>
@@ -30,6 +31,7 @@
           label="Step2：输出软件需求"
           default-opened
           header-class="bg-grey-4"
+          v-show="requestReq"
         >
           <q-card>
             <q-card-section>
@@ -70,8 +72,8 @@ export default defineComponent({
     let ReqText = ref('')
     let ReqMD = ref('')
     let Chatting = false
-    let requestDetail = false
-    let requestReq = false
+    let requestDetail = ref(false)
+    let requestReq = ref(false)
     const store = useAPIStore();
 
     async function RequirementAnasys() {
@@ -83,13 +85,13 @@ export default defineComponent({
       DetailMD.value = ''
       ReqText.value = ''
       ReqMD.value = ''
-      requestDetail = false
-      requestReq = false
+      requestDetail.value = false
+      requestReq.value = false
 
       Chatting = true
 
       // get req details
-      requestDetail = true
+      requestDetail.value = true
       const detailResp = await fetch('/api/stream-req-details', {
         method: 'POST',
         headers: {
@@ -121,7 +123,7 @@ export default defineComponent({
       }
 
       // get requirements
-      requestReq = true
+      requestReq.value = true
       const response = await fetch('/api/stream-requirement', {
         method: 'POST',
         headers: {
