@@ -10,7 +10,8 @@
       </q-btn>
     </div>
     <div>
-      <div v-html="MarkdownText" class="markdown-body"></div>
+      <div v-html="DetailMD" class="markdown-body"></div>
+      <div v-html="ReqMD" class="markdown-body"></div>
     </div>
 <!--    <div style="white-space: pre-wrap">{{OutputText}}</div>-->
   </div>
@@ -34,8 +35,10 @@ export default defineComponent({
   name: 'RequirementPage',
   setup() {
     let InputText = ref('')
-    let OutputText = ref('')
-    let MarkdownText = ref('')
+    let DetailText = ref('')
+    let DetailMD = ref('')
+    let ReqText = ref('')
+    let ReqMD = ref('')
     let Chatting = false
     const store = useAPIStore();
 
@@ -44,8 +47,8 @@ export default defineComponent({
         return
       }
 
-      OutputText.value = ''
-      MarkdownText.value = ''
+      DetailText.value = '实现细节：\n'
+      DetailMD.value = ''
       Chatting = true
 
       // get req details
@@ -69,8 +72,8 @@ export default defineComponent({
         const {value, done} = await detailReader.read()
 
         if (value) {
-          OutputText.value = OutputText.value + detailDecoder.decode(value)
-          MarkdownText.value = marked(OutputText.value)
+          DetailText.value = DetailText.value + detailDecoder.decode(value)
+          DetailMD.value = marked(DetailText.value)
         }
 
         if (done) {
@@ -78,6 +81,10 @@ export default defineComponent({
           break
         }
       }
+
+
+      ReqText.value = '软件需求'
+      ReqMD.value = ''
 
       // get requirements
       const response = await fetch('/api/stream-requirement', {
@@ -88,7 +95,7 @@ export default defineComponent({
         },
         body: JSON.stringify({
           'model': store.model,
-          'requirement': InputText.value,
+          'requirement': '需求：' + InputText.value + '\n' + DetailText.value,
           'temperature': store.temperature,
         })
       })
@@ -100,8 +107,8 @@ export default defineComponent({
         const {value, done} = await reader.read()
 
         if (value) {
-          OutputText.value = OutputText.value + decoder.decode(value)
-          MarkdownText.value = marked(OutputText.value)
+          ReqText.value = ReqText.value + decoder.decode(value)
+          ReqMD.value = marked(ReqText.value)
         }
 
         if (done) {
@@ -120,8 +127,8 @@ export default defineComponent({
 
     return {
       InputText,
-      OutputText,
-      MarkdownText,
+      DetailMD,
+      ReqMD,
       handleEnter,
       RequirementAnasys
     }
