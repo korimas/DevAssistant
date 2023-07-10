@@ -51,7 +51,7 @@ export default defineComponent({
       Chatting = true
 
       // request
-      const response = await fetch('/api/stream-translate', {
+      const response = await fetch('/api/stream-zh-to-en', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
