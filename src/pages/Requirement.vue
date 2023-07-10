@@ -47,7 +47,7 @@ export default defineComponent({
         return
       }
 
-      DetailText.value = '实现细节：\n'
+      DetailText.value = '### 实现细节：\r\n'
       DetailMD.value = ''
       Chatting = true
 
@@ -83,7 +83,7 @@ export default defineComponent({
       }
 
 
-      ReqText.value = '软件需求'
+      ReqText.value = '### 软件需求\r\n'
       ReqMD.value = ''
 
       // get requirements
