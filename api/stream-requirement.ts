@@ -170,7 +170,7 @@ const handler = async (req: Request): Promise<Response> => {
 `
   let reqDetails = ''
   if (recvPayload.detail != '') {
-      reqDetails = '#17 结合以下实现细节：\n' + recvPayload.detail
+      reqDetails = '#17 结合但不限于以下实现细节：\n' + recvPayload.detail
     }
     const GoodMessage: ChatGPTMessage[] = [
       {
