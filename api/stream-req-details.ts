@@ -130,11 +130,10 @@ const handler = async (req: Request): Promise<Response> => {
 
 #11 将你补充的软件实现细节输出。
 `
-    const example1 = `
-1. 需要考虑DSP固件升级包的完整性检查
+    const example1 = `1. 需要考虑DSP固件升级包的完整性检查
 2. 需要考虑DSP固件升级过程中的断电处理
 3. 需要考虑DSP固件升级中的软硬件兼容性检查
-    `
+4. 需要考虑DSP固件升级成功和失败的处理`
     const GoodMessage: ChatGPTMessage[] = [
       {
         'role': 'system',
