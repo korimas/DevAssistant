@@ -168,7 +168,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     prompt = prompt + `
 
-#99 输出的所有的软件需求规格必须以markdown table展示，且必须遵循以下格式：
+#99 输出的结果必须以markdown table展示并且只输出这个table，table必须遵循以下格式：
 """
 | 编号 | 标题 | 描述 | 验证准则 |
 | ---- | --- | ---- | ------ |
