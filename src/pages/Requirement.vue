@@ -49,7 +49,9 @@ export default defineComponent({
 
       DetailText.value = ''
       DetailMD.value = ''
+      ReqText.value = ''
       ReqMD.value = ''
+
       Chatting = true
 
       // get req details
@@ -82,10 +84,6 @@ export default defineComponent({
           break
         }
       }
-
-
-      ReqText.value = ''
-      ReqMD.value = ''
 
       // get requirements
       const response = await fetch('/api/stream-requirement', {

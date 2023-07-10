@@ -168,7 +168,10 @@ const handler = async (req: Request): Promise<Response> => {
 """
 
 `
-    const reqDetails = '#17 输出软件需求时，需考虑以下实现细节：\n' + recvPayload.detail
+  let reqDetails = ''
+  if (recvPayload.detail != '') {
+      reqDetails = '#17 结合以下实现细节：\n' + recvPayload.detail
+    }
     const GoodMessage: ChatGPTMessage[] = [
       {
         'role': 'system',
