@@ -139,14 +139,14 @@ const handler = async (req: Request): Promise<Response> => {
         'role': 'system',
         'content': prompt
       },
-      {
-        'role': 'user',
-        'content': 'DSP固件升级'
-      },
-      {
-        'role': 'assistant',
-        'content': example1
-      },
+      // {
+      //   'role': 'user',
+      //   'content': 'DSP固件升级'
+      // },
+      // {
+      //   'role': 'assistant',
+      //   'content': example1
+      // },
       {
         'role': 'user',
         'content': recvPayload.requirement
