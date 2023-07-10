@@ -21,7 +21,7 @@
         >
           <q-card>
             <q-card-section>
-              <div v-html="DetailMD" class="markdown-body" style="white-space: pre-wrap"></div>
+              <div v-html="DetailMD" class="markdown-body"></div>
             </q-card-section>
           </q-card>
         </q-expansion-item>
@@ -35,7 +35,7 @@
         >
           <q-card>
             <q-card-section>
-              <div v-html="ReqMD" class="markdown-body" style="white-space: pre-wrap"></div>
+              <div v-html="ReqMD" class="markdown-body"></div>
             </q-card-section>
           </q-card>
         </q-expansion-item>
