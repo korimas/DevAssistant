@@ -128,25 +128,17 @@ const handler = async (req: Request): Promise<Response> => {
 
 #10 你必须利用你之前的工作经验，尽可能补充这条软件需求的详细的软件实现细节。
 
-#11 将你补充的软件实现细节输出，输出时，直接输出从序号1开始的细节，不要包含其他无关内容。
+#11 将你补充的软件实现细节输出，输出时，直接输出从序号1开始的细节，不要包含其他无关内容，例如：
+"""
+1. 细节1
+2. 细节2
+"""
 `
-    const example1 = `1. 需要考虑DSP固件升级包的完整性检查
-2. 需要考虑DSP固件升级过程中的断电处理
-3. 需要考虑DSP固件升级中的软硬件兼容性检查
-4. 需要考虑DSP固件升级成功和失败的处理`
     const GoodMessage: ChatGPTMessage[] = [
       {
         'role': 'system',
         'content': prompt
       },
-      // {
-      //   'role': 'user',
-      //   'content': 'DSP固件升级'
-      // },
-      // {
-      //   'role': 'assistant',
-      //   'content': example1
-      // },
       {
         'role': 'user',
         'content': recvPayload.requirement
