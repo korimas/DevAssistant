@@ -15,7 +15,6 @@
         <q-expansion-item
           expand-separator
           label="补充实现细节"
-          v-show="requestDetail"
           default-opened
         >
           <q-card>
@@ -28,7 +27,6 @@
         <q-expansion-item
           expand-separator
           label="输出软件需求"
-          v-show="requestReq"
           default-opened
         >
           <q-card>
