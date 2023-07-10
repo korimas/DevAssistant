@@ -11,7 +11,7 @@
     </div>
     <div>
 
-      <q-list bordered class="rounded-borders" v-show="requestReq || requestDetail">
+      <q-list bordered class="rounded-borders">
         <q-expansion-item
           expand-separator
           label="补充实现细节"
