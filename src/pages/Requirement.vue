@@ -74,7 +74,7 @@ export default defineComponent({
 
         if (value) {
           DetailText.value = DetailText.value + detailDecoder.decode(value)
-          DetailMD.value = marked('### 补充实现细节：\r\n' + DetailText.value)
+          DetailMD.value = marked('### Step1：补充实现细节：\r\n' + DetailText.value)
         }
 
         if (done) {
@@ -110,7 +110,7 @@ export default defineComponent({
 
         if (value) {
           ReqText.value = ReqText.value + decoder.decode(value)
-          ReqMD.value = marked('### 输出软件需求\r\n' + ReqText.value)
+          ReqMD.value = marked('### Step2：输出软件需求\r\n' + ReqText.value)
         }
 
         if (done) {
