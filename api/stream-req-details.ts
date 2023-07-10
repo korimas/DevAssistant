@@ -130,8 +130,8 @@ const handler = async (req: Request): Promise<Response> => {
 
 #11 将你补充的软件实现细节输出，输出时，直接从第一个实现细节开始输出，不要包含其他无关的开头介绍或结尾总结：
 """
-1. 细节1
-2. 细节2
+1. xxxx
+2. xxxx
 """
 `
     const GoodMessage: ChatGPTMessage[] = [
