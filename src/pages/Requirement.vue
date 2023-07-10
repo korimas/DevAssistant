@@ -11,11 +11,12 @@
     </div>
     <div>
 
-      <q-list bordered class="rounded-borders" v-show="requestReq && requestDetail">
+      <q-list bordered class="rounded-borders" v-show="requestReq || requestDetail">
         <q-expansion-item
           expand-separator
           label="补充实现细节"
           v-show="requestDetail"
+          default-opened
         >
           <q-card>
             <q-card-section>
@@ -28,6 +29,7 @@
           expand-separator
           label="输出软件需求"
           v-show="requestReq"
+          default-opened
         >
           <q-card>
             <q-card-section>
