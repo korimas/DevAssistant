@@ -10,8 +10,36 @@
       </q-btn>
     </div>
     <div>
-      <div v-html="DetailMD" class="markdown-body"></div>
-      <div v-html="ReqMD" class="markdown-body" style="margin-top: 30px;"></div>
+
+      <q-list bordered class="rounded-borders" v-show="requestReq && requestDetail">
+        <q-expansion-item
+          expand-separator
+          label="补充实现细节"
+          v-show="requestDetail"
+        >
+          <q-card>
+            <q-card-section>
+              <div v-html="DetailMD" class="markdown-body"></div>
+            </q-card-section>
+          </q-card>
+        </q-expansion-item>
+
+        <q-expansion-item
+          expand-separator
+          label="输出软件需求"
+          v-show="requestReq"
+        >
+          <q-card>
+            <q-card-section>
+              <div v-html="ReqMD" class="markdown-body"></div>
+            </q-card-section>
+          </q-card>
+        </q-expansion-item>
+
+      </q-list>
+
+<!--      <div v-html="DetailMD" class="markdown-body"></div>-->
+<!--      <div v-html="ReqMD" class="markdown-body" style="margin-top: 30px;"></div>-->
     </div>
 <!--    <div style="white-space: pre-wrap">{{OutputText}}</div>-->
   </div>
@@ -40,6 +68,8 @@ export default defineComponent({
     let ReqText = ref('')
     let ReqMD = ref('')
     let Chatting = false
+    let requestDetail = false
+    let requestReq = false
     const store = useAPIStore();
 
     async function RequirementAnasys() {
@@ -51,10 +81,13 @@ export default defineComponent({
       DetailMD.value = ''
       ReqText.value = ''
       ReqMD.value = ''
+      requestDetail = false
+      requestReq = false
 
       Chatting = true
 
       // get req details
+      requestDetail = true
       const detailResp = await fetch('/api/stream-req-details', {
         method: 'POST',
         headers: {
@@ -86,6 +119,7 @@ export default defineComponent({
       }
 
       // get requirements
+      requestReq = true
       const response = await fetch('/api/stream-requirement', {
         method: 'POST',
         headers: {
@@ -130,6 +164,8 @@ export default defineComponent({
       DetailMD,
       ReqMD,
       handleEnter,
+      requestDetail,
+      requestReq,
       RequirementAnasys
     }
   }
