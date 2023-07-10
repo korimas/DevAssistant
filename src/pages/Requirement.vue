@@ -11,7 +11,7 @@
     </div>
     <div>
       <div v-html="DetailMD" class="markdown-body"></div>
-      <div v-html="ReqMD" class="markdown-body"></div>
+      <div v-html="ReqMD" class="markdown-body" style="margin-top: 30px;"></div>
     </div>
 <!--    <div style="white-space: pre-wrap">{{OutputText}}</div>-->
   </div>
