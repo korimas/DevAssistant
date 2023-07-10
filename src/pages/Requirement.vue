@@ -14,7 +14,7 @@
       <q-list bordered class="rounded-borders">
         <q-expansion-item
           expand-separator
-          label="补充实现细节"
+          label="Step1：补充实现细节"
           default-opened
         >
           <q-card>
@@ -26,7 +26,7 @@
 
         <q-expansion-item
           expand-separator
-          label="输出软件需求"
+          label="Step2：输出软件需求"
           default-opened
         >
           <q-card>
@@ -109,7 +109,7 @@ export default defineComponent({
 
         if (value) {
           DetailText.value = DetailText.value + detailDecoder.decode(value)
-          DetailMD.value = marked('### Step1：补充实现细节：\r\n' + DetailText.value)
+          DetailMD.value = marked(DetailText.value)
         }
 
         if (done) {
@@ -142,7 +142,7 @@ export default defineComponent({
 
         if (value) {
           ReqText.value = ReqText.value + decoder.decode(value)
-          ReqMD.value = marked('### Step2：输出软件需求\r\n' + ReqText.value)
+          ReqMD.value = marked(ReqText.value)
         }
 
         if (done) {
