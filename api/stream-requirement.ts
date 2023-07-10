@@ -165,18 +165,20 @@ const handler = async (req: Request): Promise<Response> => {
 """
 | 编号 | 标题 | 描述 | 验证准则 |
 | ---- | --- | ---- | ------ |
-"""`
+"""
+
+`
+    const reqDetails = '#17 输出软件需求时，需考虑以下实现细节：\n' + recvPayload.detail
     const GoodMessage: ChatGPTMessage[] = [
       {
         'role': 'system',
-        'content': prompt
+        'content': prompt + reqDetails
       },
       {
         'role': 'user',
         'content': recvPayload.requirement
       }
     ]
-
     const defaultModel = process.env.OPENAI_API_MODEL ?? 'gpt-3.5-turbo'
 
     const payload: OpenAIStreamPayload = {

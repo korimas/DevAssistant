@@ -47,8 +47,9 @@ export default defineComponent({
         return
       }
 
-      DetailText.value = '### 实现细节：\r\n'
+      DetailText.value = ''
       DetailMD.value = ''
+      ReqMD.value = ''
       Chatting = true
 
       // get req details
@@ -73,7 +74,7 @@ export default defineComponent({
 
         if (value) {
           DetailText.value = DetailText.value + detailDecoder.decode(value)
-          DetailMD.value = marked(DetailText.value)
+          DetailMD.value = marked('### 补充实现细节：\r\n' + DetailText.value)
         }
 
         if (done) {
@@ -83,7 +84,7 @@ export default defineComponent({
       }
 
 
-      ReqText.value = '### 软件需求\r\n'
+      ReqText.value = ''
       ReqMD.value = ''
 
       // get requirements
@@ -95,7 +96,8 @@ export default defineComponent({
         },
         body: JSON.stringify({
           'model': store.model,
-          'requirement': '需求：' + InputText.value + '\n' + DetailText.value,
+          'requirement': InputText.value,
+          'detail': DetailText.value,
           'temperature': store.temperature,
         })
       })
@@ -108,7 +110,7 @@ export default defineComponent({
 
         if (value) {
           ReqText.value = ReqText.value + decoder.decode(value)
-          ReqMD.value = marked(ReqText.value)
+          ReqMD.value = marked('### 输出软件需求\r\n' + ReqText.value)
         }
 
         if (done) {
