@@ -130,8 +130,8 @@ const handler = async (req: Request): Promise<Response> => {
 
 #11 输出的所有的软件实现细节必须以markdown table展示且只输出这个table，table必须遵循以下格式：
 """
-| 编号 | 细节描述 |
-| ---- | ------- |
+| 编号 | 软件实现细节 |
+| ---- | ---------- |
 """
 `
     const GoodMessage: ChatGPTMessage[] = [
