@@ -48,7 +48,38 @@ export default defineComponent({
       MarkdownText.value = ''
       Chatting = true
 
-      // request
+      // get req details
+      const detailResp = await fetch('/api/stream-req-details', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          //'Authorization': 'Bearer ' + Password.value
+        },
+        body: JSON.stringify({
+          'model': store.model,
+          'requirement': InputText.value,
+          'temperature': store.temperature,
+        })
+      })
+
+      const detailReader = detailResp.body!.getReader()
+      const detailDecoder = new TextDecoder('utf-8')
+
+      while (true) {
+        const {value, done} = await detailReader.read()
+
+        if (value) {
+          OutputText.value = OutputText.value + detailDecoder.decode(value)
+          MarkdownText.value = marked(OutputText.value)
+        }
+
+        if (done) {
+          Chatting = false
+          break
+        }
+      }
+
+      // get requirements
       const response = await fetch('/api/stream-requirement', {
         method: 'POST',
         headers: {
