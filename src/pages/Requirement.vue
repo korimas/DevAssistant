@@ -16,6 +16,7 @@
           expand-separator
           label="Step1：补充实现细节"
           default-opened
+          header-class="bg-grey-4"
         >
           <q-card>
             <q-card-section>
@@ -28,6 +29,7 @@
           expand-separator
           label="Step2：输出软件需求"
           default-opened
+          header-class="bg-grey-4"
         >
           <q-card>
             <q-card-section>
