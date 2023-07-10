@@ -128,10 +128,10 @@ const handler = async (req: Request): Promise<Response> => {
 
 #10 你必须利用你之前的工作经验，尽可能补充这条软件需求的详细的软件实现细节。
 
-#11 将你补充的软件实现细节输出，输出时，直接从第一个实现细节开始输出，不要包含其他无关的开头介绍或结尾总结：
+#11 输出的所有的软件实现细节必须以markdown table展示且只输出这个table，table必须遵循以下格式：
 """
-1. xxxx
-2. xxxx
+| 编号 | 细节描述 |
+| ---- | ------- |
 """
 `
     const GoodMessage: ChatGPTMessage[] = [
