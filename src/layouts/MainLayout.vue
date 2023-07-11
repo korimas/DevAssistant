@@ -14,9 +14,7 @@
         <q-toolbar-title>
           DevAssistant
         </q-toolbar-title>
-        <div style="min-width: 100px"><q-select filled v-model="store.model" :options="store.modelOptions" label="Model" /></div>
-        <div style="width: 130px"><q-select filled v-model="store.temperature" :options="store.temperatureOptions" label="Temperature" /></div>
-        <q-btn round flat icon="settings" />
+        <q-btn round flat icon="settings" @click="toggleSettingDrawer"/>
       </q-toolbar>
     </q-header>
 
@@ -40,10 +38,23 @@
       </q-scroll-area>
     </q-drawer>
 
+    <q-drawer elevated side="right"
+              :width="($q.screen.width > 600) ? 600: $q.screen.width "
+              v-model="settingDrawerOpen"
+              overlay
+    >
+
+      <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
+        <div style="min-width: 100px"><q-select filled v-model="store.model" :options="store.modelOptions" label="Model" /></div>
+        <div style="width: 130px"><q-select filled v-model="store.temperature" :options="store.temperatureOptions" label="Temperature" /></div>
+      </q-scroll-area>
+    </q-drawer>
+
     <q-page-container>
       <router-view />
     </q-page-container>
   </q-layout>
+
 </template>
 
 <script lang="ts">
@@ -84,6 +95,7 @@ export default defineComponent({
 
   setup () {
     const leftDrawerOpen = ref(false)
+    const settingDrawerOpen = ref(false)
     const store = useAPIStore();
     const miniState = ref(true)
 
@@ -92,8 +104,12 @@ export default defineComponent({
       leftDrawerOpen,
       miniState,
       store,
+      settingDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
+      },
+      toggleSettingDrawer() {
+        settingDrawerOpen.value = !settingDrawerOpen.value
       }
     }
   }
