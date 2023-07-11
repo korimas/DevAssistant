@@ -45,8 +45,11 @@
     >
 
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
-        <div style="min-width: 100px"><q-select filled v-model="store.model" :options="store.modelOptions" label="Model" /></div>
-        <div style="width: 130px"><q-select filled v-model="store.temperature" :options="store.temperatureOptions" label="Temperature" /></div>
+        <div class="q-pa-md q-gutter-md">
+          <div style="min-width: 100px"><q-select filled v-model="store.model" :options="store.modelOptions" label="Model" /></div>
+          <div style="width: 130px"><q-select filled v-model="store.temperature" :options="store.temperatureOptions" label="Temperature" /></div>
+        </div>
+
       </q-scroll-area>
     </q-drawer>
 
