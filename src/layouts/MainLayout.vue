@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh Lpr lff">
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -16,30 +16,28 @@
         </q-toolbar-title>
         <div style="min-width: 100px"><q-select filled v-model="store.model" :options="store.modelOptions" label="Model" /></div>
         <div style="width: 130px"><q-select filled v-model="store.temperature" :options="store.temperatureOptions" label="Temperature" /></div>
-
+        <q-btn round flat icon="settings" />
       </q-toolbar>
-
-
     </q-header>
 
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
       bordered
+      :mini="miniState"
+      @mouseover="miniState = false"
+      @mouseout="miniState = true"
     >
-      <q-list>
-        <q-item-label
-          header
-        >
-          菜单
-        </q-item-label>
+      <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
 
+      <q-list padding>
         <EssentialLink
           v-for="link in essentialLinks"
           :key="link.title"
           v-bind="link"
         />
       </q-list>
+      </q-scroll-area>
     </q-drawer>
 
     <q-page-container>
@@ -87,10 +85,12 @@ export default defineComponent({
   setup () {
     const leftDrawerOpen = ref(false)
     const store = useAPIStore();
+    const miniState = ref(true)
 
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
+      miniState,
       store,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
