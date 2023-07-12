@@ -39,7 +39,7 @@
                   />
 
                   <q-icon name="task_alt" size="sm"
-                          v-if="requestStep === 2"
+                          v-if="requestStep === 2 || requestStep === 0"
                   ></q-icon>
                 </div>
               </q-item-section>
