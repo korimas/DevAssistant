@@ -24,6 +24,30 @@
             header-class="bg-grey-4"
             v-show="requestDetail"
           >
+            <template v-slot:header>
+              <q-item-section side>
+                <div class="row items-center">
+                  <q-circular-progress
+                    indeterminate
+                    size="sm"
+                    :thickness="0.4"
+                    font-size="50px"
+                    color="lime"
+                    track-color="grey-3"
+                    center-color="grey-8"
+                    v-if="requestStep === 1"
+                  />
+
+                  <q-icon name="task_alt" size="sm"
+                          v-if="requestStep === 2"
+                  ></q-icon>
+                </div>
+              </q-item-section>
+              <q-item-section>
+                补充实现细节
+              </q-item-section>
+            </template>
+
             <q-card>
               <q-card-section>
                 <div v-html="DetailMD" class="markdown-body"></div>
@@ -38,6 +62,32 @@
             header-class="bg-grey-4"
             v-show="requestReq"
           >
+
+            <template v-slot:header>
+              <q-item-section side>
+                <div class="row items-center">
+                  <q-circular-progress
+                    indeterminate
+                    size="sm"
+                    :thickness="0.4"
+                    font-size="50px"
+                    color="lime"
+                    track-color="grey-3"
+                    center-color="grey-8"
+                    v-if="requestStep === 2"
+                  />
+
+                  <q-icon name="task_alt" size="sm"
+                          v-if="requestStep === 0"
+                  ></q-icon>
+                </div>
+              </q-item-section>
+              <q-item-section>
+                输出软件需求
+              </q-item-section>
+            </template>
+
+
             <q-card>
               <q-card-section>
                 <div v-html="ReqMD" class="markdown-body"></div>
@@ -91,14 +141,15 @@ export default defineComponent({
     let DetailMD = ref('')
     let ReqText = ref('')
     let ReqMD = ref('')
-    let Chatting = false
-    let requestDetail = ref(false)
+    let requestDetail = ref(true)
     let requestReq = ref(false)
     let needDetail = ref(false)
+    let requestStep = ref(0)
+
     const store = useAPIStore();
 
     async function RequirementAnasys() {
-      if (InputText.value == '' || Chatting) {
+      if (InputText.value == '' || requestStep.value > 0) {
         return
       }
 
@@ -109,10 +160,9 @@ export default defineComponent({
       requestDetail.value = false
       requestReq.value = false
 
-      Chatting = true
-
       // get req details
       if (needDetail.value) {
+        requestStep.value = 1
         requestDetail.value = true
         const detailResp = await fetch('/api/stream-req-details', {
           method: 'POST',
@@ -139,7 +189,6 @@ export default defineComponent({
           }
 
           if (done) {
-            Chatting = false
             break
           }
         }
@@ -147,6 +196,7 @@ export default defineComponent({
 
       // get requirements
       requestReq.value = true
+      requestStep.value = 2
       const response = await fetch('/api/stream-requirement', {
         method: 'POST',
         headers: {
@@ -173,7 +223,7 @@ export default defineComponent({
         }
 
         if (done) {
-          Chatting = false
+          requestStep.value = 0
           break
         }
       }
@@ -194,6 +244,7 @@ export default defineComponent({
       handleEnter,
       requestDetail,
       requestReq,
+      requestStep,
       RequirementAnasys
     }
   }
