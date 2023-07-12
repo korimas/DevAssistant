@@ -8,7 +8,7 @@
             <q-btn round dense flat icon="send" @click="RequirementAnasys"/>
           </template>
         </q-input>
-        <div class="row q-pa-md q-gutter-md">
+        <div class="row">
           <q-chip v-model:selected="needDetail" icon="crop_din">
             尝试补充细节
           </q-chip>
