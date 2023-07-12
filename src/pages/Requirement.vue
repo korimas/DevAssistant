@@ -141,7 +141,7 @@ export default defineComponent({
     let DetailMD = ref('')
     let ReqText = ref('')
     let ReqMD = ref('')
-    let requestDetail = ref(true)
+    let requestDetail = ref(false)
     let requestReq = ref(false)
     let needDetail = ref(false)
     let requestStep = ref(0)
