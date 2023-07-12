@@ -9,13 +9,11 @@
           <q-btn round dense flat icon="send"  @click="RequirementAnasys" />
         </template>
       </q-input>
-      <div>
+      <div class="row">
         <q-checkbox
           left-label
           v-model="needDetail"
-          label="补充实现细节"
-          checked-icon="task_alt"
-          unchecked-icon="highlight_off"
+          label="补充细节"
         />
       </div>
     </div>
