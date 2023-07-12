@@ -2,12 +2,11 @@
   <div class="q-pa-md q-gutter-md">
     <div class="text-h5">系统需求拆解</div>
     <div class="row">
-      <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter"/>
-      <q-btn color="primary" style="margin-left: 10px" @click="RequirementAnasys">
-        <div class="text-center">
-          提交<br>Ctrl + Enter
-        </div>
-      </q-btn>
+      <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter">
+        <template v-slot:after>
+          <q-btn round dense flat icon="send"  @click="RequirementAnasys" />
+        </template>
+      </q-input>
     </div>
     <div>
       <div v-html="MarkdownText" class="markdown-body"></div>
