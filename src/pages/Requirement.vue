@@ -13,7 +13,7 @@
         <q-checkbox
           left-label
           v-model="needDetail"
-          label="补充细节"
+          label="尝试补充细节"
         />
       </div>
     </div>
