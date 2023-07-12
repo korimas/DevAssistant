@@ -3,12 +3,21 @@
 
   <div class="q-pa-md q-gutter-md">
     <div class="text-h5">软件需求分析</div>
-    <div class="row">
+    <div class="coloum">
       <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter">
         <template v-slot:after>
           <q-btn round dense flat icon="send"  @click="RequirementAnasys" />
         </template>
       </q-input>
+      <div>
+        <q-checkbox
+          left-label
+          v-model="needDetail"
+          label="补充实现细节"
+          checked-icon="task_alt"
+          unchecked-icon="highlight_off"
+        />
+      </div>
     </div>
 
     <div>
@@ -76,6 +85,7 @@ export default defineComponent({
     let Chatting = false
     let requestDetail = ref(false)
     let requestReq = ref(false)
+    let needDetail = ref(false)
     const store = useAPIStore();
 
     async function RequirementAnasys() {
@@ -93,34 +103,36 @@ export default defineComponent({
       Chatting = true
 
       // get req details
-      requestDetail.value = true
-      const detailResp = await fetch('/api/stream-req-details', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          //'Authorization': 'Bearer ' + Password.value
-        },
-        body: JSON.stringify({
-          'model': store.model,
-          'requirement': InputText.value,
-          'temperature': store.temperature,
+      if (needDetail.value) {
+        requestDetail.value = true
+        const detailResp = await fetch('/api/stream-req-details', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            //'Authorization': 'Bearer ' + Password.value
+          },
+          body: JSON.stringify({
+            'model': store.model,
+            'requirement': InputText.value,
+            'temperature': store.temperature,
+          })
         })
-      })
 
-      const detailReader = detailResp.body!.getReader()
-      const detailDecoder = new TextDecoder('utf-8')
+        const detailReader = detailResp.body!.getReader()
+        const detailDecoder = new TextDecoder('utf-8')
 
-      while (true) {
-        const {value, done} = await detailReader.read()
+        while (true) {
+          const {value, done} = await detailReader.read()
 
-        if (value) {
-          DetailText.value = DetailText.value + detailDecoder.decode(value)
-          DetailMD.value = marked(DetailText.value)
-        }
+          if (value) {
+            DetailText.value = DetailText.value + detailDecoder.decode(value)
+            DetailMD.value = marked(DetailText.value)
+          }
 
-        if (done) {
-          Chatting = false
-          break
+          if (done) {
+            Chatting = false
+            break
+          }
         }
       }
 
@@ -168,6 +180,7 @@ export default defineComponent({
     return {
       InputText,
       DetailMD,
+      needDetail,
       ReqMD,
       handleEnter,
       requestDetail,
