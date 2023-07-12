@@ -40,7 +40,7 @@
     </q-drawer>
 
     <q-drawer elevated side="right"
-              :width="($q.screen.width > 600) ? 600: ($q.screen.width * 0.8)"
+              :width="($q.screen.width > 600) ? 500: ($q.screen.width * 0.8)"
               v-model="settingDrawerOpen"
               overlay
     >
