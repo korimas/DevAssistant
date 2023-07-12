@@ -20,9 +20,9 @@
           <q-expansion-item
             expand-separator
             label="补充实现细节"
-            default-opened
             header-class="bg-grey-4"
             v-show="requestDetail"
+            v-model="DetailExpanded"
           >
             <template v-slot:header>
               <q-item-section side>
@@ -145,6 +145,7 @@ export default defineComponent({
     let requestReq = ref(false)
     let needDetail = ref(false)
     let requestStep = ref(0)
+    let DetailExpanded = ref(true)
 
     const store = useAPIStore();
 
@@ -162,6 +163,7 @@ export default defineComponent({
 
       // get req details
       if (needDetail.value) {
+        DetailExpanded.value = true
         requestStep.value = 1
         requestDetail.value = true
         const detailResp = await fetch('/api/stream-req-details', {
@@ -197,6 +199,7 @@ export default defineComponent({
       // get requirements
       requestReq.value = true
       requestStep.value = 2
+      DetailExpanded.value = false
       const response = await fetch('/api/stream-requirement', {
         method: 'POST',
         headers: {
@@ -243,6 +246,7 @@ export default defineComponent({
       ReqMD,
       handleEnter,
       requestDetail,
+      DetailExpanded,
       requestReq,
       requestStep,
       RequirementAnasys
