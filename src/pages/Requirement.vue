@@ -22,7 +22,7 @@
         <q-list bordered class="rounded-borders" v-show="requestReq || requestDetail">
         <q-expansion-item
           expand-separator
-          label="Step1：补充实现细节"
+          label="补充实现细节"
           default-opened
           header-class="bg-grey-4"
           v-show="requestDetail"
@@ -36,7 +36,7 @@
 
         <q-expansion-item
           expand-separator
-          label="Step2：输出软件需求"
+          label="输出软件需求"
           default-opened
           header-class="bg-grey-4"
           v-show="requestReq"
