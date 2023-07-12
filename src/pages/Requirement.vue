@@ -10,7 +10,7 @@
         </q-input>
         <div class="row" style="margin-top: 13px">
           <q-chip v-model:selected="needDetail" icon="panorama_fish_eye" icon-selected="task_alt">
-            尝试补充细节
+            尝试补充细节(Beta)
           </q-chip>
         </div>
       </div>
