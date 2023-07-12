@@ -8,9 +8,9 @@
         </template>
       </q-input>
     </div>
+    <q-scroll-area>
 
     <div>
-      <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
         <q-list bordered class="rounded-borders" v-show="requestReq || requestDetail">
         <q-expansion-item
           expand-separator
@@ -40,12 +40,13 @@
           </q-card>
         </q-expansion-item>
       </q-list>
-      </q-scroll-area>
 
 <!--      <div v-html="DetailMD" class="markdown-body"></div>-->
 <!--      <div v-html="ReqMD" class="markdown-body" style="margin-top: 30px;"></div>-->
     </div>
-<!--    <div style="white-space: pre-wrap">{{OutputText}}</div>-->
+    </q-scroll-area>
+
+    <!--    <div style="white-space: pre-wrap">{{OutputText}}</div>-->
   </div>
 </template>
 
