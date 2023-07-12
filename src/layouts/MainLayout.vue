@@ -19,6 +19,7 @@
     </q-header>
 
     <q-drawer
+      :width="230"
       v-model="leftDrawerOpen"
       show-if-above
       bordered
