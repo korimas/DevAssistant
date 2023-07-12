@@ -8,9 +8,10 @@
         </template>
       </q-input>
     </div>
-    <div>
 
-      <q-list bordered class="rounded-borders" v-show="requestReq || requestDetail">
+    <div>
+      <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
+        <q-list bordered class="rounded-borders" v-show="requestReq || requestDetail">
         <q-expansion-item
           expand-separator
           label="Step1：补充实现细节"
@@ -38,8 +39,8 @@
             </q-card-section>
           </q-card>
         </q-expansion-item>
-
       </q-list>
+      </q-scroll-area>
 
 <!--      <div v-html="DetailMD" class="markdown-body"></div>-->
 <!--      <div v-html="ReqMD" class="markdown-body" style="margin-top: 30px;"></div>-->
