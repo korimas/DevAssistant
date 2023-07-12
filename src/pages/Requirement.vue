@@ -1,76 +1,87 @@
 <template>
-  <q-scroll-area style="height: calc(100vh - 50px);">
+  <q-page>
+    <div class="q-pa-md q-gutter-md">
+      <div class="text-h5">软件需求分析</div>
+      <div class="column">
+        <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter">
+          <template v-slot:after>
+            <q-btn round dense flat icon="send" @click="RequirementAnasys"/>
+          </template>
+        </q-input>
+        <div class="row q-pa-md q-gutter-md">
+          <q-chip v-model:selected="needDetail" icon="crop_din">
+            尝试补充细节
+          </q-chip>
+        </div>
+      </div>
 
-  <div class="q-pa-md q-gutter-md">
-    <div class="text-h5">软件需求分析</div>
-    <div class="coloum">
-      <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter">
-        <template v-slot:after>
-          <q-btn round dense flat icon="send"  @click="RequirementAnasys" />
-        </template>
-      </q-input>
-      <div class="row">
-        <q-checkbox
-          left-label
-          v-model="needDetail"
-          label="尝试补充细节"
-        />
+      <div>
+        <q-list bordered class="rounded-borders" v-show="requestReq || requestDetail">
+          <q-expansion-item
+            expand-separator
+            label="补充实现细节"
+            default-opened
+            header-class="bg-grey-4"
+            v-show="requestDetail"
+          >
+            <q-card>
+              <q-card-section>
+                <div v-html="DetailMD" class="markdown-body"></div>
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+
+          <q-expansion-item
+            expand-separator
+            label="输出软件需求"
+            default-opened
+            header-class="bg-grey-4"
+            v-show="requestReq"
+          >
+            <q-card>
+              <q-card-section>
+                <div v-html="ReqMD" class="markdown-body"></div>
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+        </q-list>
+
       </div>
     </div>
-
-    <div>
-        <q-list bordered class="rounded-borders" v-show="requestReq || requestDetail">
-        <q-expansion-item
-          expand-separator
-          label="补充实现细节"
-          default-opened
-          header-class="bg-grey-4"
-          v-show="requestDetail"
-        >
-          <q-card>
-            <q-card-section>
-              <div v-html="DetailMD" class="markdown-body"></div>
-            </q-card-section>
-          </q-card>
-        </q-expansion-item>
-
-        <q-expansion-item
-          expand-separator
-          label="输出软件需求"
-          default-opened
-          header-class="bg-grey-4"
-          v-show="requestReq"
-        >
-          <q-card>
-            <q-card-section>
-              <div v-html="ReqMD" class="markdown-body"></div>
-            </q-card-section>
-          </q-card>
-        </q-expansion-item>
-      </q-list>
-
-<!--      <div v-html="DetailMD" class="markdown-body"></div>-->
-<!--      <div v-html="ReqMD" class="markdown-body" style="margin-top: 30px;"></div>-->
-    </div>
-
-  </div>
-    </q-scroll-area>
-
+    <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
+      <q-btn fab icon="keyboard_arrow_up" color="accent"/>
+    </q-page-scroller>
+  </q-page>
 </template>
 
 <style>
-.md-c table { border-collapse: collapse; }
-.md-c. tr { border: solid 1px black; }
-.md-c td {border: solid 1px black;}
-.md-c th {border: solid 1px black;}
-.md-c tr:nth-child(even) {background-color: #f2f2f2;}
+.md-c table {
+  border-collapse: collapse;
+}
+
+.md-c. tr {
+  border: solid 1px black;
+}
+
+.md-c td {
+  border: solid 1px black;
+}
+
+.md-c th {
+  border: solid 1px black;
+}
+
+.md-c tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
 </style>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import {defineComponent, ref} from 'vue';
 import {marked} from 'marked';
 import 'github-markdown-css';
-import { useAPIStore } from 'stores/APIStore'
+import {useAPIStore} from 'stores/APIStore'
 
 export default defineComponent({
   name: 'RequirementPage',
