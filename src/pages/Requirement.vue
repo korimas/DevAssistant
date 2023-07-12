@@ -9,7 +9,7 @@
           </template>
         </q-input>
         <div class="row" style="margin-top: 10px">
-          <q-chip v-model:selected="needDetail" icon="crop_din">
+          <q-chip v-model:selected="needDetail" icon="panorama_fish_eye" icon-selected="task_alt">
             尝试补充细节
           </q-chip>
         </div>
