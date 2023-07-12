@@ -1,4 +1,6 @@
 <template>
+  <q-scroll-area style="height: calc(100vh - 50px);">
+
   <div class="q-pa-md q-gutter-md">
     <div class="text-h5">软件需求分析</div>
     <div class="row">
@@ -8,7 +10,6 @@
         </template>
       </q-input>
     </div>
-    <q-scroll-area>
 
     <div>
         <q-list bordered class="rounded-borders" v-show="requestReq || requestDetail">
@@ -44,10 +45,10 @@
 <!--      <div v-html="DetailMD" class="markdown-body"></div>-->
 <!--      <div v-html="ReqMD" class="markdown-body" style="margin-top: 30px;"></div>-->
     </div>
+
+  </div>
     </q-scroll-area>
 
-    <!--    <div style="white-space: pre-wrap">{{OutputText}}</div>-->
-  </div>
 </template>
 
 <style>
