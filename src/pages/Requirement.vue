@@ -3,7 +3,7 @@
     <div class="q-pa-md q-gutter-md">
       <div class="text-h5">软件需求分析</div>
       <div class="column">
-        <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter">
+        <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter" :disable="requestStep !== 0">
           <template v-slot:after>
             <q-btn round dense flat icon="send" @click="RequirementAnasys"/>
           </template>
