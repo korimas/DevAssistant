@@ -1,29 +1,58 @@
 <template>
   <div class="q-pa-md q-gutter-md">
     <div class="text-h5">中英文翻译</div>
-    <div class="row">
-      <q-input class="col" autogrow v-model="InputText" label="中文" @keydown.enter="handleEnter">
-        <template v-slot:after>
-          <q-btn round dense flat icon="send"  @click="RequirementAnasys" />
-        </template>
-      </q-input>
-    </div>
-    <div>
-      <div v-html="MarkdownText" class="markdown-body"></div>
+    <div class="row q-pa-md q-gutter-md" style="min-height: 500px">
+      <div class="col" style="min-width: 400px">
+        <q-input outlined type="textarea"
+                 v-model="InputText"
+                 label="中文"
+                 class="fit"
+                 @keydown.enter="handleEnter"
+        >
+          <template v-slot:after>
+            <q-btn round dense flat icon="send" @click="RequirementAnasys"/>
+          </template>
+        </q-input>
+
+      </div>
+      <q-card flat bordered class="col" style="min-width: 400px">
+        <q-card-section>
+          <div v-html="MarkdownText" class="markdown-body"></div>
+        </q-card-section>
+      </q-card>
+
     </div>
   </div>
 </template>
 
 <style>
-.md-c table { border-collapse: collapse; }
-.md-c. tr { border: solid 1px black; }
-.md-c td {border: solid 1px black;}
-.md-c th {border: solid 1px black;}
-.md-c tr:nth-child(even) {background-color: #f2f2f2;}
+.md-c table {
+  border-collapse: collapse;
+}
+
+.q-textarea .q-field__control {
+  height: 100%;
+}
+
+.md-c. tr {
+  border: solid 1px black;
+}
+
+.md-c td {
+  border: solid 1px black;
+}
+
+.md-c th {
+  border: solid 1px black;
+}
+
+.md-c tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 </style>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import {defineComponent, ref} from 'vue';
 import {marked} from 'marked';
 import 'github-markdown-css';
 
