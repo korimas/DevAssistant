@@ -69,7 +69,9 @@
                 >
                   <template v-slot:after>
                     <div class="column">
-                      <q-btn dense flat icon="save" @click="ParseDetailMarkdown"/>
+                      <q-btn dense flat icon="save" @click="ParseDetailMarkdown">
+                        <q-tooltip class="bg-grey">保存并重新生成软件需求</q-tooltip>
+                      </q-btn>
                       <q-btn dense flat color="primary" @click="inEditDetail = false">取消</q-btn>
                     </div>
                   </template>
