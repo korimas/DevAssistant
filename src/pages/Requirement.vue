@@ -17,11 +17,11 @@
         <div class="row" style="margin-top: 13px">
           <q-chip v-model:selected="needDetail" :color='needDetail ? "green-4" : "grey-4"' icon="panorama_fish_eye"
                   icon-selected="task_alt">
-            尝试补充细节(Beta)
+            自动补充细节(Beta)
           </q-chip>
 
           <q-chip color="grey-4" icon="panorama_fish_eye" icon-selected="task_alt" :disable="true">
-            Connect Confluence(Plan)
+            Connect Confluence (Plan)
           </q-chip>
         </div>
       </div>
