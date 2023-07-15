@@ -4,7 +4,7 @@
       <div class="text-h5">软件需求分析</div>
       <div class="column">
         <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter"
-                 :disable="!isChatting">
+                 :disable="isChatting">
           <template v-slot:after>
             <q-btn round dense flat icon="send" @click="RequirementAnasys"/>
           </template>
