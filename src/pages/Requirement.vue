@@ -48,8 +48,11 @@
                 <div class="row">
                   <div>补充实现细节</div>
                   <div class="row items-center">
-                    <q-btn flat icon="edit" color="primary" size="sm" @click.stop @click="editDetailText"
-                           v-if="requirementGot"/>
+                    <q-btn dense flat icon="edit" color="primary" size="sm" @click.stop @click="editDetailText"
+                           v-if="requirementGot">
+                      <q-tooltip class="bg-grey">手动编辑实现细节</q-tooltip>
+
+                    </q-btn>
                   </div>
                 </div>
               </q-item-section>
