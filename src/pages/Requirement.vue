@@ -30,7 +30,7 @@
                   <q-circular-progress
                     indeterminate
                     size="sm"
-                    :thickness="0.4"
+                    :thickness="0.5"
                     font-size="50px"
                     color="lime"
                     track-color="grey-3"
