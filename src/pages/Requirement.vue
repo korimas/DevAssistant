@@ -127,7 +127,7 @@
       </div>
     </div>
     <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
-      <q-btn dense fab icon="keyboard_arrow_up" color="grey"/>
+      <q-btn dense fab-mini icon="keyboard_arrow_up" color="grey"/>
     </q-page-scroller>
   </q-page>
 </template>
