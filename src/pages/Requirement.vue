@@ -22,7 +22,7 @@
             expand-separator
             label="补充实现细节"
             header-class="bg-grey-4"
-            v-show="requestStep > 0 && needDetail"
+            v-show="requestStep > 0 && detailGot"
             v-model="DetailExpanded"
           >
             <template v-slot:header>
@@ -36,11 +36,11 @@
                     color="teal"
                     track-color="grey-3"
                     center-color="grey-8"
-                    v-if="requestStep === 1"
+                    v-if="!detailGot"
                   />
 
                   <q-icon name="task_alt" size="sm"
-                          v-if="requestStep === 2 || requestStep === 0"
+                          v-if="detailGot"
                   ></q-icon>
                 </div>
               </q-item-section>
@@ -71,6 +71,7 @@
               </q-card-section>
             </q-card>
           </q-expansion-item>
+
           <q-expansion-item
             expand-separator
             label="输出软件需求"
@@ -90,11 +91,11 @@
                     color="teal"
                     track-color="grey-3"
                     center-color="grey-8"
-                    v-if="requestStep === 2"
+                    v-if="!requirementGot"
                   />
 
                   <q-icon name="task_alt" size="sm"
-                          v-if="requestStep === 0"
+                          v-if="requirementGot"
                   ></q-icon>
                 </div>
               </q-item-section>
@@ -153,17 +154,23 @@ export default defineComponent({
   name: 'RequirementPage',
   setup() {
     let InputText = ref('')
-    let DetailText = ref('')
-    let DetailMD = ref('')
-    let ReqText = ref('')
-    let ReqMD = ref('')
-    let inEditDetail = ref(false)
-    let needDetail = ref(false)
     let requestStep = ref(0)
-    let DetailExpanded = ref(true)
-
     const store = useAPIStore();
     let isChatting = false
+
+    // get detail related
+    let DetailText = ref('')
+    let DetailMD = ref('')
+    let inEditDetail = ref(false)
+    let needDetail = ref(false)
+    let DetailExpanded = ref(true)
+    let detailGot = ref(false)
+
+    // get requirement related
+    let ReqText = ref('')
+    let ReqMD = ref('')
+    let requirementGot = ref(false)
+
 
     async function GetDetails() {
       if (InputText.value == '' || isChatting) {
@@ -175,6 +182,7 @@ export default defineComponent({
       DetailMD.value = ''
       DetailExpanded.value = true
       requestStep.value = 1
+      detailGot.value = false
 
       const detailResp = await fetch('/api/stream-req-details', {
         method: 'POST',
@@ -204,6 +212,7 @@ export default defineComponent({
           break
         }
       }
+      detailGot.value = true
       isChatting = false
     }
 
@@ -213,6 +222,7 @@ export default defineComponent({
         return
       }
       isChatting = true
+      requirementGot.value = false
       ReqText.value = ''
       ReqMD.value = ''
       requestStep.value = 2
@@ -247,6 +257,7 @@ export default defineComponent({
           break
         }
       }
+      requirementGot.value = true
       isChatting = false
     }
 
@@ -294,7 +305,9 @@ export default defineComponent({
       requestStep,
       editDetailText,
       RequirementAnasys,
-      ParseDetailMarkdown
+      ParseDetailMarkdown,
+      detailGot,
+      requirementGot,
     }
   }
 });
