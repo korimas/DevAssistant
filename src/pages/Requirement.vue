@@ -14,6 +14,10 @@
                   icon-selected="task_alt">
             尝试补充细节(Beta)
           </q-chip>
+
+          <q-chip color="grey-4" icon="panorama_fish_eye" icon-selected="task_alt" :disable="true">
+            链接到Confluence(Building)
+          </q-chip>
         </div>
       </div>
 
