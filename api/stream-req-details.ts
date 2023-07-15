@@ -106,8 +106,12 @@ const handler = async (req: Request): Promise<Response> => {
 #09 输出的结果须按照以下格式输出：
 """
 ### 需求细节
+这里描述软件需求的实现细节
+
+### 关联需求
+这里描述和这个软件需求相关的其他软件需求
+
 ### 约束条件
-### 注意事项
 """
 `
     const GoodMessage: ChatGPTMessage[] = [
