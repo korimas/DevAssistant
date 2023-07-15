@@ -21,7 +21,7 @@
           </q-chip>
 
           <q-chip color="grey-4" icon="panorama_fish_eye" icon-selected="task_alt" :disable="true">
-            Connect Confluence(Building)
+            Connect Confluence(Plan)
           </q-chip>
         </div>
       </div>
