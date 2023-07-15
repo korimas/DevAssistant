@@ -29,13 +29,13 @@
     >
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
 
-      <q-list padding>
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
+        <q-list padding>
+          <EssentialLink
+            v-for="link in essentialLinks"
+            :key="link.title"
+            v-bind="link"
+          />
+        </q-list>
       </q-scroll-area>
     </q-drawer>
 
@@ -44,26 +44,36 @@
               v-model="settingDrawerOpen"
               overlay
     >
+      <div class="q-pa-md row" style="height: 65px">
+        <div class="text-h6">OpenAI配置</div>
+        <q-space></q-space>
+        <q-btn unelevated size="12px" icon="clear" color="red" @click="toggleSettingDrawer"/>
+      </div>
+      <q-separator/>
 
-      <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
+      <q-scroll-area style="height: calc(100% - 66px);" :horizontal-thumb-style="{ opacity: 0 }">
         <div class="q-pa-md q-gutter-md">
-          <div style="min-width: 100px"><q-select filled v-model="store.model" :options="store.modelOptions" label="Model" /></div>
-          <div style="min-width: 130px"><q-select filled v-model="store.temperature" :options="store.temperatureOptions" label="Temperature" /></div>
+          <div style="min-width: 100px">
+            <q-select filled v-model="store.model" :options="store.modelOptions" label="Model"/>
+          </div>
+          <div style="min-width: 130px">
+            <q-select filled v-model="store.temperature" :options="store.temperatureOptions" label="Temperature"/>
+          </div>
         </div>
 
       </q-scroll-area>
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
   </q-layout>
 
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { useAPIStore } from 'stores/APIStore'
+import {defineComponent, ref} from 'vue';
+import {useAPIStore} from 'stores/APIStore'
 import EssentialLink from 'components/EssentialLink.vue';
 
 const linksList = [
@@ -97,7 +107,7 @@ export default defineComponent({
     EssentialLink
   },
 
-  setup () {
+  setup() {
     const leftDrawerOpen = ref(false)
     const settingDrawerOpen = ref(false)
     const store = useAPIStore();
@@ -109,7 +119,7 @@ export default defineComponent({
       miniState,
       store,
       settingDrawerOpen,
-      toggleLeftDrawer () {
+      toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
       toggleSettingDrawer() {
