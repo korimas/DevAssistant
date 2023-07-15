@@ -3,7 +3,8 @@
     <div class="q-pa-md q-gutter-md">
       <div class="text-h5">软件需求分析</div>
       <div class="column">
-        <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter" :disable="requestStep !== 0">
+        <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter"
+                 :disable="requestStep !== 0">
           <template v-slot:after>
             <q-btn round dense flat icon="send" @click="RequirementAnasys"/>
           </template>
@@ -16,12 +17,12 @@
       </div>
 
       <div>
-        <q-list bordered class="rounded-borders" v-show="requestReq || requestDetail">
+        <q-list bordered class="rounded-borders" v-show="requestStep > 0">
           <q-expansion-item
             expand-separator
             label="补充实现细节"
             header-class="bg-grey-4"
-            v-show="requestDetail"
+            v-show="requestStep > 0"
             v-model="DetailExpanded"
           >
             <template v-slot:header>
@@ -75,7 +76,7 @@
             label="输出软件需求"
             default-opened
             header-class="bg-grey-4"
-            v-show="requestReq"
+            v-show="requestStep > 1"
           >
 
             <template v-slot:header>
@@ -157,65 +158,63 @@ export default defineComponent({
     let ReqText = ref('')
     let ReqMD = ref('')
     let inEditDetail = ref(false)
-    let requestDetail = ref(false)
-    let requestReq = ref(false)
     let needDetail = ref(false)
     let requestStep = ref(0)
     let DetailExpanded = ref(true)
 
     const store = useAPIStore();
 
-    async function RequirementAnasys() {
-      if (InputText.value == '' || requestStep.value > 0) {
+    async function GetDetails() {
+      if (InputText.value == '' || requestStep.value == 1 || requestStep.value == 2) {
         return
       }
 
       DetailText.value = ''
       DetailMD.value = ''
-      ReqText.value = ''
-      ReqMD.value = ''
-      requestDetail.value = false
-      requestReq.value = false
+      DetailExpanded.value = true
+      requestStep.value = 1
 
-      // get req details
-      if (needDetail.value) {
-        DetailExpanded.value = true
-        requestStep.value = 1
-        requestDetail.value = true
-        const detailResp = await fetch('/api/stream-req-details', {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            //'Authorization': 'Bearer ' + Password.value
-          },
-          body: JSON.stringify({
-            'model': store.model,
-            'requirement': InputText.value,
-            'temperature': store.temperature,
-          })
+      const detailResp = await fetch('/api/stream-req-details', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          //'Authorization': 'Bearer ' + Password.value
+        },
+        body: JSON.stringify({
+          'model': store.model,
+          'requirement': InputText.value,
+          'temperature': store.temperature,
         })
+      })
 
-        const detailReader = detailResp.body!.getReader()
-        const detailDecoder = new TextDecoder('utf-8')
+      const detailReader = detailResp.body!.getReader()
+      const detailDecoder = new TextDecoder('utf-8')
 
-        while (true) {
-          const {value, done} = await detailReader.read()
+      while (true) {
+        const {value, done} = await detailReader.read()
 
-          if (value) {
-            DetailText.value = DetailText.value + detailDecoder.decode(value)
-            DetailMD.value = marked(DetailText.value)
-          }
+        if (value) {
+          DetailText.value = DetailText.value + detailDecoder.decode(value)
+          DetailMD.value = marked(DetailText.value)
+        }
 
-          if (done) {
-            break
-          }
+        if (done) {
+          break
         }
       }
+    }
 
-      // get requirements
-      requestReq.value = true
+    async function GetRequirements() {
+
+      if (InputText.value == '' || requestStep.value == 1 || requestStep.value == 2) {
+        return
+      }
+
+      ReqText.value = ''
+      ReqMD.value = ''
       requestStep.value = 2
       DetailExpanded.value = false
+
       const response = await fetch('/api/stream-requirement', {
         method: 'POST',
         headers: {
@@ -248,6 +247,21 @@ export default defineComponent({
       }
     }
 
+    async function RequirementAnasys() {
+
+      if (InputText.value == '' || requestStep.value == 1 || requestStep.value == 2) {
+        return
+      }
+
+      requestStep.value = 0
+
+      // get req details
+      if (needDetail.value) {
+        await GetDetails()
+      }
+      await GetRequirements()
+    }
+
     function handleEnter(e: any) {
       if (e.ctrlKey) {
         RequirementAnasys()
@@ -273,9 +287,7 @@ export default defineComponent({
       ReqMD,
       inEditDetail,
       handleEnter,
-      requestDetail,
       DetailExpanded,
-      requestReq,
       requestStep,
       editDetailText,
       RequirementAnasys,
