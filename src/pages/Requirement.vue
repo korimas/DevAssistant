@@ -10,7 +10,8 @@
           </template>
         </q-input>
         <div class="row" style="margin-top: 13px">
-          <q-chip v-model:selected="needDetail" icon="panorama_fish_eye" icon-selected="task_alt">
+          <q-chip v-model:selected="needDetail" :color='needDetail ? "green-4" : "grey-4"' icon="panorama_fish_eye"
+                  icon-selected="task_alt">
             尝试补充细节(Beta)
           </q-chip>
         </div>
@@ -81,7 +82,6 @@
                       <q-btn dense color="primary" flat icon="save" @click="ParseDetailMarkdown">
                         <q-tooltip class="bg-grey">保存并重新生成软件需求</q-tooltip>
                       </q-btn>
-                      <q-space></q-space>
                       <q-btn dense flat @click="inEditDetail = false">取消</q-btn>
                     </div>
                   </template>
