@@ -103,10 +103,9 @@ const handler = async (req: Request): Promise<Response> => {
 
 #08 你必须利用你对激光雷达的了解，考虑实现细节，并补充与该需求相关的其他需求。
 
-#09 输出的所有的软件需求必须以markdown table展示且只输出这个table，table必须遵循以下格式：
+#09 输出的所有的软件需求以markdown list的形式输出，如下所示：
 """
-| 相关需求 |
-| ------- |
+* 相关细节的软件需求
 """
 `
     const GoodMessage: ChatGPTMessage[] = [
