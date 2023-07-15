@@ -273,7 +273,7 @@ export default defineComponent({
 
     async function RequirementAnasys() {
 
-      if (InputText.value == '' || isChatting) {
+      if (InputText.value == '' || isChatting.value) {
         return
       }
 
