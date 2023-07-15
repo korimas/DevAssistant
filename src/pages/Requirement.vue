@@ -20,7 +20,6 @@
         <q-list bordered class="rounded-borders" v-show="requestStep > 0">
           <q-expansion-item
             expand-separator
-            label="补充实现细节"
             header-class="bg-grey-4"
             v-show="requestStep === 1 || detailGot"
             v-model="DetailExpanded"
@@ -46,11 +45,11 @@
               </q-item-section>
               <q-item-section>
                 <div class="row">
-                  <div>补充实现细节</div>
+                  <div>补充需求细节</div>
                   <div class="row items-center">
                     <q-btn dense flat icon="edit" color="primary" size="sm" @click.stop @click="editDetailText"
                            v-if="requirementGot">
-                      <q-tooltip class="bg-grey">手动编辑实现细节</q-tooltip>
+                      <q-tooltip class="bg-grey">手动编辑需求细节</q-tooltip>
 
                     </q-btn>
                   </div>
@@ -86,7 +85,6 @@
 
           <q-expansion-item
             expand-separator
-            label="输出软件需求"
             default-opened
             header-class="bg-grey-4"
             v-show="requestStep > 1"
@@ -113,7 +111,7 @@
                 </div>
               </q-item-section>
               <q-item-section>
-                输出软件需求
+                生成软件需求
               </q-item-section>
             </template>
 
