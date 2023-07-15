@@ -290,9 +290,10 @@ export default defineComponent({
       console.log('send')
     }
 
-    function ParseDetailMarkdown() {
+    async function ParseDetailMarkdown() {
       DetailMD.value = marked(DetailText.value)
       inEditDetail.value = false
+      await GetRequirements()
     }
 
     return {
