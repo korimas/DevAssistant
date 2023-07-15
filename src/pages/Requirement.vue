@@ -32,8 +32,8 @@
                     size="sm"
                     :thickness="0.5"
                     font-size="50px"
-                    color="lime"
-                    track-color="teal-4"
+                    color="teal"
+                    track-color="grey-3"
                     center-color="grey-8"
                     v-if="requestStep === 1"
                   />
@@ -71,8 +71,8 @@
                     size="sm"
                     :thickness="0.5"
                     font-size="50px"
-                    color="lime"
-                    track-color="teal-4"
+                    color="teal"
+                    track-color="grey-3"
                     center-color="grey-8"
                     v-if="requestStep === 2"
                   />
