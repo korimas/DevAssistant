@@ -48,7 +48,7 @@
               </q-item-section>
               <q-item-section side>
                 <div class="row items-center">
-                  <q-btn flat icon="edit" size="sm" @click.stop @click="editDetailText"/>
+                  <q-btn flat icon="edit" color="primary" size="sm" @click.stop @click="editDetailText"/>
                 </div>
               </q-item-section>
             </template>
@@ -60,6 +60,7 @@
                          v-model="DetailText"
                          label="细节"
                          class="fit"
+                         autogrow
                 >
                   <template v-slot:after>
                     <q-btn round dense flat icon="save" @click="ParseDetailMarkdown"/>
@@ -156,7 +157,7 @@ export default defineComponent({
     let ReqText = ref('')
     let ReqMD = ref('')
     let inEditDetail = ref(false)
-    let requestDetail = ref(true)
+    let requestDetail = ref(false)
     let requestReq = ref(false)
     let needDetail = ref(false)
     let requestStep = ref(0)
