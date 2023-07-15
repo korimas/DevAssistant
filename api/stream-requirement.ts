@@ -148,7 +148,7 @@ const handler = async (req: Request): Promise<Response> => {
 
 #12 你必须确保你输出的软件需求规格书可以满足ASPICE level 2的要求。
 
-#13 在进行软件需求分析时，你必须结合以下背景知识：
+#13 进行软件需求分析时，须结合以下软件架构背景：
 """
 1. 激光雷达的软件架构分为两个主要部分：ARM部分和DSP部分。
 2. ARM部分是基于Linux系统，包含了固件以及点云计算服务程序。固件则负责各种硬件外设的控制，点云计算服务的主要职责是处理和计算从雷达采集到的原始数据，然后生成点云。
@@ -160,7 +160,7 @@ const handler = async (req: Request): Promise<Response> => {
 
 `
     if (recvPayload.detail != '') {
-      prompt = prompt + '#14 进行软件需求分析时，须综合考虑以下内容：\n"""\n' + recvPayload.detail + '\n"""'
+      prompt = prompt + '#14 进行软件需求分析时，须结合以下相关的细节：\n"""\n' + recvPayload.detail + '\n"""'
     }
 
     prompt = prompt + `
