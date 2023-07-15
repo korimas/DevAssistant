@@ -174,7 +174,7 @@ export default defineComponent({
   name: 'RequirementPage',
   setup() {
     let InputText = ref('')
-    let requestStep = ref(1)
+    let requestStep = ref(0)
     const store = useAPIStore();
     let isChatting = ref(false)
 
@@ -191,7 +191,7 @@ export default defineComponent({
     // get requirement related
     let ReqText = ref('')
     let ReqMD = ref('')
-    let requirementGot = ref(true)
+    let requirementGot = ref(false)
 
 
     async function GetDetails() {
