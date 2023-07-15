@@ -46,15 +46,29 @@
               <q-item-section>
                 补充实现细节
               </q-item-section>
+              <q-item-section side>
+                <div class="row items-center">
+                  <q-btn flat icon="edit" size="sm" @click.stop @click="editDetailText"/>
+                </div>
+              </q-item-section>
             </template>
 
             <q-card>
               <q-card-section>
-                <div v-html="DetailMD" class="markdown-body"></div>
+                <div v-if="!inEditDetail" v-html="DetailMD" class="markdown-body"></div>
+                <q-input v-if="inEditDetail" outlined type="textarea"
+                         v-model="DetailText"
+                         label="细节"
+                         class="fit"
+                >
+                  <template v-slot:after>
+                    <q-btn round dense flat icon="save" @click="ParseDetailMarkdown"/>
+                  </template>
+                </q-input>
+
               </q-card-section>
             </q-card>
           </q-expansion-item>
-
           <q-expansion-item
             expand-separator
             label="输出软件需求"
@@ -141,7 +155,8 @@ export default defineComponent({
     let DetailMD = ref('')
     let ReqText = ref('')
     let ReqMD = ref('')
-    let requestDetail = ref(false)
+    let inEditDetail = ref(false)
+    let requestDetail = ref(true)
     let requestReq = ref(false)
     let needDetail = ref(false)
     let requestStep = ref(0)
@@ -239,17 +254,31 @@ export default defineComponent({
       }
     }
 
+    function editDetailText() {
+      inEditDetail.value = true
+      console.log('send')
+    }
+
+    function ParseDetailMarkdown() {
+      DetailMD.value = marked(DetailText.value)
+      inEditDetail.value = false
+    }
+
     return {
       InputText,
+      DetailText,
       DetailMD,
       needDetail,
       ReqMD,
+      inEditDetail,
       handleEnter,
       requestDetail,
       DetailExpanded,
       requestReq,
       requestStep,
-      RequirementAnasys
+      editDetailText,
+      RequirementAnasys,
+      ParseDetailMarkdown
     }
   }
 });
