@@ -268,6 +268,8 @@ export default defineComponent({
       }
 
       requestStep.value = 0
+      detailGot.value = false
+      requirementGot.value = false
 
       // get req details
       if (needDetail.value) {
