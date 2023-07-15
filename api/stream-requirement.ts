@@ -165,7 +165,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     prompt = prompt + `
 
-#99 输出的结果必须以markdown table展示并且只输出这个table，table必须遵循以下格式，编号从1开始：
+#99 必须以markdown table的形式输出，并且只输出这个table，table遵循以下格式，编号从1开始：
 """
 | 编号 | 标题 | 描述 | 验证准则 |
 | ---- | --- | ---- | ------ |
