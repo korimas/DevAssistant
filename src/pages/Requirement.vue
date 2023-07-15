@@ -49,7 +49,7 @@
                   <div>补充实现细节</div>
                   <div class="row items-center">
                     <q-btn flat icon="edit" color="primary" size="sm" @click.stop @click="editDetailText"
-                           :disable="!requirementGot"/>
+                           v-if="requirementGot"/>
                   </div>
                 </div>
               </q-item-section>
@@ -208,6 +208,10 @@ export default defineComponent({
 
       const detailReader = detailResp.body!.getReader()
       const detailDecoder = new TextDecoder('utf-8')
+      let oldConsoleLog = window.console.log;
+      window.console.log = function () {
+        return
+      };
 
       while (true) {
         const {value, done} = await detailReader.read()
@@ -223,6 +227,8 @@ export default defineComponent({
       }
       detailGot.value = true
       isChatting.value = false
+
+      window.console.log = oldConsoleLog
     }
 
     async function GetRequirements() {
@@ -254,6 +260,10 @@ export default defineComponent({
 
       const reader = response.body!.getReader()
       const decoder = new TextDecoder('utf-8')
+      let oldConsoleLog = window.console.log;
+      window.console.log = function () {
+        return
+      };
 
       while (true) {
         const {value, done} = await reader.read()
@@ -267,6 +277,7 @@ export default defineComponent({
           break
         }
       }
+      window.console.log = oldConsoleLog
       requirementGot.value = true
       isChatting.value = false
     }
@@ -296,8 +307,8 @@ export default defineComponent({
     }
 
     function editDetailText() {
+      DetailExpanded.value = true
       inEditDetail.value = true
-      console.log('send')
     }
 
     async function ParseDetailMarkdown() {
