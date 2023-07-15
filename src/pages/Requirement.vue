@@ -81,6 +81,7 @@
                       <q-btn dense color="primary" flat icon="save" @click="ParseDetailMarkdown">
                         <q-tooltip class="bg-grey">保存并重新生成软件需求</q-tooltip>
                       </q-btn>
+                      <q-space></q-space>
                       <q-btn dense flat @click="inEditDetail = false">取消</q-btn>
                     </div>
                   </template>
