@@ -48,7 +48,7 @@
                 <div class="row">
                   <div>补充实现细节</div>
                   <div class="row items-center">
-                    <q-btn flat icon="edit" color="primary" size="sm" @click.stop @click="editDetailText"/>
+                    <q-btn flat icon="edit" color="primary" size="sm" @click.stop @click="editDetailText" :disable="requirementGot"/>
                   </div>
                 </div>
               </q-item-section>
@@ -69,7 +69,7 @@
                   <template v-slot:after>
                     <div class="column">
                       <q-btn  dense flat icon="save" @click="ParseDetailMarkdown"/>
-                      <q-btn  dense flat color="primary"  @click="inEditDetail = false">取消</q-btn>
+                      <q-btn  dense flat color="primary" @click="inEditDetail = false">取消</q-btn>
                     </div>
                   </template>
                 </q-input>
