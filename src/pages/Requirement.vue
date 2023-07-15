@@ -33,7 +33,7 @@
                     :thickness="0.5"
                     font-size="50px"
                     color="lime"
-                    track-color="grey-3"
+                    track-color="teal-4"
                     center-color="grey-8"
                     v-if="requestStep === 1"
                   />
@@ -72,7 +72,7 @@
                     :thickness="0.5"
                     font-size="50px"
                     color="lime"
-                    track-color="grey-3"
+                    track-color="teal-4"
                     center-color="grey-8"
                     v-if="requestStep === 2"
                   />
