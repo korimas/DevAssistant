@@ -22,7 +22,7 @@
             expand-separator
             label="补充实现细节"
             header-class="bg-grey-4"
-            v-show="requestStep > 0 && detailGot"
+            v-show="requestStep === 1 || detailGot"
             v-model="DetailExpanded"
           >
             <template v-slot:header>
