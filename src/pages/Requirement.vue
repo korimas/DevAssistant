@@ -4,7 +4,7 @@
       <div class="text-h5">软件需求分析</div>
       <div class="column">
         <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter"
-                 :disable="requestStep !== 0">
+                 :disable="!isChatting">
           <template v-slot:after>
             <q-btn round dense flat icon="send" @click="RequirementAnasys"/>
           </template>
@@ -48,7 +48,8 @@
                 <div class="row">
                   <div>补充实现细节</div>
                   <div class="row items-center">
-                    <q-btn flat icon="edit" color="primary" size="sm" @click.stop @click="editDetailText" :disable="!requirementGot"/>
+                    <q-btn flat icon="edit" color="primary" size="sm" @click.stop @click="editDetailText"
+                           :disable="!requirementGot"/>
                   </div>
                 </div>
               </q-item-section>
@@ -68,8 +69,8 @@
                 >
                   <template v-slot:after>
                     <div class="column">
-                      <q-btn  dense flat icon="save" @click="ParseDetailMarkdown"/>
-                      <q-btn  dense flat color="primary" @click="inEditDetail = false">取消</q-btn>
+                      <q-btn dense flat icon="save" @click="ParseDetailMarkdown"/>
+                      <q-btn dense flat color="primary" @click="inEditDetail = false">取消</q-btn>
                     </div>
                   </template>
                 </q-input>
@@ -163,7 +164,7 @@ export default defineComponent({
     let InputText = ref('')
     let requestStep = ref(0)
     const store = useAPIStore();
-    let isChatting = false
+    let isChatting = ref(false)
 
     // get detail related
     let DetailText = ref('')
@@ -181,11 +182,11 @@ export default defineComponent({
 
 
     async function GetDetails() {
-      if (InputText.value == '' || isChatting) {
+      if (InputText.value == '' || isChatting.value) {
         return
       }
 
-      isChatting = true
+      isChatting.value = true
       DetailText.value = ''
       DetailMD.value = ''
       DetailExpanded.value = true
@@ -221,15 +222,15 @@ export default defineComponent({
         }
       }
       detailGot.value = true
-      isChatting = false
+      isChatting.value = false
     }
 
     async function GetRequirements() {
 
-      if (InputText.value == '' || isChatting) {
+      if (InputText.value == '' || isChatting.value) {
         return
       }
-      isChatting = true
+      isChatting.value = true
       requirementGot.value = false
       ReqText.value = ''
       ReqMD.value = ''
@@ -267,7 +268,7 @@ export default defineComponent({
         }
       }
       requirementGot.value = true
-      isChatting = false
+      isChatting.value = false
     }
 
     async function RequirementAnasys() {
@@ -321,6 +322,7 @@ export default defineComponent({
       ParseDetailMarkdown,
       detailGot,
       requirementGot,
+      isChatting
     }
   }
 });
