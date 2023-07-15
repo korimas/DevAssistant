@@ -160,7 +160,7 @@ const handler = async (req: Request): Promise<Response> => {
 
 `
     if (recvPayload.detail != '') {
-      prompt = prompt + '#14 进行软件需求分析时，须包含以下相关的细节：\n"""\n' + recvPayload.detail + '\n"""'
+      prompt = prompt + '#14 进行软件需求分析时，须包含以下markdown table涉及的细节，分析出更多的软件需求：\n"""\n' + recvPayload.detail + '\n"""'
     }
 
     prompt = prompt + `
