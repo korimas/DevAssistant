@@ -6,7 +6,10 @@
         <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter"
                  :disable="isChatting">
           <template v-slot:after>
-            <q-btn round dense flat icon="send" @click="RequirementAnasys"/>
+            <div class="column">
+              <q-btn dense flat icon="send" @click="RequirementAnasys"> </q-btn>
+              <div class="text-caption">Ctrl + Enter</div>
+            </div>
           </template>
         </q-input>
         <div class="row" style="margin-top: 13px">
