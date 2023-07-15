@@ -135,7 +135,7 @@ const handler = async (req: Request): Promise<Response> => {
 
 `
     if (recvPayload.detail != '') {
-      prompt = prompt + '#14 进行软件需求分析时，须包含以下的细节，以此分析出更多的软件需求：\n"""\n' + recvPayload.detail + '\n"""'
+      prompt = prompt + '#14 进行软件需求分析时，须包含以下的细节，以此拆分出更多条软件需求：\n"""\n' + recvPayload.detail + '\n"""'
     }
 
     prompt = prompt + `
