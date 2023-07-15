@@ -45,12 +45,15 @@
                 </div>
               </q-item-section>
               <q-item-section>
-                补充实现细节
+                <div class="row">
+                  <div>补充实现细节</div>
+                  <div class="row items-center">
+                    <q-btn flat icon="edit" color="primary" size="sm" @click.stop @click="editDetailText"/>
+                  </div>
+                </div>
               </q-item-section>
               <q-item-section side>
-                <div class="row items-center">
-                  <q-btn flat icon="edit" color="primary" size="sm" @click.stop @click="editDetailText"/>
-                </div>
+
               </q-item-section>
             </template>
 
@@ -64,7 +67,10 @@
                          autogrow
                 >
                   <template v-slot:after>
-                    <q-btn round dense flat icon="save" @click="ParseDetailMarkdown"/>
+                    <div class="column">
+                      <q-btn  dense flat icon="save" @click="ParseDetailMarkdown"/>
+                      <q-btn  dense flat color="primary"  @click="inEditDetail = false">取消</q-btn>
+                    </div>
                   </template>
                 </q-input>
 
@@ -78,6 +84,7 @@
             default-opened
             header-class="bg-grey-4"
             v-show="requestStep > 1"
+            v-model="reqExpanded"
           >
 
             <template v-slot:header>
@@ -154,7 +161,7 @@ export default defineComponent({
   name: 'RequirementPage',
   setup() {
     let InputText = ref('')
-    let requestStep = ref(0)
+    let requestStep = ref(1)
     const store = useAPIStore();
     let isChatting = false
 
@@ -164,6 +171,7 @@ export default defineComponent({
     let inEditDetail = ref(false)
     let needDetail = ref(false)
     let DetailExpanded = ref(true)
+    let reqExpanded = ref(true)
     let detailGot = ref(false)
 
     // get requirement related
@@ -227,6 +235,7 @@ export default defineComponent({
       ReqMD.value = ''
       requestStep.value = 2
       DetailExpanded.value = false
+      reqExpanded.value = true
 
       const response = await fetch('/api/stream-requirement', {
         method: 'POST',
@@ -305,6 +314,7 @@ export default defineComponent({
       inEditDetail,
       handleEnter,
       DetailExpanded,
+      reqExpanded,
       requestStep,
       editDetailText,
       RequirementAnasys,
