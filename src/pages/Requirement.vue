@@ -47,8 +47,15 @@
                 <div class="row">
                   <div>补充需求细节</div>
                   <div class="row items-center">
-                    <q-btn dense flat icon="edit" color="primary" size="sm" @click.stop @click="editDetailText"
-                           v-if="requirementGot">
+                    <q-btn dense flat
+                           icon="edit"
+                           color="primary"
+                           size="sm"
+                           @click.stop
+                           @click="editDetailText"
+                           v-if="requirementGot"
+                           style="margin-left: 5px"
+                    >
                       <q-tooltip class="bg-grey">手动编辑需求细节</q-tooltip>
 
                     </q-btn>
