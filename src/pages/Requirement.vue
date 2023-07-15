@@ -163,12 +163,14 @@ export default defineComponent({
     let DetailExpanded = ref(true)
 
     const store = useAPIStore();
+    let isChatting = false
 
     async function GetDetails() {
-      if (InputText.value == '' || requestStep.value == 1 || requestStep.value == 2) {
+      if (InputText.value == '' || isChatting) {
         return
       }
 
+      isChatting = true
       DetailText.value = ''
       DetailMD.value = ''
       DetailExpanded.value = true
@@ -202,14 +204,15 @@ export default defineComponent({
           break
         }
       }
+      isChatting = false
     }
 
     async function GetRequirements() {
 
-      if (InputText.value == '' || requestStep.value == 1 || requestStep.value == 2) {
+      if (InputText.value == '' || isChatting) {
         return
       }
-
+      isChatting = true
       ReqText.value = ''
       ReqMD.value = ''
       requestStep.value = 2
@@ -245,11 +248,12 @@ export default defineComponent({
           break
         }
       }
+      isChatting = false
     }
 
     async function RequirementAnasys() {
 
-      if (InputText.value == '' || requestStep.value == 1 || requestStep.value == 2) {
+      if (InputText.value == '' || isChatting) {
         return
       }
 
