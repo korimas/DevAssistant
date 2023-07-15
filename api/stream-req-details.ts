@@ -105,8 +105,8 @@ const handler = async (req: Request): Promise<Response> => {
 
 #09 输出的所有的软件需求必须以markdown table展示且只输出这个table，table必须遵循以下格式：
 """
-| 编号 | 相关需求 |
-| ---- | ------- |
+| 相关需求 |
+| ------- |
 """
 `
     const GoodMessage: ChatGPTMessage[] = [
