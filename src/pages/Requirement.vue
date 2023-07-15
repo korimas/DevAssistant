@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page padding>
     <div class="q-pa-md q-gutter-md">
       <div class="text-h5">软件需求分析</div>
       <div class="column">
@@ -127,7 +127,7 @@
       </div>
     </div>
     <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
-      <q-btn fab icon="keyboard_arrow_up" color="accent"/>
+      <q-btn dense fab icon="keyboard_arrow_up" color="grey"/>
     </q-page-scroller>
   </q-page>
 </template>
