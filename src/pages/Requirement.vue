@@ -48,7 +48,7 @@
                 <div class="row">
                   <div>补充实现细节</div>
                   <div class="row items-center">
-                    <q-btn flat icon="edit" color="primary" size="sm" @click.stop @click="editDetailText" :disable="requirementGot"/>
+                    <q-btn flat icon="edit" color="primary" size="sm" @click.stop @click="editDetailText" :disable="!requirementGot"/>
                   </div>
                 </div>
               </q-item-section>
