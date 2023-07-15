@@ -79,10 +79,11 @@
                 >
                   <template v-slot:after>
                     <div class="column">
-                      <q-btn dense color="primary" flat icon="save" @click="ParseDetailMarkdown">
+                      <q-btn style="margin-top: 20px" dense color="primary" unelevated icon="save" @click="ParseDetailMarkdown">
+                        保存
                         <q-tooltip class="bg-grey">保存并重新生成软件需求</q-tooltip>
                       </q-btn>
-                      <q-btn dense flat @click="inEditDetail = false">取消</q-btn>
+                      <q-btn style="margin-top: 10px" dense flat @click="inEditDetail = false" icon="clear">取消</q-btn>
                     </div>
                   </template>
                 </q-input>
@@ -173,7 +174,7 @@ export default defineComponent({
   name: 'RequirementPage',
   setup() {
     let InputText = ref('')
-    let requestStep = ref(0)
+    let requestStep = ref(1)
     const store = useAPIStore();
     let isChatting = ref(false)
 
@@ -190,7 +191,7 @@ export default defineComponent({
     // get requirement related
     let ReqText = ref('')
     let ReqMD = ref('')
-    let requirementGot = ref(false)
+    let requirementGot = ref(true)
 
 
     async function GetDetails() {
