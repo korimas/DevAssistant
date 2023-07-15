@@ -88,11 +88,12 @@
                 >
                   <template v-slot:after>
                     <div class="column">
-                      <q-btn style="margin-top: 20px" color="primary" unelevated icon="done" label="确认"
+                      <q-btn style="margin-top: 20px" color="primary" unelevated icon="done" label="确认" size="md"
                              @click="ParseDetailMarkdown">
                         <q-tooltip class="bg-grey">确认提交并重新生成软件需求</q-tooltip>
                       </q-btn>
-                      <q-btn style="margin-top: 10px" flat @click="inEditDetail = false" icon="clear" label="取消"/>
+                      <q-btn style="margin-top: 10px" flat @click="inEditDetail = false" icon="clear" label="取消"
+                             size="md"/>
                     </div>
                   </template>
                 </q-input>
