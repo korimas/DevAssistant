@@ -16,7 +16,7 @@
           </q-chip>
 
           <q-chip color="grey-4" icon="panorama_fish_eye" icon-selected="task_alt" :disable="true">
-            链接到Confluence(Building)
+            Connect Confluence(Building)
           </q-chip>
         </div>
       </div>
@@ -83,7 +83,8 @@
                 >
                   <template v-slot:after>
                     <div class="column">
-                      <q-btn style="margin-top: 20px" dense color="primary" unelevated icon="done" @click="ParseDetailMarkdown">
+                      <q-btn style="margin-top: 20px" dense color="primary" unelevated icon="done"
+                             @click="ParseDetailMarkdown">
                         保存
                         <q-tooltip class="bg-grey">确认提交并重新生成软件需求</q-tooltip>
                       </q-btn>
