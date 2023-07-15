@@ -1,12 +1,12 @@
 <template>
-  <q-page padding>
+  <q-page>
     <div class="q-pa-md q-gutter-md">
       <div class="text-h5">软件需求分析</div>
       <div class="column">
         <q-input class="col" autogrow v-model="InputText" label="需求描述" @keydown.enter="handleEnter"
                  :disable="isChatting">
           <template v-slot:after>
-            <q-btn dense flat @click="RequirementAnasys">
+            <q-btn flat @click="RequirementAnasys">
               <div class="column">
                 <q-icon style="margin: auto" name="send"></q-icon>
                 <div class="text-caption">Ctrl + Enter</div>
