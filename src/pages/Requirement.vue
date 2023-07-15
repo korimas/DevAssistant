@@ -62,7 +62,7 @@
               <q-card-section>
                 <div v-if="!inEditDetail" v-html="DetailMD" class="markdown-body"></div>
                 <q-input v-if="inEditDetail" outlined type="textarea"
-                         v-model="DetailText"
+                         v-model="DetailTextTmp"
                          label="细节"
                          class="fit"
                          autogrow
@@ -168,6 +168,7 @@ export default defineComponent({
 
     // get detail related
     let DetailText = ref('')
+    let DetailTextTmp = ref('')
     let DetailMD = ref('')
     let inEditDetail = ref(false)
     let needDetail = ref(false)
@@ -309,9 +310,11 @@ export default defineComponent({
     function editDetailText() {
       DetailExpanded.value = true
       inEditDetail.value = true
+      DetailTextTmp.value = DetailText.value
     }
 
     async function ParseDetailMarkdown() {
+      DetailText.value = DetailTextTmp.value
       DetailMD.value = marked(DetailText.value)
       inEditDetail.value = false
       await GetRequirements()
@@ -333,7 +336,8 @@ export default defineComponent({
       ParseDetailMarkdown,
       detailGot,
       requirementGot,
-      isChatting
+      isChatting,
+      DetailTextTmp
     }
   }
 });
