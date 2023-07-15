@@ -161,7 +161,7 @@ export default defineComponent({
   name: 'RequirementPage',
   setup() {
     let InputText = ref('')
-    let requestStep = ref(1)
+    let requestStep = ref(0)
     const store = useAPIStore();
     let isChatting = false
 
