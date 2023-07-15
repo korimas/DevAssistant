@@ -102,6 +102,7 @@ const handler = async (req: Request): Promise<Response> => {
 3. 为了提升健壮性，该考虑哪些方面
 4. 为了提升性能效率，该考虑哪些方面
 5. 考虑功能安全相关的内容
+6. 不应考虑手册等和软件实现无关的内容
 """
 
 #10 必须以markdown table的形式输出，并且只输出这个table，table遵循以下格式，编号从1开始：
