@@ -22,7 +22,7 @@
             expand-separator
             label="补充实现细节"
             header-class="bg-grey-4"
-            v-show="requestStep > 0"
+            v-show="requestStep > 0 && needDetail"
             v-model="DetailExpanded"
           >
             <template v-slot:header>
@@ -244,7 +244,6 @@ export default defineComponent({
         }
 
         if (done) {
-          requestStep.value = 0
           break
         }
       }
