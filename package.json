@@ -19,7 +19,6 @@
     "github-markdown-css": "^5.2.0",
     "highlight.js": "^11.8.0",
     "marked": "^5.1.0",
-    "marked-highlight": "^2.0.1",
     "pinia": "^2.1.4",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",

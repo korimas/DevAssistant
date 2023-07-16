@@ -50,8 +50,8 @@ import {defineComponent, ref} from 'vue';
 import {marked} from "marked";
 import 'github-markdown-css';
 import {useAPIStore} from 'stores/APIStore';
-import {markedHighlight} from 'marked-highlight';
 import hljs from 'highlight.js';
+import 'highlight.js/styles/github.css';
 
 export default defineComponent({
   name: 'OneQOneAPage',
