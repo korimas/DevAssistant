@@ -110,7 +110,7 @@ const linksList = [
   }, {
     title: '一问一答聊天',
     caption: '效率工具',
-    icon: 'smart_toy',
+    icon: 'question_answer',
     link: '/oneqonea'
   }
 ];
