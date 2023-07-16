@@ -1,25 +1,19 @@
 <template>
   <div class="q-pa-md q-gutter-md">
-    <div class="text-h5">中英文翻译</div>
-    <div class="row q-pa-md q-gutter-md" style="min-height: 500px">
-      <div class="col" style="min-width: 400px">
-        <q-input outlined type="textarea"
-                 v-model="InputText"
-                 label="中文"
-                 class="fit"
-                 @keydown.enter="handleEnter"
-        >
-          <template v-slot:after>
-            <q-btn round dense flat icon="send" @click="RequirementAnasys"/>
-          </template>
-        </q-input>
+    <div class="text-h5">一问一答</div>
+    <div class="column">
+      <q-input class="col" autogrow v-model="InputText" label="问题描述" @keydown.enter="handleEnter" :disable="Chatting">
+        <template v-slot:after>
+          <q-btn flat @click="Chat">
+            <div class="column">
+              <q-icon style="margin: auto" name="send"></q-icon>
+              <div class="text-caption">Ctrl + Enter</div>
+            </div>
+          </q-btn>
+        </template>
+      </q-input>
 
-      </div>
-      <q-card flat bordered class="col" style="min-width: 400px">
-        <q-card-section>
-          <div v-html="MarkdownText" class="markdown-body"></div>
-        </q-card-section>
-      </q-card>
+      <div v-html="MarkdownText" class="markdown-body"></div>
 
     </div>
   </div>
@@ -55,21 +49,18 @@
 import {defineComponent, ref} from 'vue';
 import {marked} from 'marked';
 import 'github-markdown-css';
+import {useAPIStore} from "stores/APIStore";
 
 export default defineComponent({
-  name: 'TranslatePage',
+  name: 'OneQOneAPage',
   setup() {
     let InputText = ref('')
     let OutputText = ref('')
     let MarkdownText = ref('')
     let Chatting = false
+    const store = useAPIStore();
 
-//     MarkdownText.value=marked(`First Header | Second Header
-// ------------ | -------------
-// Content Cell | Content Cell
-// Content Cell | Content Cell`)
-
-    async function RequirementAnasys() {
+    async function Chat() {
       if (InputText.value == '' || Chatting) {
         return
       }
@@ -79,18 +70,16 @@ export default defineComponent({
       Chatting = true
 
       // request
-      const response = await fetch('/api/stream-zh-to-en', {
+      const response = await fetch('/api/stream-api', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
           //'Authorization': 'Bearer ' + Password.value
         },
         body: JSON.stringify({
-          //"model": "gpt-3.5-turbo",
-          //"model": "gpt-4",
-          'requirement': InputText.value,
-          //"stream": true,
-          //"temperature": 0.7,
+          'model': store.model,
+          'temperature': store.temperature,
+          'question': InputText.value,
         })
       })
 
@@ -114,7 +103,7 @@ export default defineComponent({
 
     function handleEnter(e: any) {
       if (e.ctrlKey) {
-        RequirementAnasys()
+        Chat()
         console.log('send')
       }
     }
@@ -124,7 +113,8 @@ export default defineComponent({
       OutputText,
       MarkdownText,
       handleEnter,
-      RequirementAnasys
+      Chatting,
+      Chat
     }
   }
 });

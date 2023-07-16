@@ -58,7 +58,7 @@
           </div>
           <div style="min-width: 130px">
             <q-select filled v-model="store.temperature" :options="store.temperatureOptions" label="Temperature"
-            hint="介于0和2之间，数字越大代表每次结果的随机性越高"/>
+                      hint="介于0和2之间，数字越大代表每次结果的随机性越高"/>
             <!--            <q-input-->
             <!--              hint="介于0和2之间，数字越大代表随机性越高"-->
             <!--              v-model.number="store.temperature"-->
@@ -107,7 +107,12 @@ const linksList = [
     caption: '效率工具',
     icon: 'translate',
     link: '/translate'
-  },
+  }, {
+    title: '一问一答聊天',
+    caption: '效率工具',
+    icon: 'smart_toy',
+    link: '/oneqonea'
+  }
 ];
 
 export default defineComponent({
