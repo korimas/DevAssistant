@@ -112,6 +112,12 @@ const linksList = [
     caption: '效率工具',
     icon: 'question_answer',
     link: '/oneqonea'
+  }, {
+    title: '数据文件分析',
+    caption: '效率工具',
+    icon: 'document_scanner',
+    link: '/oneqonea',
+    disable: true
   }
 ];
 
