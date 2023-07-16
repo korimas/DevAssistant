@@ -4,6 +4,7 @@
     clickable
     v-ripple
     :to="link"
+    :disable="disable"
   >
     <q-item-section
       v-if="icon"
@@ -43,6 +44,11 @@ export default defineComponent({
     icon: {
       type: String,
       default: ''
+    },
+
+    disable: {
+      type: Boolean,
+      default: false
     }
   }
 });

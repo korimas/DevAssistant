@@ -72,7 +72,7 @@ export default defineComponent({
       gfm: true,
       breaks: false,
       sanitize: false,
-      smartLists: true,
+      // smartLists: true,
       smartypants: false,
       xhtml: false
     });
