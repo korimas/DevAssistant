@@ -45,7 +45,7 @@
               overlay
     >
       <div class="q-pa-md row" style="height: 65px">
-        <div class="text-h6">OpenAI Config</div>
+        <div class="text-h6">API Config</div>
         <q-space></q-space>
         <q-btn unelevated size="12px" icon="clear" color="red" @click="toggleSettingDrawer"/>
       </div>
