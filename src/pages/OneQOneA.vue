@@ -13,7 +13,7 @@
         </template>
       </q-input>
 
-      <div v-html="MarkdownText" class="markdown-body"></div>
+      <div style="margin-top: 10px" v-html="MarkdownText" class="markdown-body"></div>
 
     </div>
   </div>
@@ -47,7 +47,7 @@
 
 <script lang="ts">
 import {defineComponent, ref} from 'vue';
-import {marked} from "marked";
+import {marked} from 'marked';
 import 'github-markdown-css';
 import {useAPIStore} from 'stores/APIStore';
 import hljs from 'highlight.js';
