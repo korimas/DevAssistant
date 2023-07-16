@@ -47,9 +47,11 @@
 
 <script lang="ts">
 import {defineComponent, ref} from 'vue';
-import {marked} from 'marked';
+import {marked} from "marked";
 import 'github-markdown-css';
-import {useAPIStore} from "stores/APIStore";
+import {useAPIStore} from 'stores/APIStore';
+import {markedHighlight} from 'marked-highlight';
+import hljs from 'highlight.js';
 
 export default defineComponent({
   name: 'OneQOneAPage',
@@ -59,6 +61,21 @@ export default defineComponent({
     let MarkdownText = ref('')
     let Chatting = false
     const store = useAPIStore();
+
+    marked.setOptions({
+      renderer: new marked.Renderer(),
+      highlight: function(code, language) {
+        const validLanguage = hljs.getLanguage(language) ? language : 'plaintext';
+        return hljs.highlight(validLanguage, code).value;
+      },
+      pedantic: false,
+      gfm: true,
+      breaks: false,
+      sanitize: false,
+      smartLists: true,
+      smartypants: false,
+      xhtml: false
+    });
 
     async function Chat() {
       if (InputText.value == '' || Chatting) {
