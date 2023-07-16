@@ -93,7 +93,8 @@ module.exports = configure(function (/* ctx */) {
       config: {
         loading: {
           delay: 500,
-          message: '加载中，请耐心等待...'
+          message: '加载中，请耐心等待...',
+          spinnerSize: 80
         }
       },
 
