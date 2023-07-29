@@ -24,10 +24,6 @@
   border-collapse: collapse;
 }
 
-.q-textarea .q-field__control {
-  height: 100%;
-}
-
 .md-c. tr {
   border: solid 1px black;
 }

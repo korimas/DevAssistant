@@ -1,4 +1,5 @@
 import {createParser, ParsedEvent, ReconnectInterval,} from 'eventsource-parser';
+import {CreateSWReqTable} from '../lib/sw_requirement';
 
 if (!process.env.OPENAI_API_KEY) {
     throw new Error('Missing env var from OpenAI');
@@ -85,6 +86,7 @@ async function OpenAIStream(payload: OpenAIStreamPayload) {
 
 const handler = async (req: Request): Promise<Response> => {
     const recvPayload = await req.json()
+    await CreateSWReqTable()
     /*
     const payload: OpenAIStreamPayload = {
         model: "gpt-3.5-turbo",
