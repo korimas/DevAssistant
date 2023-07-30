@@ -18,7 +18,7 @@ const handler = async (req: Request): Promise<Response> => {
     这里填写翻译过后的内容
 
     ### 再译
-    这里将翻译后的内容重新翻译为原语言的内容
+    这里将翻译后的内容重新翻译为翻以前的语言类型
     """
     `
 
