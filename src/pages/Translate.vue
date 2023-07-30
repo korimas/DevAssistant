@@ -2,10 +2,10 @@
   <div class="q-pa-md q-gutter-md">
     <div class="text-h5">中英文翻译</div>
     <div class="row q-pa-md q-gutter-md" style="min-height: 500px">
-      <div class="col" style="min-width: 400px">
+      <div class="col" style="min-width: 350px">
         <q-input outlined type="textarea"
                  v-model="InputText"
-                 label="中文"
+                 label="原文"
                  class="fit"
                  @keydown.enter="handleEnter"
         >
@@ -15,7 +15,7 @@
         </q-input>
 
       </div>
-      <q-card flat bordered class="col" style="min-width: 400px">
+      <q-card flat bordered class="col" style="min-width: 300px">
         <q-card-section>
           <div v-html="MarkdownText" class="markdown-body"></div>
         </q-card-section>
