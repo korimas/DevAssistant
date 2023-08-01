@@ -15,7 +15,7 @@
         </q-input>
 
       </div>
-      <q-card flat bordered class="col" style="min-width: 300px;white-space: pre;">
+      <q-card flat bordered class="col" style="min-width: 300px">
         <q-card-section>
           <div v-html="MarkdownText" class="markdown-body"></div>
         </q-card-section>
