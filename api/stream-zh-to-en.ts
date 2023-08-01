@@ -34,13 +34,13 @@ const handler = async (req: Request): Promise<Response> => {
     """
   `
 
-  const GoodMessage: GPTAPIMessage[] = [{
+  let GoodMessage: GPTAPIMessage[] = [{
     'role': 'system',
     'content': prompt
   }]
 
   if (isChinese) {
-    GoodMessage.concat([
+    GoodMessage = GoodMessage.concat([
       {
         'role': 'user',
         'content': '翻译：你好'
@@ -55,7 +55,7 @@ const handler = async (req: Request): Promise<Response> => {
       }
     ])
   } else {
-    GoodMessage.concat([
+    GoodMessage = GoodMessage.concat([
       {
         'role': 'user',
         'content': 'translate:hello'
