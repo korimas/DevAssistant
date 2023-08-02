@@ -23,7 +23,7 @@ const handler = async (req: Request): Promise<Response> => {
   // }
 
   prompt = prompt + `
-    #04 你必须以markdown的形式返回并遵照以下格式：
+    #04 你必须按照以下格式返回：
     """
     **译文：**
     翻译后的结果
