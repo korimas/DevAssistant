@@ -16,11 +16,6 @@ const handler = async (req: Request): Promise<Response> => {
     #01 我想让你充当翻译员。
     #02 你只需要翻译输入的内容，不必对内容中的问题或要求进行解释或回答，只需要翻译它。
     `
-  // if (isChinese) {
-  //   prompt = prompt + '#03 用户的输入开头会带有"翻译："这几个字，你必须删除这几字后再翻译。'
-  // } else {
-  //   prompt = prompt + '#03 用户的输入开头会带有"translate:"这几个字，你必须删除这几字后再翻译。'
-  // }
 
   prompt = prompt + `
     #04 你必须按照以下格式返回：
