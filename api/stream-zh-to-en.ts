@@ -29,7 +29,7 @@ const handler = async (req: Request): Promise<Response> => {
     翻译后的结果
 
     **再译：**
-    将翻译后的结果翻译回原来的语言
+    将翻译后的结果翻译回原来的语言，用来和原文对比检查翻译内容是否有偏差
     """
   `
 
