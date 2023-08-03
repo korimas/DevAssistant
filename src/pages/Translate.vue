@@ -2,7 +2,7 @@
   <div class="q-pa-md q-gutter-md">
     <div class="text-h5">中英文翻译</div>
     <q-card class="row no-border-radius" flat bordered style="min-height: 500px">
-      <div class="col column">
+      <div class="col column" style="min-width: 300px">
         <div class="row full-width col-auto">
           <q-select borderless style="width: 120px; margin-left: 20px" v-model="SrcLanguage" :options="LanguageOptions"
                     label="检测源语言"/>
@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <div class="col column">
+      <div class="col column" style="min-width: 300px">
         <div class="full-width col-auto">
           <q-select borderless style="width: 120px; margin-left: 20px" v-model="DstLanguage"
                     :options="LanguageOptions"
