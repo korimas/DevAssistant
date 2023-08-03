@@ -1,27 +1,42 @@
 <template>
   <div class="q-pa-md q-gutter-md">
     <div class="text-h5">中英文翻译</div>
-    <div class="row q-pa-md q-gutter-md" style="min-height: 500px">
-      <div class="col" style="min-width: 350px">
-        <q-input outlined type="textarea"
-                 v-model="InputText"
-                 label="原文"
-                 class="fit"
-                 @keydown.enter="handleEnter"
-        >
-          <template v-slot:after>
-            <q-btn round dense flat icon="send" @click="RequirementAnasys"/>
-          </template>
-        </q-input>
+    <q-card class="row no-border-radius" flat bordered style="min-height: 500px">
+      <div class="col column">
+        <div class="row full-width col-auto">
+          <q-select borderless style="width: 150px; margin-left: 20px" v-model="SrcLanguage" :options="LanguageOptions"
+                    label="检测源语言"/>
+          <q-space></q-space>
 
+          <q-btn unelevated color="primary" label="翻译" style="margin: 10px" @click="RequirementAnasys"/>
+        </div>
+        <div class="full-width col">
+          <q-input square outlined type="textarea"
+                   v-model="InputText"
+                   label="原文"
+                   class="fit"
+                   @keydown.enter="handleEnter"
+                   @update:model-value="handleInput"
+          >
+          </q-input>
+        </div>
       </div>
-      <q-card flat bordered class="col" style="min-width: 300px">
-        <q-card-section>
-          <div v-html="MarkdownText" class="markdown-body"></div>
-        </q-card-section>
-      </q-card>
 
-    </div>
+      <div class="col column">
+        <div class="full-width col-auto">
+          <q-select borderless style="max-width: 150px; margin-left: 20px" v-model="DstLanguage"
+                    :options="LanguageOptions"
+                    label="目标语言"/>
+        </div>
+        <q-card flat bordered class="full-width col  no-border-radius">
+          <q-card-section>
+            <div v-html="MarkdownText" class="markdown-body"></div>
+          </q-card-section>
+        </q-card>
+      </div>
+
+
+    </q-card>
   </div>
 </template>
 
@@ -63,11 +78,15 @@ export default defineComponent({
     let OutputText = ref('')
     let MarkdownText = ref('')
     let Chatting = false
+    let SrcLanguage = ref('')
+    let DstLanguage = ref('')
+    let timer: NodeJS.Timeout;
 
-//     MarkdownText.value=marked(`First Header | Second Header
-// ------------ | -------------
-// Content Cell | Content Cell
-// Content Cell | Content Cell`)
+    const LanguageOptions = ['中文', '英文']
+
+    function isChinese(inputStr: string) {
+      return /[\u4E00-\u9FA5]+/g.test(inputStr)
+    }
 
     async function RequirementAnasys() {
       if (InputText.value == '' || Chatting) {
@@ -119,12 +138,32 @@ export default defineComponent({
       }
     }
 
+    function handleInput(value: string) {
+      if(timer) {
+        clearTimeout(timer); // 当用户连续输入时，清除上一次的定时器
+      }
+
+      timer = setTimeout(() => {
+        if (isChinese(value)){
+          SrcLanguage.value = '中文'
+          DstLanguage.value = '英文'
+        } else {
+          SrcLanguage.value = '英文'
+          DstLanguage.value = '中文'
+        }
+      }, 1000); // 延时1s后进行语言检测
+    }
+
     return {
       InputText,
       OutputText,
       MarkdownText,
       handleEnter,
-      RequirementAnasys
+      RequirementAnasys,
+      LanguageOptions,
+      SrcLanguage,
+      DstLanguage,
+      handleInput
     }
   }
 });
