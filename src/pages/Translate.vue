@@ -8,7 +8,8 @@
                     label="检测源语言"/>
           <q-space></q-space>
 
-          <q-btn unelevated color="primary" label="翻译" style="margin: 10px" @click="RequirementAnasys"/>
+          <q-btn unelevated color="primary" label="翻译" style="margin: 10px" @click="RequirementAnasys"
+          :disable="SrcLanguage===''"/>
         </div>
         <div class="full-width col">
           <q-input square outlined type="textarea"
@@ -84,8 +85,15 @@ export default defineComponent({
 
     const LanguageOptions = ['中文', '英文']
 
-    function isChinese(inputStr: string) {
-      return /[\u4E00-\u9FA5]+/g.test(inputStr)
+    function checkLanguage(inputStr: string) {
+      let isChinese = /[\u4E00-\u9FA5]+/g.test(inputStr)
+      if (isChinese) {
+        SrcLanguage.value = '中文'
+        DstLanguage.value = '英文'
+      } else {
+        SrcLanguage.value = '英文'
+        DstLanguage.value = '中文'
+      }
     }
 
     async function RequirementAnasys() {
@@ -97,6 +105,10 @@ export default defineComponent({
       MarkdownText.value = ''
       Chatting = true
 
+      if(SrcLanguage.value === '' || DstLanguage.value === '') {
+        checkLanguage(InputText.value)
+      }
+
       // request
       const response = await fetch('/api/stream-zh-to-en', {
         method: 'POST',
@@ -105,11 +117,9 @@ export default defineComponent({
           //'Authorization': 'Bearer ' + Password.value
         },
         body: JSON.stringify({
-          //"model": "gpt-3.5-turbo",
-          //"model": "gpt-4",
           'requirement': InputText.value,
-          //"stream": true,
-          //"temperature": 0.7,
+          'from': SrcLanguage.value,
+          'to': DstLanguage.value
         })
       })
 
@@ -144,13 +154,7 @@ export default defineComponent({
       }
 
       timer = setTimeout(() => {
-        if (isChinese(value)){
-          SrcLanguage.value = '中文'
-          DstLanguage.value = '英文'
-        } else {
-          SrcLanguage.value = '英文'
-          DstLanguage.value = '中文'
-        }
+        checkLanguage(value)
       }, 1000); // 延时1s后进行语言检测
     }
 
