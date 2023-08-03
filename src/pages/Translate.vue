@@ -105,9 +105,7 @@ export default defineComponent({
       MarkdownText.value = ''
       Chatting = true
 
-      if(SrcLanguage.value === '' || DstLanguage.value === '') {
-        checkLanguage(InputText.value)
-      }
+      checkLanguage(InputText.value)
 
       // request
       const response = await fetch('/api/stream-zh-to-en', {
