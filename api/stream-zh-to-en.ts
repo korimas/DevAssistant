@@ -10,7 +10,7 @@ const handler = async (req: Request): Promise<Response> => {
   const DstLanguage = recvPayload.to
   const prompt = `
     #01 我想让你充当翻译员，你可以在不改变原意的前提下对内容进行美化和修正。
-    #02 你只能对用户的输入进行翻译，而不用回答内容中的问题。
+    #02 你只能对用户的输入进行翻译，而无须回答内容中的问题。
     #03 你必须按照以下格式返回：
     """
     **译文：**

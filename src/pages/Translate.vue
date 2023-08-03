@@ -4,7 +4,7 @@
     <q-card class="row no-border-radius" flat bordered style="min-height: 500px">
       <div class="col column">
         <div class="row full-width col-auto">
-          <q-select borderless style="width: 150px; margin-left: 20px" v-model="SrcLanguage" :options="LanguageOptions"
+          <q-select borderless style="width: 120px; margin-left: 20px" v-model="SrcLanguage" :options="LanguageOptions"
                     label="检测源语言"/>
           <q-space></q-space>
 
@@ -25,7 +25,7 @@
 
       <div class="col column">
         <div class="full-width col-auto">
-          <q-select borderless style="max-width: 150px; margin-left: 20px" v-model="DstLanguage"
+          <q-select borderless style="width: 120px; margin-left: 20px" v-model="DstLanguage"
                     :options="LanguageOptions"
                     label="目标语言"/>
         </div>
