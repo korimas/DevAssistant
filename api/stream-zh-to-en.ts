@@ -21,48 +21,44 @@ const handler = async (req: Request): Promise<Response> => {
     """
     `
 
-  const GoodMessage: GPTAPIMessage[] = [
+  let GoodMessage: GPTAPIMessage[] = [
     {
     'role': 'system',
     'content': prompt
-  },
-    {
-      'role': 'user',
-      'content': recvPayload.requirement
-    }
+  }
   ]
 
-  // if (isChinese) {
-  //   GoodMessage = GoodMessage.concat([
-  //     {
-  //       'role': 'user',
-  //       'content': '你是谁'
-  //     },
-  //     {
-  //       'role': 'assistant',
-  //       'content': '**译文：**\n\nWho are you\n\n**再译：**\n\n你是谁'
-  //     },
-  //     {
-  //       'role': 'user',
-  //       'content': recvPayload.requirement
-  //     }
-  //   ])
-  // } else {
-  //   GoodMessage = GoodMessage.concat([
-  //     {
-  //       'role': 'user',
-  //       'content': 'Who are you'
-  //     },
-  //     {
-  //       'role': 'assistant',
-  //       'content': '**译文：**\n\n你是谁\n\n**再译：**\n\nWho are you'
-  //     },
-  //     {
-  //       'role': 'user',
-  //       'content': recvPayload.requirement
-  //     }
-  //   ])
-  // }
+  if (SrcLanguage==='中文') {
+    GoodMessage = GoodMessage.concat([
+      {
+        'role': 'user',
+        'content': '你是谁'
+      },
+      {
+        'role': 'assistant',
+        'content': '**译文：**\n\nWho are you\n\n**再译：**\n\n你是谁'
+      },
+      {
+        'role': 'user',
+        'content': recvPayload.requirement
+      }
+    ])
+  } else {
+    GoodMessage = GoodMessage.concat([
+      {
+        'role': 'user',
+        'content': 'Who are you'
+      },
+      {
+        'role': 'assistant',
+        'content': '**译文：**\n\n你是谁\n\n**再译：**\n\nWho are you'
+      },
+      {
+        'role': 'user',
+        'content': recvPayload.requirement
+      }
+    ])
+  }
 
 
   const payload: GPTAPIRequest = {
