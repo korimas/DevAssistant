@@ -8,8 +8,7 @@
                     label="检测源语言"/>
           <q-space></q-space>
 
-          <q-btn unelevated color="primary" label="翻译" style="margin: 10px" @click="RequirementAnasys" :loading="Chatting"
-          :disable="SrcLanguage===''"/>
+          <q-btn unelevated color="primary" label="翻译" style="margin: 10px" @click="RequirementAnasys" :loading="Chatting"/>
         </div>
         <div class="full-width col">
           <q-input square outlined type="textarea"
