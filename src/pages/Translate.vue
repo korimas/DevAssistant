@@ -1,10 +1,10 @@
 <template>
   <div class="q-pa-md q-gutter-md">
     <div class="text-h5">中英文翻译</div>
-    <q-card class="row no-border-radius" flat style="min-height: 500px">
+    <q-card class="row no-border-radius" flat style="min-height: 500px;border-top:1px solid rgba(0, 0, 0, 0.12);">
       <div class="col column" style="min-width: 300px">
         <div class="row full-width col-auto"
-             style="border-left:1px solid rgba(0, 0, 0, 0.12);border-top:1px solid rgba(0, 0, 0, 0.12);">
+             style="border-left:1px solid rgba(0, 0, 0, 0.12);">
           <q-select borderless style="width: 120px; margin-left: 20px" v-model="SrcLanguage" :options="LanguageOptions"
                     label="检测源语言"/>
           <q-space></q-space>
@@ -25,7 +25,7 @@
       </div>
 
       <div class="col column" style="min-width: 300px">
-        <div class="full-width col-auto" style="border-right:1px solid rgba(0, 0, 0, 0.12);border-top:1px solid rgba(0, 0, 0, 0.12);">
+        <div class="full-width col-auto" style="border-right:1px solid rgba(0, 0, 0, 0.12);">
           <q-select borderless style="width: 120px; margin-left: 20px" v-model="DstLanguage"
                     :options="LanguageOptions"
                     label="目标语言"/>
