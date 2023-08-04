@@ -28,6 +28,16 @@
           <q-select borderless style="width: 120px; margin-left: 20px" v-model="DstLanguage"
                     :options="LanguageOptions"
                     label="目标语言"/>
+            <q-circular-progress
+              indeterminate
+              size="sm"
+              :thickness="0.5"
+              font-size="50px"
+              color="teal"
+              track-color="grey-3"
+              center-color="grey-8"
+              v-if="Chatting"
+            />
         </div>
         <q-card flat bordered class="full-width col  no-border-radius">
           <q-card-section>
@@ -78,7 +88,7 @@ export default defineComponent({
     let InputText = ref('')
     let OutputText = ref('')
     let MarkdownText = ref('')
-    let Chatting = false
+    let Chatting = ref(false)
     let SrcLanguage = ref('')
     let DstLanguage = ref('')
     let timer: NodeJS.Timeout;
@@ -97,13 +107,13 @@ export default defineComponent({
     }
 
     async function RequirementAnasys() {
-      if (InputText.value == '' || Chatting) {
+      if (InputText.value == '' || Chatting.value) {
         return
       }
 
       OutputText.value = ''
       MarkdownText.value = ''
-      Chatting = true
+      Chatting.value = true
 
       checkLanguage(InputText.value)
 
@@ -133,7 +143,7 @@ export default defineComponent({
         }
 
         if (done) {
-          Chatting = false
+          Chatting.value = false
           break
         }
       }
@@ -165,7 +175,8 @@ export default defineComponent({
       LanguageOptions,
       SrcLanguage,
       DstLanguage,
-      handleInput
+      handleInput,
+      Chatting
     }
   }
 });
