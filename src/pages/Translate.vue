@@ -1,14 +1,16 @@
 <template>
   <div class="q-pa-md q-gutter-md">
     <div class="text-h5">中英文翻译</div>
-    <q-card class="row no-border-radius" flat bordered style="min-height: 500px">
+    <q-card class="row no-border-radius" flat style="min-height: 500px">
       <div class="col column" style="min-width: 300px">
-        <div class="row full-width col-auto">
+        <div class="row full-width col-auto"
+             style="border-left:1px solid rgba(0, 0, 0, 0.12);border-top:1px solid rgba(0, 0, 0, 0.12);">
           <q-select borderless style="width: 120px; margin-left: 20px" v-model="SrcLanguage" :options="LanguageOptions"
                     label="检测源语言"/>
           <q-space></q-space>
 
-          <q-btn unelevated color="primary" label="翻译" style="margin: 10px" @click="RequirementAnasys" :loading="Chatting"/>
+          <q-btn unelevated color="primary" label="翻译" style="margin: 10px" @click="RequirementAnasys"
+                 :loading="Chatting"/>
         </div>
         <div class="full-width col">
           <q-input square outlined type="textarea"
@@ -23,7 +25,7 @@
       </div>
 
       <div class="col column" style="min-width: 300px">
-        <div class="full-width col-auto">
+        <div class="full-width col-auto" style="border-right:1px solid rgba(0, 0, 0, 0.12);border-top:1px solid rgba(0, 0, 0, 0.12);">
           <q-select borderless style="width: 120px; margin-left: 20px" v-model="DstLanguage"
                     :options="LanguageOptions"
                     label="目标语言"/>
@@ -146,7 +148,7 @@ export default defineComponent({
     }
 
     function handleInput(value: string) {
-      if(timer) {
+      if (timer) {
         clearTimeout(timer); // 当用户连续输入时，清除上一次的定时器
       }
 
