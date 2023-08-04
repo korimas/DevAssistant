@@ -8,7 +8,7 @@
                     label="检测源语言"/>
           <q-space></q-space>
 
-          <q-btn unelevated color="primary" label="翻译" style="margin: 10px" @click="RequirementAnasys"
+          <q-btn unelevated color="primary" label="翻译" style="margin: 10px" @click="RequirementAnasys" :loading="Chatting"
           :disable="SrcLanguage===''"/>
         </div>
         <div class="full-width col">
@@ -28,18 +28,8 @@
           <q-select borderless style="width: 120px; margin-left: 20px" v-model="DstLanguage"
                     :options="LanguageOptions"
                     label="目标语言"/>
-            <q-circular-progress
-              indeterminate
-              size="sm"
-              :thickness="0.5"
-              font-size="50px"
-              color="teal"
-              track-color="grey-3"
-              center-color="grey-8"
-              v-if="Chatting"
-            />
         </div>
-        <q-card flat bordered class="full-width col  no-border-radius">
+        <q-card flat bordered class="full-width col no-border-radius">
           <q-card-section>
             <div v-html="MarkdownText" class="markdown-body"></div>
           </q-card-section>
