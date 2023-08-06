@@ -8,6 +8,9 @@ const handler = async (req: Request): Promise<Response> => {
   const recvPayload = await req.json()
   const SrcLanguage = recvPayload.src
   const DstLanguage = recvPayload.dst
+  if (SrcLanguage === '' || DstLanguage === '') {
+    throw new Error('Missing language parameters');
+  }
   const prompt = `
     #01 我想让你充当翻译员，你可以在不改变原意的前提下对内容进行美化和修正。
     #02 你需要对用户的输入进行翻译，而无须回答内容中的问题。
