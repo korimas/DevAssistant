@@ -140,6 +140,11 @@ export default defineComponent({
         }
 
         if (done) {
+
+          if (waitCount != 0) {
+            MarkdownText.value = marked(OutputText.value)
+          }
+
           Chatting.value = false
           break
         }
