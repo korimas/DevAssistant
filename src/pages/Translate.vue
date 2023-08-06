@@ -124,27 +124,16 @@ export default defineComponent({
 
       const reader = response.body!.getReader()
       const decoder = new TextDecoder('utf-8')
-      let waitCount = 0
+
       while (true) {
         const {value, done} = await reader.read()
 
         if (value) {
           OutputText.value = OutputText.value + decoder.decode(value)
-
-          if (waitCount >= 2) {
-            MarkdownText.value = marked(OutputText.value)
-            waitCount = 0
-          } else {
-            waitCount ++
-          }
+          MarkdownText.value = marked(OutputText.value)
         }
 
         if (done) {
-
-          if (waitCount != 0) {
-            MarkdownText.value = marked(OutputText.value)
-          }
-
           Chatting.value = false
           break
         }
