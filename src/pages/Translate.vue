@@ -124,13 +124,19 @@ export default defineComponent({
 
       const reader = response.body!.getReader()
       const decoder = new TextDecoder('utf-8')
-
+      let waitCount = 0
       while (true) {
         const {value, done} = await reader.read()
 
         if (value) {
           OutputText.value = OutputText.value + decoder.decode(value)
-          MarkdownText.value = marked(OutputText.value)
+
+          if (waitCount >= 5) {
+            MarkdownText.value = marked(OutputText.value)
+            waitCount = 0
+          } else {
+            waitCount ++
+          }
         }
 
         if (done) {
