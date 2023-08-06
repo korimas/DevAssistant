@@ -131,7 +131,7 @@ export default defineComponent({
         if (value) {
           OutputText.value = OutputText.value + decoder.decode(value)
 
-          if (waitCount >= 3) {
+          if (waitCount >= 2) {
             MarkdownText.value = marked(OutputText.value)
             waitCount = 0
           } else {
