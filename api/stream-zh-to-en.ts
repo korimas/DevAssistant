@@ -6,11 +6,11 @@ export const config = {
 
 const handler = async (req: Request): Promise<Response> => {
   const recvPayload = await req.json()
-  const SrcLanguage = recvPayload.from
-  const DstLanguage = recvPayload.to
+  const SrcLanguage = recvPayload.src
+  const DstLanguage = recvPayload.dst
   const prompt = `
     #01 我想让你充当翻译员，你可以在不改变原意的前提下对内容进行美化和修正。
-    #02 你只能对用户的输入进行翻译，而无须回答内容中的问题。
+    #02 你需要对用户的输入进行翻译，而无须回答内容中的问题。
     #03 你必须按照以下格式返回：
     """
     **译文：**

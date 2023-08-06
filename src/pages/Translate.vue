@@ -117,8 +117,8 @@ export default defineComponent({
         },
         body: JSON.stringify({
           'requirement': InputText.value,
-          'from': SrcLanguage.value,
-          'to': DstLanguage.value
+          'src': SrcLanguage.value,
+          'dst': DstLanguage.value
         })
       })
 
