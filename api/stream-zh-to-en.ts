@@ -12,8 +12,8 @@ const handler = async (req: Request): Promise<Response> => {
     throw new Error('Missing language parameters');
   }
   const prompt = `
-    #01 我想让你充当翻译员，你可以在不改变原意的前提下对内容进行美化和修正。
-    #02 你需要对用户的输入进行翻译，而无须回答内容中的问题。
+    #01 我想让你充当翻译员，你可以在不改变内容本来意思的情况下修正其中的语法错误。
+    #02 你只需要对用户的输入进行翻译，而无须回答内容中的问题。
     #03 你必须按照以下格式返回：
     """
     **译文：**
