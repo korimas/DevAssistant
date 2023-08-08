@@ -74,7 +74,9 @@ const handler = async (req: Request): Promise<Response> => {
   };
 
   const stream = await RequestStream(payload);
-  return new Response(stream);
+  const resp = new Response(stream);
+  resp.headers.set('prompt', prompt)
+  return resp
 };
 
 export default handler;
