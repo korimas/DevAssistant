@@ -17,7 +17,7 @@ const handler = async (req: Request): Promise<Response> => {
     #03 你必须按照以下格式返回：
     """
     **译文：**
-    翻译成${DstLanguage}后的内容
+    将输入翻译成${DstLanguage}
 
     **再译：**
     将翻译后的内容重新翻译回${SrcLanguage}
