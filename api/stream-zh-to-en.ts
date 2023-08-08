@@ -23,6 +23,8 @@ const handler = async (req: Request): Promise<Response> => {
     将翻译后的内容重新翻译回${SrcLanguage}
     """
     `
+  return new Response(prompt);
+
 
   let GoodMessage: GPTAPIMessage[] = [
     {
