@@ -73,10 +73,10 @@ const handler = async (req: Request): Promise<Response> => {
     stream: true,
   };
 
-  const stream = await RequestStream(payload);
-  const resp = new Response(stream);
-  resp.headers.set('prompt', prompt)
-  return resp
+  const stream: ReadableStream = await RequestStream(payload);
+  return new Response(stream, {
+    headers: {'prompt': prompt}
+  });
 };
 
 export default handler;
