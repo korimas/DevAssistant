@@ -37,11 +37,11 @@ const handler = async (req: Request): Promise<Response> => {
     GoodMessage = GoodMessage.concat([
       {
         'role': 'user',
-        'content': '你是谁'
+        'content': '你好'
       },
       {
         'role': 'assistant',
-        'content': '**译文：**\n\nWho are you\n\n**再译：**\n\n你是谁'
+        'content': '**译文：**\n\nHello\n\n**再译：**\n\n你好'
       },
       {
         'role': 'user',
@@ -52,11 +52,11 @@ const handler = async (req: Request): Promise<Response> => {
     GoodMessage = GoodMessage.concat([
       {
         'role': 'user',
-        'content': 'Who are you'
+        'content': 'Hello'
       },
       {
         'role': 'assistant',
-        'content': '**译文：**\n\n你是谁\n\n**再译：**\n\nWho are you'
+        'content': '**译文：**\n\n你好\n\n**再译：**\n\nHello'
       },
       {
         'role': 'user',
