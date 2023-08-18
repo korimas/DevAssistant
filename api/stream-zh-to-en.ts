@@ -17,7 +17,7 @@ const handler = async (req: Request): Promise<Response> => {
     #03 你必须按照以下格式输出结果：
     """
     **译文：**
-    这里填：将输入翻译成${DstLanguage}后的内容
+    这里填：将输入的内容翻译成${DstLanguage}
 
     **再译：**
     这里填：将翻译后的内容重新翻译回${SrcLanguage}
@@ -26,44 +26,44 @@ const handler = async (req: Request): Promise<Response> => {
   // return new Response(prompt);
 
 
-  let GoodMessage: GPTAPIMessage[] = [
+  const GoodMessage: GPTAPIMessage[] = [
     {
     'role': 'system',
     'content': prompt
   }
   ]
 
-  if (SrcLanguage==='中文') {
-    GoodMessage = GoodMessage.concat([
-      {
-        'role': 'user',
-        'content': '你是谁'
-      },
-      {
-        'role': 'assistant',
-        'content': '**译文：**\n\nWho are you\n\n**再译：**\n\n你是谁'
-      },
-      {
-        'role': 'user',
-        'content': recvPayload.requirement
-      }
-    ])
-  } else {
-    GoodMessage = GoodMessage.concat([
-      {
-        'role': 'user',
-        'content': 'Who are you'
-      },
-      {
-        'role': 'assistant',
-        'content': '**译文：**\n\n你是谁\n\n**再译：**\n\nWho are you'
-      },
-      {
-        'role': 'user',
-        'content': recvPayload.requirement
-      }
-    ])
-  }
+  // if (SrcLanguage==='中文') {
+  //   GoodMessage = GoodMessage.concat([
+  //     {
+  //       'role': 'user',
+  //       'content': '你是谁'
+  //     },
+  //     {
+  //       'role': 'assistant',
+  //       'content': '**译文：**\n\nWho are you\n\n**再译：**\n\n你是谁'
+  //     },
+  //     {
+  //       'role': 'user',
+  //       'content': recvPayload.requirement
+  //     }
+  //   ])
+  // } else {
+  //   GoodMessage = GoodMessage.concat([
+  //     {
+  //       'role': 'user',
+  //       'content': 'Who are you'
+  //     },
+  //     {
+  //       'role': 'assistant',
+  //       'content': '**译文：**\n\n你是谁\n\n**再译：**\n\nWho are you'
+  //     },
+  //     {
+  //       'role': 'user',
+  //       'content': recvPayload.requirement
+  //     }
+  //   ])
+  // }
 
 
   const payload: GPTAPIRequest = {
