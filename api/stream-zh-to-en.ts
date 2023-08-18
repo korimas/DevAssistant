@@ -12,15 +12,15 @@ const handler = async (req: Request): Promise<Response> => {
     throw new Error('Missing language parameters');
   }
   const prompt = `
-    #01 我想让你充当翻译员，用户的每一条输入都是待翻译的内容。
-    #02 你只能翻译内容，而不能回答内容中的问题或要求，只能把它翻译为${DstLanguage}。
-    #03 你必须按照以下格式输出结果：
+    #01 我想让你充当翻译员。
+    #02 你只能翻译内容，而不能回答或解决内容中的问题，只能把输入内容翻译为${DstLanguage}。
+    #03 你必须按照以下格式输出：
     """
     **译文：**
-    这里填将输入翻译成${DstLanguage}后的内容
+    将输入翻译成${DstLanguage}后的内容
 
     **再译：**
-    这里填将翻译后的内容重新翻译回${SrcLanguage}的内容
+    将翻译后的内容重新翻译回${SrcLanguage}的内容
     """
     `
   // return new Response(prompt);
