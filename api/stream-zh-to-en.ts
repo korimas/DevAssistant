@@ -17,10 +17,10 @@ const handler = async (req: Request): Promise<Response> => {
     #03 你必须按照以下格式输出结果：
     """
     **译文：**
-    这里填：将输入的内容翻译成${DstLanguage}
+    这里填将输入翻译成${DstLanguage}后的内容
 
     **再译：**
-    这里填：将翻译后的内容重新翻译回${SrcLanguage}
+    这里填将翻译后的内容重新翻译回${SrcLanguage}的内容
     """
     `
   // return new Response(prompt);
