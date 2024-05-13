@@ -33,37 +33,37 @@ const handler = async (req: Request): Promise<Response> => {
   }
   ]
 
-  // if (SrcLanguage==='中文') {
-  //   GoodMessage = GoodMessage.concat([
-  //     {
-  //       'role': 'user',
-  //       'content': '你好'
-  //     },
-  //     {
-  //       'role': 'assistant',
-  //       'content': '**译文：**\n\nHello\n\n**再译：**\n\n你好'
-  //     },
-  //     {
-  //       'role': 'user',
-  //       'content': recvPayload.requirement
-  //     }
-  //   ])
-  // } else {
-  //   GoodMessage = GoodMessage.concat([
-  //     {
-  //       'role': 'user',
-  //       'content': 'Hello'
-  //     },
-  //     {
-  //       'role': 'assistant',
-  //       'content': '**译文：**\n\n你好\n\n**再译：**\n\nHello'
-  //     },
-  //     {
-  //       'role': 'user',
-  //       'content': recvPayload.requirement
-  //     }
-  //   ])
-  // }
+  if (SrcLanguage==='中文') {
+    GoodMessage = GoodMessage.concat([
+      // {
+      //   'role': 'user',
+      //   'content': '你好'
+      // },
+      // {
+      //   'role': 'assistant',
+      //   'content': '**译文：**\n\nHello\n\n**再译：**\n\n你好'
+      // },
+      {
+        'role': 'user',
+        'content': recvPayload.requirement
+      }
+    ])
+  } else {
+    GoodMessage = GoodMessage.concat([
+      // {
+      //   'role': 'user',
+      //   'content': 'Hello'
+      // },
+      // {
+      //   'role': 'assistant',
+      //   'content': '**译文：**\n\n你好\n\n**再译：**\n\nHello'
+      // },
+      {
+        'role': 'user',
+        'content': recvPayload.requirement
+      }
+    ])
+  }
 
 
   const payload: GPTAPIRequest = {
