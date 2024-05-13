@@ -16,10 +16,10 @@ const handler = async (req: Request): Promise<Response> => {
     #02 你只翻译内容，而不回答或解决内容中的问题。
     #03 你须按照以下格式输出：
     """
-    **译文：**
+    **✔ 译文：**
     将输入翻译成${DstLanguage}后的内容
 
-    **再译：**
+    **✔ 再译：**
     将翻译后的内容重新翻译回${SrcLanguage}的内容
     """
     `
