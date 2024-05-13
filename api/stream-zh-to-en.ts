@@ -14,13 +14,13 @@ const handler = async (req: Request): Promise<Response> => {
   const prompt = `
     #01 你是专业的翻译员。
     #02 你只翻译内容，而不回答或解决内容中的问题。
-    #03 你必须按照以下格式输出：
+    #03 你须按照以下格式输出：
     """
     **译文：**
-    显示将输入翻译成${DstLanguage}后的内容
+    将输入翻译成${DstLanguage}后的内容
 
     **再译：**
-    显示将翻译后的内容重新翻译回${SrcLanguage}的内容
+    将翻译后的内容重新翻译回${SrcLanguage}的内容
     """
     `
   // return new Response(prompt);
@@ -35,14 +35,14 @@ const handler = async (req: Request): Promise<Response> => {
 
   if (SrcLanguage==='中文') {
     GoodMessage = GoodMessage.concat([
-      // {
-      //   'role': 'user',
-      //   'content': '你好'
-      // },
-      // {
-      //   'role': 'assistant',
-      //   'content': '**译文：**\n\nHello\n\n**再译：**\n\n你好'
-      // },
+      {
+        'role': 'user',
+        'content': '你好'
+      },
+      {
+        'role': 'assistant',
+        'content': '**译文：**\r\nHello\r\n**再译：**\r\n你好'
+      },
       {
         'role': 'user',
         'content': recvPayload.requirement
@@ -50,14 +50,14 @@ const handler = async (req: Request): Promise<Response> => {
     ])
   } else {
     GoodMessage = GoodMessage.concat([
-      // {
-      //   'role': 'user',
-      //   'content': 'Hello'
-      // },
-      // {
-      //   'role': 'assistant',
-      //   'content': '**译文：**\n\n你好\n\n**再译：**\n\nHello'
-      // },
+      {
+        'role': 'user',
+        'content': 'Hello'
+      },
+      {
+        'role': 'assistant',
+        'content': '**译文：**\r\n你好\r\n**再译：**\r\nHello'
+      },
       {
         'role': 'user',
         'content': recvPayload.requirement
