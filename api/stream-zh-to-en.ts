@@ -49,7 +49,7 @@ const handler = async (req: Request): Promise<Response> => {
       },
       {
         'role': 'assistant',
-        'content': '**译文：**\n\nHello\n\n**再译：**\n\n你好'
+        'content': '**✔ 译文：**\n\nHello\n\n**✔ 再译：**\n\n你好'
       },
       {
         'role': 'user',
@@ -64,7 +64,7 @@ const handler = async (req: Request): Promise<Response> => {
       },
       {
         'role': 'assistant',
-        'content': '**译文：**\n\n你好\n\n**再译：**\n\nHello'
+        'content': '**✔ 译文：**\n\n你好\n\n**✔ 再译：**\n\nHello'
       },
       {
         'role': 'user',
