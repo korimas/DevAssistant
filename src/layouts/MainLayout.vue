@@ -2,63 +2,49 @@
   <q-layout view="hHh Lpr lff">
     <q-header elevated>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
           DevAssistant
         </q-toolbar-title>
-        <q-btn round flat icon="settings" @click="toggleSettingDrawer"/>
+        <q-btn round flat icon="settings" @click="toggleSettingDrawer" />
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      :width="230"
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      :mini="miniState"
-      @mouseover="miniState = false"
-      @mouseout="miniState = true"
-    >
+    <q-drawer :width="230" v-model="leftDrawerOpen" show-if-above bordered :mini="miniState"
+      @mouseover="miniState = false" @mouseout="miniState = true">
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
 
         <q-list padding>
-          <EssentialLink
-            v-for="link in essentialLinks"
-            :key="link.title"
-            v-bind="link"
-          />
+          <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
         </q-list>
       </q-scroll-area>
     </q-drawer>
 
-    <q-drawer elevated side="right"
-              :width="($q.screen.width > 600) ? 500: ($q.screen.width * 0.8)"
-              v-model="settingDrawerOpen"
-              overlay
-    >
+    <q-drawer elevated side="right" :width="($q.screen.width > 600) ? 500 : ($q.screen.width * 0.8)"
+      v-model="settingDrawerOpen" overlay>
       <div class="q-pa-md row" style="height: 65px">
         <div class="text-h6">API Config</div>
         <q-space></q-space>
-        <q-btn unelevated size="12px" icon="clear" color="red" @click="toggleSettingDrawer"/>
+        <q-btn unelevated size="12px" icon="clear" color="red" @click="toggleSettingDrawer" />
       </div>
-      <q-separator/>
+      <q-separator />
 
       <q-scroll-area style="height: calc(100% - 66px);" :horizontal-thumb-style="{ opacity: 0 }">
         <div class="q-pa-md q-gutter-md">
           <div style="min-width: 100px">
-            <q-select filled v-model="store.model" :options="store.modelOptions" label="Model"/>
+            <q-select filled v-model="store.model" :options="store.modelOptions" label="Model" />
           </div>
           <div style="min-width: 130px">
-            <q-select filled v-model="store.temperature" :options="store.temperatureOptions" label="Temperature"
-                      hint="介于0和2之间，数字越大代表每次结果的随机性越高"/>
+
+            <!-- <q-badge color="secondary">
+              Temperature: {{ store.temperature }}, 介于0和2之间，数字越大代表每次结果的随机性越高
+            </q-badge> -->
+            Temperature: {{ store.temperature }}
+            <q-slider v-model="store.temperature" :min="0" :max="2" :step="0.1" label />
+            Temperature介于0和2之间，数字越大代表每次结果的随机性越高
+            <!-- <q-select filled v-model="store.temperature" :options="store.temperatureOptions" label="Temperature"
+              hint="介于0和2之间，数字越大代表每次结果的随机性越高" /> -->
             <!--            <q-input-->
             <!--              hint="介于0和2之间，数字越大代表随机性越高"-->
             <!--              v-model.number="store.temperature"-->
@@ -75,15 +61,15 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view/>
+      <router-view />
     </q-page-container>
   </q-layout>
 
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from 'vue';
-import {useAPIStore} from 'stores/APIStore'
+import { defineComponent, ref } from 'vue';
+import { useAPIStore } from 'stores/APIStore'
 import EssentialLink from 'components/EssentialLink.vue';
 
 const linksList = [
