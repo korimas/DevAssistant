@@ -1,10 +1,18 @@
-import {RequestStream, GPTAPIMessage, GPTAPIRequest} from '../lib/openai/api';
+import { RequestStream, GPTAPIMessage, GPTAPIRequest } from '../lib/openai/api';
 
 export const config = {
   runtime: 'edge',
 };
 
 const handler = async (req: Request): Promise<Response> => {
+
+  // for CORS
+  if (req.method === 'OPTIONS') {
+    return new Response('{"Access": "OPTIONS"}', {
+      status: 200
+    });
+  }
+
   const recvPayload = await req.json()
   const SrcLanguage = recvPayload.src
   const DstLanguage = recvPayload.dst
@@ -28,12 +36,12 @@ const handler = async (req: Request): Promise<Response> => {
 
   let GoodMessage: GPTAPIMessage[] = [
     {
-    'role': 'system',
-    'content': prompt
-  }
+      'role': 'system',
+      'content': prompt
+    }
   ]
 
-  if (SrcLanguage==='中文') {
+  if (SrcLanguage === '中文') {
     GoodMessage = GoodMessage.concat([
       {
         'role': 'user',

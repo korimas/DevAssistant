@@ -1,18 +1,25 @@
-import {RequestStream, GPTAPIMessage, GPTAPIRequest} from '../lib/openai/api';
+import { RequestStream, GPTAPIMessage, GPTAPIRequest } from '../lib/openai/api';
 
 export const config = {
-    runtime: 'edge',
+  runtime: 'edge',
 };
 
 const handler = async (req: Request): Promise<Response> => {
-    const recvPayload = await req.json()
 
-    const GoodMessage: GPTAPIMessage[] = [
-      {
-        'role': 'user',
-        'content': recvPayload.question
-      }
-    ]
+  // for CORS
+  if (req.method === 'OPTIONS') {
+    return new Response('{"Access": "OPTIONS"}', {
+      status: 200
+    });
+  }
+  const recvPayload = await req.json()
+
+  const GoodMessage: GPTAPIMessage[] = [
+    {
+      'role': 'user',
+      'content': recvPayload.question
+    }
+  ]
 
   const defaultModel = process.env.OPENAI_API_MODEL ?? 'gpt-3.5-turbo'
 
@@ -23,8 +30,8 @@ const handler = async (req: Request): Promise<Response> => {
     stream: true,
   };
 
-    const stream = await RequestStream(payload);
-    return new Response(stream);
+  const stream = await RequestStream(payload);
+  return new Response(stream);
 };
 
 export default handler;
