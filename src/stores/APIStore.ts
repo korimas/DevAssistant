@@ -1,11 +1,11 @@
-import {defineStore} from 'pinia';
+import { defineStore } from 'pinia';
 
 export const useAPIStore = defineStore('api', {
   state: () => ({
     modelOptions: ['gpt-3.5-turbo', 'gpt-4', 'gpt-4-turbo'],
     model: 'gpt-3.5-turbo',
     temperatureOptions: [2.0, 1.9, 1.8, 1.7, 1.6, 1.5, 1.4, 1.3, 1.2, 1.1, 1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0],
-    temperature: 0.7
+    temperature: 1
   }),
 
   // getters: {
