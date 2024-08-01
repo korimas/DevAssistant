@@ -15,6 +15,18 @@
         <q-tab name="Friday" label="周五" />
         <q-tab name="Saturday" label="周六" />
         <q-tab name="Sunday" label="周日" />
+        <q-space />
+
+        <q-btn
+          round
+          dense
+          color="secondary"
+          icon="webhook"
+          style="margin-right: 5px"
+          @click="generateWeeklyReport"
+        >
+          <q-tooltip> 生成周报 </q-tooltip>
+        </q-btn>
       </q-tabs>
       <q-separator />
 
@@ -56,4 +68,8 @@ defineOptions({
 
 let tab = ref('Monday');
 let weeklyWork = ref(WEEKLY_WORK);
+
+function generateWeeklyReport() {
+  console.log('generateWeeklyReport');
+}
 </script>
