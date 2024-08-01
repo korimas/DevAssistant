@@ -13,7 +13,9 @@
     <template v-slot:top>
       <div class="q-gutter-sm row full-width" style="margin: 0">
         <!--表格标题-->
-        <div class="q-table__title text-h5">{{ dayWork.name }}</div>
+        <div class="q-table__title text-h5">
+          {{ dayName }}
+        </div>
         <q-space></q-space>
 
         <q-btn
@@ -84,6 +86,7 @@ interface Props {
 const props = defineProps<Props>();
 let dayWork = ref(props.dayWork);
 let timeoutId: NodeJS.Timeout | undefined; // 检查延时的计时器ID
+let dayName = dayWork.value.name.toUpperCase();
 
 function autoSaveInput() {
   if (timeoutId) {
