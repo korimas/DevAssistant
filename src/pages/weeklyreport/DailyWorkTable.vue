@@ -1,5 +1,6 @@
 <template>
   <q-table
+    class="work-item-table"
     flat
     selection="multiple"
     :rows="dayWork.rows"
@@ -48,6 +49,7 @@
     <template v-slot:body-cell="props">
       <q-td :props="props">
         <q-input
+          autogrow
           v-model="props.row[props.col.name]"
           input-class="text-left"
           dense
@@ -98,3 +100,10 @@ let initialPagination = {
   rowsPerPage: 50,
 };
 </script>
+
+<style scoped>
+.work-item-table .q-textarea {
+  width: 100% !important;
+  height: 100% !important;
+}
+</style>
