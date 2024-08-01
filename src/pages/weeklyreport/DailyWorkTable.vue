@@ -21,8 +21,7 @@
         <q-btn
           flat
           size="13px"
-          icon="clear"
-          color="red"
+          color="red-5"
           label="ClearAll"
           @click="clearAll(dayWork)"
         />
