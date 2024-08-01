@@ -2,6 +2,7 @@ import { RequestStream, GPTAPIMessage, GPTAPIRequest } from '../lib/openai/api';
 
 export const config = {
   runtime: 'edge',
+  preferredRegion: ['sin1', 'iad1']
 };
 
 const handler = async (req: Request): Promise<Response> => {
