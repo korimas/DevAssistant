@@ -10,6 +10,7 @@ export interface DayWork {
     name: string;
     rows: WorkItem[];
     selected: WorkItem[];
+    summary: string;
 }
 
 
@@ -30,6 +31,7 @@ export const generateDayWork = (name: string): DayWork => ({
     name: name,
     rows: [],
     selected: [],
+    summary: '',
 });
 
 export const generateWorkItem = (index: number): WorkItem => ({

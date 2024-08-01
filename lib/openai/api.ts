@@ -1,4 +1,4 @@
-import {createParser, ParsedEvent, ReconnectInterval} from 'eventsource-parser';
+import { createParser, ParsedEvent, ReconnectInterval } from 'eventsource-parser';
 
 export type ChatGPTAgent = 'user' | 'system' | 'assistant';
 
@@ -35,6 +35,12 @@ export async function RequestStream(payload: GPTAPIRequest) {
     method: 'POST',
     body: JSON.stringify(payload),
   });
+  if (!res.ok) {
+    const content = await res.text();
+    // console.error('Response content:', content);
+    console.error('Failed to fetch from OpenAI:', res.status, res.statusText, content);
+    throw new Error(`Failed to fetch from OpenAI: ${res.status} ${res.statusText}`);
+  }
 
   const stream = new ReadableStream({
     async start(controller) {
