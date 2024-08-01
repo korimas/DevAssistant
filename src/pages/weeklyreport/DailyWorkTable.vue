@@ -101,9 +101,15 @@ let initialPagination = {
 };
 </script>
 
-<style scoped>
+<style>
 .work-item-table .q-textarea {
   width: 100% !important;
   height: 100% !important;
+}
+
+.work-item-table .q-textarea.q-field--dense .q-field__control,
+.work-item-table .q-textarea.q-field--dense .q-field__native {
+  min-height: 36px;
+  height: 100%;
 }
 </style>
