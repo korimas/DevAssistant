@@ -69,6 +69,7 @@ import {
   getWeeklyWorkItemsNumber,
 } from 'pages/weeklyreport/models';
 import DailyWorkTable from './DailyWorkTable.vue';
+import { useAPIStore } from 'stores/APIStore';
 
 defineOptions({
   name: 'WeeklyReport',
@@ -79,6 +80,7 @@ let weeklyWork = ref(WEEKLY_WORK);
 let generating = ref(false);
 let OutputText = ref('');
 let MarkdownText = ref('');
+const store = useAPIStore();
 
 async function generateWeeklyReport() {
   if (getWeeklyWorkItemsNumber() === 0) {
@@ -96,7 +98,11 @@ async function generateWeeklyReport() {
       'content-type': 'application/json',
       //'Authorization': 'Bearer ' + Password.value
     },
-    body: JSON.stringify(weeklyWork.value),
+    body: JSON.stringify({
+      model: store.model,
+      weeklyWork: JSON.stringify(weeklyWork.value),
+      temperature: store.temperature,
+    }),
   });
 
   const reader = response.body!.getReader();
