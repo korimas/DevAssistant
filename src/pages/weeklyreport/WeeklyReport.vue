@@ -15,11 +15,13 @@
         <q-tab name="Friday" label="周五" />
         <q-tab name="Saturday" label="周六" />
         <q-tab name="Sunday" label="周日" />
+        <q-tab name="report" label=">> 周报 <<" />
         <q-space />
 
         <q-btn
           round
           dense
+          :loading="generating"
           color="secondary"
           icon="webhook"
           style="margin-right: 5px"
@@ -52,6 +54,9 @@
         <q-tab-panel name="Sunday">
           <DailyWorkTable :dayWork="weeklyWork.sunday" />
         </q-tab-panel>
+        <q-tab-panel name="report">
+          {{ OutputText }}
+        </q-tab-panel>
       </q-tab-panels>
     </div>
   </q-page>
@@ -59,7 +64,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { WEEKLY_WORK } from 'pages/weeklyreport/models';
+import {
+  WEEKLY_WORK,
+  getWeeklyWorkItemsNumber,
+} from 'pages/weeklyreport/models';
 import DailyWorkTable from './DailyWorkTable.vue';
 
 defineOptions({
@@ -68,8 +76,44 @@ defineOptions({
 
 let tab = ref('Monday');
 let weeklyWork = ref(WEEKLY_WORK);
+let generating = ref(false);
+let OutputText = ref('');
+let MarkdownText = ref('');
 
-function generateWeeklyReport() {
-  console.log('generateWeeklyReport');
+async function generateWeeklyReport() {
+  if (getWeeklyWorkItemsNumber() === 0) {
+    return;
+  }
+
+  OutputText.value = '';
+  MarkdownText.value = '';
+  generating.value = true;
+
+  // request
+  const response = await fetch('/api/stream-weekly-status', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      //'Authorization': 'Bearer ' + Password.value
+    },
+    body: JSON.stringify(weeklyWork.value),
+  });
+
+  const reader = response.body!.getReader();
+  const decoder = new TextDecoder('utf-8');
+
+  while (true) {
+    const { value, done } = await reader.read();
+
+    if (value) {
+      OutputText.value = OutputText.value + decoder.decode(value);
+      // MarkdownText.value = marked(OutputText.value);
+    }
+
+    if (done) {
+      generating.value = false;
+      break;
+    }
+  }
 }
 </script>

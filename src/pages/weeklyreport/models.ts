@@ -82,6 +82,16 @@ export function autoSave() {
     saveToLocalStorage(WEEKLY_WORK)
 }
 
+export function getWeeklyWorkItemsNumber() {
+    return WEEKLY_WORK.monday.rows.length +
+        WEEKLY_WORK.tuesday.rows.length +
+        WEEKLY_WORK.wednesday.rows.length +
+        WEEKLY_WORK.thursday.rows.length +
+        WEEKLY_WORK.friday.rows.length +
+        WEEKLY_WORK.saturday.rows.length +
+        WEEKLY_WORK.sunday.rows.length;
+}
+
 export function deleteSelectedWorks(dayWork: DayWork) {
     dayWork.rows = dayWork.rows.filter((row) => !dayWork.selected.includes(row));
     saveToLocalStorage(WEEKLY_WORK)
