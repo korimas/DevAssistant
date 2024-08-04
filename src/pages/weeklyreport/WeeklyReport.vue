@@ -55,7 +55,7 @@
           <DailyWorkTable :dayWork="weeklyWork.sunday" />
         </q-tab-panel>
         <q-tab-panel name="report">
-          <div v-html="weeklyWork.value.report" class="markdown-body"></div>
+          <div v-html="weeklyWork.report" class="markdown-body"></div>
         </q-tab-panel>
       </q-tab-panels>
     </div>
