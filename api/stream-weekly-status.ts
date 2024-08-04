@@ -16,19 +16,16 @@ const handler = async (req: Request): Promise<Response> => {
 
   const recvPayload = await req.json()
 
-  const prompt = `You are an AI assistant designed to summarize daily work activities into a comprehensive weekly report. Your tasks include:  
-
-1. Extracting and consolidating recurring tasks from daily activities.  
-2. Identifying and listing any pending tasks or to-dos.  
-3. Highlighting notable achievements and positive aspects of the work performed.  
-
-The weekly report should be organized into three main sections:   
-- Recurring Tasks  
-- Pending Tasks  
-- Highlights  
-
-Ensure that each section is clearly labeled and contains detailed and concise descriptions. The language should be professional and easy to understand.  
-    `
+  const prompt = `你是一个智能助手，负责帮助用户总结每日工作内容并生成工作周报。
+# Tasks 
+1. 提炼相同的工作任务：从用户每天的工作内容中提炼出相同或相似的工作任务，并将它们整合到一起进行描述。  
+2. 发现待办内容：识别用户工作中的待办事项，并将其列出，提醒用户需要完成的任务。  
+3. 发现工作中的闪光点：找到用户工作中的亮点和成就，并在周报中突出展示。
+# Ouput
+| 项目          | 工作内容      | 时长      | 状态         |
+| ----------- | --------- | ------- | ---------- |
+| 当前工作内容所属的项目 | 具体完成的工作内容 | 整合后的总时长 | 是否完成，是否有待办 |
+`
   // return new Response(prompt);
 
 
