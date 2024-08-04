@@ -17,18 +17,6 @@
         <q-tab name="Sunday" label="周日" />
         <q-tab name="report" label=">> 周报 <<" />
         <q-space />
-
-        <q-btn
-          round
-          dense
-          :loading="generating"
-          color="secondary"
-          icon="webhook"
-          style="margin-right: 5px"
-          @click="generateWeeklyReport"
-        >
-          <q-tooltip> 生成周报 </q-tooltip>
-        </q-btn>
       </q-tabs>
       <q-separator />
 
@@ -55,6 +43,26 @@
           <DailyWorkTable :dayWork="weeklyWork.sunday" />
         </q-tab-panel>
         <q-tab-panel name="report">
+          <div class="row q-pl-sm" style="margin-bottom: 13px">
+            <q-space />
+
+            <q-btn
+              label="生成周报"
+              :loading="generating"
+              color="secondary"
+              icon="webhook"
+              style="margin-right: 5px"
+              @click="generateWeeklyReport"
+            />
+            <q-btn
+              label="导出JSON"
+              color="green"
+              icon="output"
+              style="margin-right: 5px"
+              @click="exportWorkItems"
+            />
+          </div>
+
           <div v-html="weeklyWork.report" class="markdown-body"></div>
         </q-tab-panel>
       </q-tab-panels>
@@ -84,6 +92,34 @@ let generating = ref(false);
 let OutputText = ref('');
 let MarkdownText = ref('');
 const store = useAPIStore();
+
+function exportWorkItems() {
+  // 创建包含字符串内容的Blob对象
+  const blob = new Blob([JSON.stringify(weeklyWork.value)], {
+    type: 'text/plain;charset=utf-8',
+  });
+
+  // 创建URL对象
+  const url = URL.createObjectURL(blob);
+
+  // 创建隐蔽的<a>元素
+  const a = document.createElement('a');
+  a.style.display = 'none';
+  a.href = url;
+  a.download = 'myFile.txt'; // 指定下载文件的文件名
+
+  // 将<a>元素添加到DOM中
+  document.body.appendChild(a);
+
+  // 触发<a>元素的点击事件，以下载文件
+  a.click();
+
+  // 移除<a>元素
+  document.body.removeChild(a);
+
+  // 释放URL对象
+  URL.revokeObjectURL(url);
+}
 
 async function generateWeeklyReport() {
   if (getWeeklyWorkItemsNumber() === 0) {
