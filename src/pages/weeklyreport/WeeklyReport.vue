@@ -67,6 +67,7 @@ import { ref } from 'vue';
 import {
   WEEKLY_WORK,
   getWeeklyWorkItemsNumber,
+  autoSave,
 } from 'pages/weeklyreport/models';
 import DailyWorkTable from './DailyWorkTable.vue';
 import { useAPIStore } from 'stores/APIStore';
@@ -120,6 +121,7 @@ async function generateWeeklyReport() {
 
     if (done) {
       generating.value = false;
+      autoSave();
       break;
     }
   }
