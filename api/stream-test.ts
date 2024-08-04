@@ -48,7 +48,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
   ]
 
-  const defaultModel = process.env.OPENAI_API_MODEL ?? 'gpt-3.5-turbo'
+  const defaultModel = process.env.OPENAI_API_MODEL ?? 'gpt-4o-mini'
 
   const payload: GPTAPIRequest = {
     model: recvPayload.model ?? defaultModel,

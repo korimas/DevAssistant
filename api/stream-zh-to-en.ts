@@ -77,7 +77,7 @@ const handler = async (req: Request): Promise<Response> => {
 
 
   const payload: GPTAPIRequest = {
-    model: process.env.OPENAI_API_MODEL ?? 'gpt-3.5-turbo',
+    model: process.env.OPENAI_API_MODEL ?? 'gpt-4o-mini',
     messages: GoodMessage,
     temperature: recvPayload.temperature,
     stream: true,
