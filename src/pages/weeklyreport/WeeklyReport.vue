@@ -93,6 +93,7 @@ async function generateWeeklyReport() {
   OutputText.value = '';
   MarkdownText.value = '';
   generating.value = true;
+  weeklyWork.value.report = '';
 
   // request
   const response = await fetch('/api/stream-weekly-status', {
