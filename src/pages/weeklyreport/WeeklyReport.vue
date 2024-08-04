@@ -120,6 +120,7 @@ async function generateWeeklyReport() {
 
     if (done) {
       generating.value = false;
+      weeklyWork.value.report = MarkdownText.value;
       break;
     }
   }

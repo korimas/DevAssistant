@@ -24,6 +24,7 @@ export interface WeeklyWork {
     sunday: DayWork;
 
     workIndex: number;
+    report: string;
 }
 
 
@@ -52,6 +53,7 @@ function generateNewWeeklyWork() {
         saturday: generateDayWork('saturday'),
         sunday: generateDayWork('sunday'),
         workIndex: 0,
+        report: '',
     };
 }
 
