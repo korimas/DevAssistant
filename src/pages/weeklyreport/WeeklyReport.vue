@@ -123,6 +123,7 @@ function exportWorkItems() {
 
 async function generateWeeklyReport() {
   if (getWeeklyWorkItemsNumber() === 0) {
+    weeklyWork.value.report = '请先填写工作内容';
     return;
   }
 
