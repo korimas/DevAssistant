@@ -55,7 +55,7 @@
           <DailyWorkTable :dayWork="weeklyWork.sunday" />
         </q-tab-panel>
         <q-tab-panel name="report">
-          {{ OutputText }}
+          <div v-html="MarkdownText" class="markdown-body"></div>
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -70,6 +70,8 @@ import {
 } from 'pages/weeklyreport/models';
 import DailyWorkTable from './DailyWorkTable.vue';
 import { useAPIStore } from 'stores/APIStore';
+import { marked } from 'marked';
+import 'github-markdown-css';
 
 defineOptions({
   name: 'WeeklyReport',
@@ -113,7 +115,7 @@ async function generateWeeklyReport() {
 
     if (value) {
       OutputText.value = OutputText.value + decoder.decode(value);
-      // MarkdownText.value = marked(OutputText.value);
+      MarkdownText.value = marked(OutputText.value);
     }
 
     if (done) {
