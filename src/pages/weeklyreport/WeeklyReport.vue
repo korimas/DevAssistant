@@ -55,7 +55,7 @@
           <DailyWorkTable :dayWork="weeklyWork.sunday" />
         </q-tab-panel>
         <q-tab-panel name="report">
-          <div v-html="MarkdownText" class="markdown-body"></div>
+          <div v-html="weeklyWork.value.report" class="markdown-body"></div>
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -115,12 +115,11 @@ async function generateWeeklyReport() {
 
     if (value) {
       OutputText.value = OutputText.value + decoder.decode(value);
-      MarkdownText.value = marked(OutputText.value);
+      weeklyWork.value.report = marked(OutputText.value);
     }
 
     if (done) {
       generating.value = false;
-      weeklyWork.value.report = MarkdownText.value;
       break;
     }
   }
