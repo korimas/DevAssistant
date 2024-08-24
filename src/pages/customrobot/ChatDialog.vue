@@ -8,7 +8,7 @@
         dense
         class="shadow-1 overflow-hidden"
         icon="tune"
-        label="Counter"
+        label="AI Configuration"
         header-class="bg-grey-3"
         expand-icon-class="text-white"
         style="margin-bottom: 10px"
@@ -16,6 +16,7 @@
         <q-card class="column q-pa-md">
           <q-input
             dense
+            lable="System Prompt"
             v-model="SystemPrompt"
             outlined
             placeholder="输入System Prompt..."
@@ -27,6 +28,7 @@
 
           <q-input
             dense
+            label="Message Keep Num"
             v-model="MessageKeepNum"
             outlined
             placeholder="输入保留几个消息..."
