@@ -119,7 +119,7 @@ async function StreamChat() {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      model: store.model,
+      model: 'gpt-3.5-turbo',
       messages: GptMessages.value,
       temperature: store.temperature,
     }),
