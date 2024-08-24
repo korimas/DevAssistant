@@ -1,22 +1,51 @@
 <template>
-  <q-input
-    v-model="SystemPrompt"
-    outlined
-    placeholder="输入System Prompt..."
-    class="full-width"
-  >
-  </q-input>
   <div
     class="column justify-between no-wrap full-width"
-    style="padding: 5px; height: calc(100vh - 107px)"
+    style="padding: 5px; height: calc(100vh - 55px)"
   >
     <div style="overflow: auto">
+      <q-expansion-item
+        dense
+        class="shadow-1 overflow-hidden"
+        icon="tune"
+        label="Counter"
+        header-class="bg-grey-3"
+        expand-icon-class="text-white"
+        style="margin-bottom: 10px"
+      >
+        <q-card class="column q-pa-md">
+          <q-input
+            dense
+            v-model="SystemPrompt"
+            outlined
+            placeholder="输入System Prompt..."
+            class="full-width"
+            style="margin-bottom: 10px"
+            @update:model-value="systemPromptUpdate"
+          >
+          </q-input>
+
+          <q-input
+            dense
+            v-model="MessageKeepNum"
+            outlined
+            placeholder="输入保留几个消息..."
+            class="full-width"
+          >
+          </q-input>
+        </q-card>
+      </q-expansion-item>
+
       <div v-for="item in Messages" :key="item.Id" class="caption doc-content">
         <MiChatCard
           :Sender="item.Sender"
           :Content="item.Content"
           :IncludeSession="item.IncludeSession"
           :Welcome="item.Welcome"
+          :Id="item.Id"
+          @delete="
+            () => (Messages = Messages.filter((msg) => msg.Id !== item.Id))
+          "
         />
       </div>
     </div>
@@ -42,6 +71,10 @@
 import { ref } from 'vue';
 import { useAPIStore } from 'stores/APIStore';
 import MiChatCard from './ChatCard.vue';
+import {
+  SystemPrompt as RobotSystemPrompt,
+  saveSystemPrompt,
+} from './RobotModels';
 
 defineOptions({
   name: 'ChatDialog',
@@ -64,24 +97,58 @@ const store = useAPIStore();
 let Messages = ref<Message[]>([]);
 let GptMessages = ref<GptMessage[]>([]);
 
-Messages.value.push({
-  Id: Date.now(),
-  Sender: false,
-  Content: 'Hello, I am AI. How can I help you?',
-  IncludeSession: false,
-  Welcome: true,
-});
-
 let InputText = ref('');
-let SystemPrompt = ref('');
+let SystemPrompt = ref(RobotSystemPrompt);
 let Loading = ref(false);
 let Waiting = ref(false);
-let system_flag = ref(false);
+let MessageKeepNum = ref(5);
+let timeoutId: NodeJS.Timeout | undefined; // 检查延时的计时器ID
+
+function systemPromptUpdate() {
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+  }
+  timeoutId = setTimeout(() => {
+    saveSystemPrompt(SystemPrompt.value);
+  }, 1000);
+}
+
+function GetGPTMessages() {
+  GptMessages.value = [
+    {
+      role: 'system',
+      content: SystemPrompt.value,
+    },
+  ];
+
+  // 从Messages中获取最新的MessageKeepNum个个消息
+  let len = Messages.value.length;
+  let start = len - MessageKeepNum.value;
+  if (start < 0) {
+    start = 0;
+  }
+  for (let i = start; i < len; i++) {
+    let msg = Messages.value[i];
+    if (msg.Sender) {
+      GptMessages.value.push({
+        role: 'user',
+        content: msg.Content,
+      });
+    } else {
+      GptMessages.value.push({
+        role: 'assistant',
+        content: msg.Content,
+      });
+    }
+  }
+}
 
 async function StreamChat() {
   if (InputText.value == '') {
     return;
   }
+
+  // 添加输入的消息
   Messages.value.push({
     Id: Date.now(),
     Sender: true,
@@ -89,18 +156,8 @@ async function StreamChat() {
     IncludeSession: true,
     Welcome: false,
   });
-  if (!system_flag.value) {
-    GptMessages.value.push({
-      role: 'system',
-      content: SystemPrompt.value,
-    });
-    system_flag.value = true;
-  }
 
-  GptMessages.value.push({
-    role: 'user',
-    content: InputText.value,
-  });
+  GetGPTMessages();
 
   // 添加一个空消息，用于显示最新的AI回复
   Messages.value.push({
@@ -143,10 +200,10 @@ async function StreamChat() {
 
     if (done) {
       Waiting.value = false;
-      GptMessages.value.push({
-        role: 'assistant',
-        content: lastMsg.Content,
-      });
+      //   GptMessages.value.push({
+      //     role: 'assistant',
+      //     content: lastMsg.Content,
+      //   });
       // await nextTick()
       // inputCom.value.focus()
       break;

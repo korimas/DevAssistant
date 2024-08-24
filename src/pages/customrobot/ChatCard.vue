@@ -9,31 +9,27 @@
       ></q-avatar>
       <q-avatar v-else size="24px" color="orange" icon="polymer"></q-avatar>
 
-      <div
-        v-if="Sender"
-        class="text-h7"
-        style="margin-top: auto; margin-left: 10px"
-      >
-        You
-      </div>
-      <div v-else class="text-h7" style="margin-top: auto; margin-left: 10px">
-        DevAssistant
+      <div class="text-h7 text-grey" style="margin: 0 0 0 10px">
+        {{ Sender ? 'You' : 'DevAssistant' }}
       </div>
 
       <q-space></q-space>
-      <q-icon v-if="IncludeSession" name="maps_ugc" color="positive">
-        <q-tooltip
-          anchor="center right"
-          self="center left"
-          transition-show="scale"
-          transition-hide="scale"
-        >
-          当前消息已包含在AI会话中
-        </q-tooltip></q-icon
-      >
-
-      <q-btn v-if="Welcome" dense flat icon="keyboard_alt"></q-btn>
-      <q-btn v-else dense flat icon="delete" color="negative"></q-btn>
+      <div v-if="!Welcome">
+        <q-btn
+          dense
+          flat
+          icon="delete"
+          color="negative"
+          @click="handleDelete"
+        ></q-btn>
+        <!-- <q-btn
+          v-if="!Sender"
+          dense
+          flat
+          icon="refresh"
+          color="negative"
+        ></q-btn> -->
+      </div>
     </div>
     <div style="margin-top: 5px">
       <q-circular-progress
@@ -58,7 +54,22 @@ defineOptions({
   name: 'ChatCard',
 });
 
+// define emits
+const emit = defineEmits(['delete', 'refresh']);
+
+function handleDelete() {
+  emit('delete');
+}
+
+function handleRefresh() {
+  emit('refresh');
+}
+
 const props = defineProps({
+  Id: {
+    type: Number,
+    default: 0,
+  },
   Sender: {
     type: Boolean,
     default: true,
