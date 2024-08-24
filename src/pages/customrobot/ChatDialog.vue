@@ -8,7 +8,7 @@
   </q-input>
   <div
     class="column justify-between no-wrap full-width"
-    style="padding: 5px; height: calc(100vh - 51px)"
+    style="padding: 5px; height: calc(100vh - 107px)"
   >
     <div style="overflow: auto">
       <div v-for="item in Messages" :key="item.Id" class="caption doc-content">
@@ -77,6 +77,11 @@ let SystemPrompt = ref('');
 let Loading = ref(false);
 let Waiting = ref(false);
 
+GptMessages.value.push({
+  role: 'system',
+  content: SystemPrompt.value,
+});
+
 async function StreamChat() {
   if (InputText.value == '') {
     return;
@@ -87,10 +92,6 @@ async function StreamChat() {
     Content: InputText.value,
     IncludeSession: true,
     Welcome: false,
-  });
-  GptMessages.value.push({
-    role: 'system',
-    content: SystemPrompt.value,
   });
 
   GptMessages.value.push({
