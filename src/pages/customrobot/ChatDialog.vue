@@ -76,11 +76,7 @@ let InputText = ref('');
 let SystemPrompt = ref('');
 let Loading = ref(false);
 let Waiting = ref(false);
-
-GptMessages.value.push({
-  role: 'system',
-  content: SystemPrompt.value,
-});
+let system_flag = ref(false);
 
 async function StreamChat() {
   if (InputText.value == '') {
@@ -93,6 +89,13 @@ async function StreamChat() {
     IncludeSession: true,
     Welcome: false,
   });
+  if (!system_flag.value) {
+    GptMessages.value.push({
+      role: 'system',
+      content: SystemPrompt.value,
+    });
+    system_flag.value = true;
+  }
 
   GptMessages.value.push({
     role: 'user',
