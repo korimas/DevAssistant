@@ -15,6 +15,7 @@
         <q-tab name="Friday" label="周五" />
         <q-tab name="Saturday" label="周六" />
         <q-tab name="Sunday" label="周日" />
+        <q-tab name="Project" label="项目" />
         <q-tab name="report" label=">> 周报 <<" />
         <q-space />
       </q-tabs>
@@ -41,6 +42,9 @@
         </q-tab-panel>
         <q-tab-panel name="Sunday">
           <DailyWorkTable :dayWork="weeklyWork.sunday" />
+        </q-tab-panel>
+        <q-tab-panel name="Project">
+          <ProjectWorkTable :dayWork="weeklyWork.sunday" />
         </q-tab-panel>
         <q-tab-panel name="report">
           <div class="row q-pl-sm" style="margin-bottom: 13px">
@@ -76,8 +80,9 @@ import {
   WEEKLY_WORK,
   getWeeklyWorkItemsNumber,
   autoSave,
-} from 'pages/weeklyreport/models';
+} from 'src/pages/weeklyreport/DayModels';
 import DailyWorkTable from './DailyWorkTable.vue';
+import ProjectWorkTable from './ProjectWorkTable.vue';
 import { useAPIStore } from 'stores/APIStore';
 import { marked } from 'marked';
 import 'github-markdown-css';

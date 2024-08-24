@@ -135,6 +135,12 @@ const linksList = [
     link: '/weeklyreport',
   },
   {
+    title: '自定义机器人',
+    caption: '效率工具',
+    icon: 'precision_manufacturing',
+    link: '/customrobot',
+  },
+  {
     title: '系统需求拆解',
     caption: '效率工具',
     icon: 'mediation',

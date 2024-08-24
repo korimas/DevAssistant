@@ -14,19 +14,10 @@ const handler = async (req: Request): Promise<Response> => {
     });
   }
   const recvPayload = await req.json()
-
-  const GoodMessage: GPTAPIMessage[] = [
-    {
-      'role': 'user',
-      'content': recvPayload.question
-    }
-  ]
-
   const defaultModel = process.env.OPENAI_API_MODEL ?? 'gpt-4o-mini'
-
   const payload: GPTAPIRequest = {
     model: recvPayload.model ?? defaultModel,
-    messages: GoodMessage,
+    messages: recvPayload.messages,
     temperature: recvPayload.temperature,
     stream: true,
   };

@@ -1,4 +1,22 @@
 <template>
+  <q-input filled v-model="date" mask="date" :rules="['date']">
+    <template v-slot:append>
+      <q-icon name="event" class="cursor-pointer">
+        <q-popup-proxy
+          ref="datePopup"
+          cover
+          transition-show="scale"
+          transition-hide="scale"
+        >
+          <q-date
+            v-model="date"
+            landscape
+            @update:model-value="hideDatePopup"
+          />
+        </q-popup-proxy>
+      </q-icon>
+    </template>
+  </q-input>
   <q-table
     class="work-item-table"
     flat
@@ -74,7 +92,7 @@ import {
 } from './DayModels';
 
 defineOptions({
-  name: 'DailyWorkTable',
+  name: 'ProjectWorkTable',
 });
 
 // props
@@ -85,7 +103,15 @@ interface Props {
 const props = defineProps<Props>();
 let dayWork = ref(props.dayWork);
 let timeoutId: NodeJS.Timeout | undefined; // 检查延时的计时器ID
-let tableTitle = dayWork.value.name.toUpperCase();
+let tableTitle = 'Project Work Table';
+let date = ref(new Date().toISOString().split('T')[0]);
+let datePopup = ref<any>(null); // Declare the datePopup ref
+
+function hideDatePopup() {
+  if (datePopup.value) {
+    datePopup.value.hide();
+  }
+}
 
 function autoSaveInput() {
   if (timeoutId) {

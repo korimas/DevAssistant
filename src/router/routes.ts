@@ -11,6 +11,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'testcase/', component: () => import('pages/TestCase.vue') },
       { path: 'translate/', component: () => import('pages/Translate.vue') },
       { path: 'oneqonea/', component: () => import('pages/OneQOneA.vue') },
+      { path: 'customrobot/', component: () => import('pages/customrobot/Customrobot.vue') },
       { path: 'weeklyreport/', component: () => import('pages/weeklyreport/WeeklyReport.vue') }
     ],
   },
