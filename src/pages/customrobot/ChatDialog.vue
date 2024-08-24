@@ -163,7 +163,7 @@ async function StreamChat() {
 
   // 添加一个空消息，用于显示最新的AI回复
   Messages.value.push({
-    Id: Date.now(),
+    Id: Date.now() + 1,
     Sender: false,
     Content: '',
     IncludeSession: true,
