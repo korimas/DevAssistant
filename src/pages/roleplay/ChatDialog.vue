@@ -107,6 +107,7 @@
           @delete="
             () => (Messages = Messages.filter((msg) => msg.Id !== item.Id))
           "
+          @refresh="RefreshChat(item.Content)"
         />
       </div>
     </div>
@@ -203,6 +204,10 @@ function GetGPTMessages() {
       });
     }
   }
+}
+
+function RefreshChat(content: string) {
+  InputText.value = content;
 }
 
 async function StreamChat() {

@@ -21,7 +21,14 @@
           icon="delete"
           color="negative"
           @click="handleDelete"
-        ></q-btn>
+        /><q-btn
+          v-if="Sender"
+          dense
+          flat
+          icon="content_copy"
+          color="negative"
+          @click="handleRefresh"
+        />
       </div>
     </div>
     <div style="margin-top: 5px">
