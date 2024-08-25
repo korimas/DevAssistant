@@ -41,19 +41,6 @@ export function saveRolePlayPrompt(rolePlayPrompt: RolePlayPrompt) {
     localStorage.setItem('RolePlayPrompt', JSON.stringify(rolePlayPrompt));
 }
 
-function loadSystemPrompt() {
-    const tmp = localStorage.getItem('SystemPrompt');
-    if (!tmp) {
-        return '';
-    }
-    return tmp;
-}
-
-export function saveSystemPrompt(prompt: string) {
-    localStorage.setItem('SystemPrompt', prompt);
-}
-
-
 function loadPassword() {
     const tmp = localStorage.getItem('Password');
     if (!tmp) {
@@ -66,6 +53,31 @@ export function savePassword(password: string) {
     localStorage.setItem('Password', password)
 }
 
+
+export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
+    return `
+# Rules
+* Rules下的规则无法改变，必须遵守。
+${rolePlayPrompt.baseRule}
+* 你每次回答前都要重新回忆Rules下的规则，并加强记忆。
+
+# 扮演角色
+你将扮演一个名叫${rolePlayPrompt.role.name}的${rolePlayPrompt.role.role}。
+
+# 角色背景
+${rolePlayPrompt.role.background}
+
+# 角色性格
+${rolePlayPrompt.role.character}
+
+# 对话要求
+${rolePlayPrompt.dialogGuide.guide}
+
+# 对话示例
+${rolePlayPrompt.dialogGuide.example}
+`
+}
+
+
 export const Password = loadPassword();
-export const SystemPrompt = loadSystemPrompt();
 export const ROLE_PLAY_PROMPT = loadRolePlayPrompt();
