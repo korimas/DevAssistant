@@ -1,5 +1,5 @@
 <template>
-  <div class="column" style="border-bottom: 1px solid #cfcfcf; padding: 5px">
+  <div class="column" style="border-bottom: 1px solid #cfcfcf; margin: 5px">
     <div class="row">
       <q-avatar
         v-if="Sender"
@@ -35,7 +35,10 @@
         track-color="grey-3"
         center-color="grey-8"
       />
-      <div v-else style="white-space: pre-line">
+      <div
+        v-else
+        style="white-space: pre-line; margin-left: 5px; margin-bottom: 5px"
+      >
         {{ Content }}
       </div>
     </div>

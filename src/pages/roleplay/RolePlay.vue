@@ -1,6 +1,6 @@
 <template>
   <q-page class="row">
-    <q-dialog v-model="AuthRequire" persistent>
+    <!-- <q-dialog v-model="AuthRequire" persistent>
       <q-card style="min-width: 350px">
         <q-card-section>
           <div class="text-h6">请输入密码</div>
@@ -21,7 +21,7 @@
           <q-btn flat label="确定" @click="Auth" />
         </q-card-actions>
       </q-card>
-    </q-dialog>
+    </q-dialog> -->
     <ChatDialog v-if="AuthSuccess" />
   </q-page>
 </template>
