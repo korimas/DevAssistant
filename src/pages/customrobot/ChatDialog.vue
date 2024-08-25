@@ -30,10 +30,10 @@
 
           <q-input
             dense
-            label="MaxMessageNum"
+            label="MaxMessageNumInSession"
             v-model="MessageKeepNum"
             outlined
-            placeholder="输入保留几个消息..."
+            placeholder="会话中最多保留几个消息..."
             class="full-width"
           >
           </q-input>

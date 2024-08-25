@@ -29,8 +29,8 @@
 <script setup lang="ts">
 import ChatDialog from './ChatDialog.vue';
 import { ref } from 'vue';
-import axios from 'axios';
-import { Password as LocalPassword, savePassword } from './RobotModels';
+// import axios from 'axios';
+// import { Password as LocalPassword, savePassword } from './RobotModels';
 // import { useAPIStore } from 'stores/APIStore';
 // import { marked } from 'marked';
 // import 'github-markdown-css';
@@ -39,27 +39,25 @@ defineOptions({
   name: 'CustomRobot',
 });
 
-let AuthRequire = ref(true);
-let AuthSuccess = ref(false);
-let Password = ref(LocalPassword);
+let AuthRequire = ref(false);
+let AuthSuccess = ref(true);
+// let Password = ref(LocalPassword);
 
-function Auth() {
-  // send http request
-  // Example using axios library
-  axios
-    .post('/api/auth', { password: Password.value })
-    .then((response: any) => {
-      // handle response
-      if (response && response.data.success) {
-        AuthRequire.value = false;
-        AuthSuccess.value = true;
-        savePassword(Password.value);
-      }
-    })
-    .catch((error: any) => {
-      // handle error
-      Password.value = '';
-      console.error(error);
-    });
-}
+// function Auth() {
+//   axios
+//     .post('/api/auth', { password: Password.value })
+//     .then((response: any) => {
+//       // handle response
+//       if (response && response.data.success) {
+//         AuthRequire.value = false;
+//         AuthSuccess.value = true;
+//         savePassword(Password.value);
+//       }
+//     })
+//     .catch((error: any) => {
+//       // handle error
+//       Password.value = '';
+//       console.error(error);
+//     });
+// }
 </script>

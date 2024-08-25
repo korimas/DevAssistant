@@ -123,12 +123,6 @@ const linksList = [
     link: '/translate',
   },
   {
-    title: '一问一答聊天',
-    caption: '效率工具',
-    icon: 'question_answer',
-    link: '/oneqonea',
-  },
-  {
     title: '周报生成工具',
     caption: '效率工具',
     icon: 'summarize',
@@ -139,6 +133,13 @@ const linksList = [
     caption: '效率工具',
     icon: 'precision_manufacturing',
     link: '/customrobot',
+  },
+  {
+    title: '一问一答聊天',
+    caption: '效率工具',
+    icon: 'question_answer',
+    link: '/oneqonea',
+    disable: true,
   },
   {
     title: '系统需求拆解',
