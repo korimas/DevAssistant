@@ -138,8 +138,8 @@ import {
   saveRolePlayPrompt,
   generateRolePlayPromptStr,
 } from './RolePlayModels';
-import { marked } from 'marked';
-import 'github-markdown-css';
+// import { marked } from 'marked';
+// import 'github-markdown-css';
 defineOptions({
   name: 'ChatDialog',
 });
@@ -268,7 +268,7 @@ async function StreamChat() {
 
     if (done) {
       Waiting.value = false;
-      lastMsg.Content = marked(lastMsg.Content);
+      // lastMsg.Content = marked(lastMsg.Content);
       //   GptMessages.value.push({
       //     role: 'assistant',
       //     content: lastMsg.Content,
