@@ -33,10 +33,18 @@
             label="MaxMessageNumInSession"
             v-model="MessageKeepNum"
             outlined
+            style="margin-bottom: 10px"
             placeholder="会话中最多保留几个消息..."
             class="full-width"
           >
           </q-input>
+          <q-btn
+            label="导出对话"
+            color="green"
+            icon="output"
+            style="margin-right: 5px"
+            @click="exportDialog"
+          />
         </q-card>
       </q-expansion-item>
 
@@ -110,6 +118,20 @@ let Waiting = ref(false);
 let MessageKeepNum = ref(5);
 let timeoutId: NodeJS.Timeout | undefined; // 检查延时的计时器ID
 let MarkdownText = ref('');
+
+function exportDialog() {
+  let dialog = '';
+  Messages.value.forEach((msg) => {
+    dialog += msg.Content + '\n';
+  });
+
+  const blob = new Blob([dialog], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'dialog.txt';
+  a.click();
+}
 
 function systemPromptUpdate() {
   if (timeoutId) {
