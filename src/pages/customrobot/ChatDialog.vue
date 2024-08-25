@@ -79,6 +79,8 @@ import {
   SystemPrompt as RobotSystemPrompt,
   saveSystemPrompt,
 } from './RobotModels';
+import { marked } from 'marked';
+import 'github-markdown-css';
 
 defineOptions({
   name: 'ChatDialog',
@@ -107,6 +109,7 @@ let Loading = ref(false);
 let Waiting = ref(false);
 let MessageKeepNum = ref(5);
 let timeoutId: NodeJS.Timeout | undefined; // 检查延时的计时器ID
+let MarkdownText = ref('');
 
 function systemPromptUpdate() {
   if (timeoutId) {
@@ -204,6 +207,7 @@ async function StreamChat() {
 
     if (done) {
       Waiting.value = false;
+      lastMsg.Content = marked(lastMsg.Content);
       //   GptMessages.value.push({
       //     role: 'assistant',
       //     content: lastMsg.Content,

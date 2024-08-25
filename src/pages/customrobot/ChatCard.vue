@@ -35,9 +35,15 @@
         track-color="grey-3"
         center-color="grey-8"
       />
-      <div v-else style="white-space: pre-line">
+      <!-- <div v-else style="white-space: pre-line">
         {{ Content }}
-      </div>
+      </div> -->
+      <div
+        v-else
+        style="margin-top: 10px"
+        v-html="Content"
+        class="markdown-body"
+      ></div>
     </div>
   </div>
 </template>
