@@ -30,7 +30,7 @@
 import ChatDialog from './ChatDialog.vue';
 import { ref } from 'vue';
 import axios from 'axios';
-import { Password as LocalPassword } from './RobotModels';
+import { Password as LocalPassword, savePassword } from './RobotModels';
 // import { useAPIStore } from 'stores/APIStore';
 // import { marked } from 'marked';
 // import 'github-markdown-css';
@@ -53,6 +53,7 @@ function Auth() {
       if (response && response.data.success) {
         AuthRequire.value = false;
         AuthSuccess.value = true;
+        savePassword(Password.value);
       }
     })
     .catch((error: any) => {
