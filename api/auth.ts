@@ -9,8 +9,8 @@ const handler = async (req: Request): Promise<Response> => {
             auth = true;
         }
         return new Response(JSON.stringify({
-            success:true,
-            result:{authRequire: auth}
+            success: true,
+            result: { authRequire: auth }
         }));
     }
 
@@ -19,11 +19,11 @@ const handler = async (req: Request): Promise<Response> => {
 
         if (body.password == process.env.PASSWORD) {
             return new Response(JSON.stringify({
-                success:true
+                success: true
             }));
         }
         return new Response(JSON.stringify({
-            success:false,
+            success: false,
             message: "密码不正确"
         }));
 

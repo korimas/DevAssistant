@@ -22,13 +22,6 @@
           color="negative"
           @click="handleDelete"
         ></q-btn>
-        <!-- <q-btn
-          v-if="!Sender"
-          dense
-          flat
-          icon="refresh"
-          color="negative"
-        ></q-btn> -->
       </div>
     </div>
     <div style="margin-top: 5px">

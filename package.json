@@ -16,6 +16,7 @@
     "@quasar/extras": "^1.0.0",
     "@types/marked": "^5.0.0",
     "@vercel/postgres-kysely": "^0.4.1",
+    "axios": "^1.7.5",
     "eventsource-parser": "^1.0.0",
     "github-markdown-css": "^5.2.0",
     "highlight.js": "^11.8.0",

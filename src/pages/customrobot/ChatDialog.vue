@@ -16,7 +16,9 @@
         <q-card class="column q-pa-md">
           <q-input
             dense
-            lable="System Prompt"
+            clearable
+            type="textarea"
+            label="SystemPrompt"
             v-model="SystemPrompt"
             outlined
             placeholder="输入System Prompt..."
@@ -28,7 +30,7 @@
 
           <q-input
             dense
-            label="Message Keep Num"
+            label="MaxMessageNum"
             v-model="MessageKeepNum"
             outlined
             placeholder="输入保留几个消息..."
