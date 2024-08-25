@@ -3,6 +3,12 @@ export const config = {
 };
 
 const handler = async (req: Request): Promise<Response> => {
+    if (req.method === 'OPTIONS') {
+        return new Response('{"Access": "OPTIONS"}', {
+            status: 200
+        });
+    }
+
     if (req.method == "GET") {
         let auth = false;
         if (process.env.PASSWORD) {

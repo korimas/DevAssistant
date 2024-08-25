@@ -30,6 +30,7 @@
 import ChatDialog from './ChatDialog.vue';
 import { ref } from 'vue';
 import axios from 'axios';
+import { Password as LocalPassword } from './RobotModels';
 // import { useAPIStore } from 'stores/APIStore';
 // import { marked } from 'marked';
 // import 'github-markdown-css';
@@ -40,7 +41,7 @@ defineOptions({
 
 let AuthRequire = ref(true);
 let AuthSuccess = ref(false);
-let Password = ref('');
+let Password = ref(LocalPassword);
 
 function Auth() {
   // send http request
