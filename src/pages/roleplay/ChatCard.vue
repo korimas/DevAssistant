@@ -16,12 +16,6 @@
       <q-space></q-space>
       <div v-if="!messageRef.Welcome">
         <q-btn
-          dense
-          flat
-          icon="delete"
-          color="grey"
-          @click="handleDelete"
-        /><q-btn
           v-if="messageRef.Sender"
           dense
           flat
@@ -29,6 +23,7 @@
           color="grey"
           @click="handleRefresh"
         />
+        <q-btn dense flat icon="delete" color="grey" @click="handleDelete" />
       </div>
     </div>
     <div style="margin-top: 5px">
