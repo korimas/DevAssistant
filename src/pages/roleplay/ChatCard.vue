@@ -2,7 +2,7 @@
   <div class="column" style="border-bottom: 1px solid #cfcfcf; margin: 5px">
     <div class="row">
       <q-avatar
-        v-if="Sender"
+        v-if="messageRef.Sender"
         size="24px"
         color="primary"
         icon="perm_identity"
@@ -10,11 +10,11 @@
       <q-avatar v-else size="24px" color="orange" icon="polymer"></q-avatar>
 
       <div class="text-h7 text-grey" style="margin: 0 0 0 10px">
-        {{ Sender ? 'You' : 'DevAssistant' }}
+        {{ messageRef.Sender ? 'You' : 'DevAssistant' }}
       </div>
 
       <q-space></q-space>
-      <div v-if="!Welcome">
+      <div v-if="!messageRef.Welcome">
         <q-btn
           dense
           flat
@@ -22,7 +22,7 @@
           color="grey"
           @click="handleDelete"
         /><q-btn
-          v-if="Sender"
+          v-if="messageRef.Sender"
           dense
           flat
           icon="content_copy"
@@ -33,7 +33,7 @@
     </div>
     <div style="margin-top: 5px">
       <q-circular-progress
-        v-if="!Content"
+        v-if="!messageRef.Content"
         indeterminate
         size="xs"
         :thickness="0.4"
@@ -46,7 +46,17 @@
         v-else
         style="white-space: pre-line; margin-left: 5px; margin-bottom: 5px"
       >
-        {{ Content }}
+        {{ messageRef.Content }}
+        <q-popup-edit v-model="messageRef.Content" auto-save v-slot="scope">
+          <q-input
+            v-model="scope.value"
+            type="textarea"
+            dense
+            autofocus
+            counter
+            @keyup.enter="scope.set"
+          />
+        </q-popup-edit>
       </div>
       <!-- <div
         v-else
@@ -59,12 +69,15 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+import { Message } from './RolePlayModels';
+
 defineOptions({
   name: 'ChatCard',
 });
 
 // define emits
-const emit = defineEmits(['delete', 'refresh', 'update']);
+const emit = defineEmits(['delete', 'refresh']);
 
 function handleDelete() {
   emit('delete');
@@ -74,30 +87,11 @@ function handleRefresh() {
   emit('refresh');
 }
 
-function handleUpdate() {
-  emit('update');
+interface Props {
+  message: Message;
 }
 
-const props = defineProps({
-  Id: {
-    type: Number,
-    default: 0,
-  },
-  Sender: {
-    type: Boolean,
-    default: true,
-  },
-  Content: {
-    type: String,
-    default: 'Oops! Something went wrong!',
-  },
-  IncludeSession: {
-    type: Boolean,
-    default: true,
-  },
-  Welcome: {
-    type: Boolean,
-    default: false,
-  },
-});
+const props = defineProps<Props>();
+
+let messageRef = ref(props.message);
 </script>

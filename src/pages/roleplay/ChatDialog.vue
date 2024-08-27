@@ -111,26 +111,12 @@
           class="caption doc-content"
         >
           <MiChatCard
-            :Sender="item.Sender"
-            :Content="item.Content"
-            :IncludeSession="item.IncludeSession"
-            :Welcome="item.Welcome"
-            :Id="item.Id"
+            :message="item"
             @delete="
               () => (Messages = Messages.filter((msg) => msg.Id !== item.Id))
             "
             @refresh="RefreshChat(item.Content)"
           />
-          <q-popup-edit v-model="item.Content" auto-save v-slot="scope">
-            <q-input
-              v-model="scope.value"
-              type="textarea"
-              dense
-              autofocus
-              counter
-              @keyup.enter="scope.set"
-            />
-          </q-popup-edit>
         </div>
       </q-scroll-area>
     </div>
@@ -160,25 +146,14 @@ import {
   ROLE_PLAY_PROMPT,
   saveRolePlayPrompt,
   generateRolePlayPromptStr,
+  Message,
+  GptMessage,
 } from './RolePlayModels';
 // import { marked } from 'marked';
 // import 'github-markdown-css';
 defineOptions({
   name: 'ChatDialog',
 });
-
-type Message = {
-  Id: number;
-  Content: string;
-  Sender: boolean;
-  IncludeSession: boolean;
-  Welcome: boolean;
-};
-
-type GptMessage = {
-  role: string;
-  content: string;
-};
 
 const store = useAPIStore();
 let Messages = ref<Message[]>([]);

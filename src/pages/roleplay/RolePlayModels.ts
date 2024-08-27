@@ -16,6 +16,19 @@ export interface RolePlayPrompt {
     dialogGuide: DialogGuide;
 }
 
+export interface Message {
+    Id: number;
+    Content: string;
+    Sender: boolean;
+    IncludeSession: boolean;
+    Welcome: boolean;
+};
+
+export interface GptMessage {
+    role: string;
+    content: string;
+};
+
 function loadRolePlayPrompt() {
     const tmp = localStorage.getItem('RolePlayPrompt');
     if (!tmp) {
