@@ -104,30 +104,35 @@
           />
         </q-card>
       </q-expansion-item>
-
-      <div v-for="item in Messages" :key="item.Id" class="caption doc-content">
-        <MiChatCard
-          :Sender="item.Sender"
-          :Content="item.Content"
-          :IncludeSession="item.IncludeSession"
-          :Welcome="item.Welcome"
-          :Id="item.Id"
-          @delete="
-            () => (Messages = Messages.filter((msg) => msg.Id !== item.Id))
-          "
-          @refresh="RefreshChat(item.Content)"
-        />
-        <q-popup-edit v-model="item.Content" auto-save v-slot="scope">
-          <q-input
-            v-model="scope.value"
-            type="textarea"
-            dense
-            autofocus
-            counter
-            @keyup.enter="scope.set"
+      <q-scroll-area style="height: calc(100vh - 167px)" ref="scrollAreaRef">
+        <div
+          v-for="item in Messages"
+          :key="item.Id"
+          class="caption doc-content"
+        >
+          <MiChatCard
+            :Sender="item.Sender"
+            :Content="item.Content"
+            :IncludeSession="item.IncludeSession"
+            :Welcome="item.Welcome"
+            :Id="item.Id"
+            @delete="
+              () => (Messages = Messages.filter((msg) => msg.Id !== item.Id))
+            "
+            @refresh="RefreshChat(item.Content)"
           />
-        </q-popup-edit>
-      </div>
+          <q-popup-edit v-model="item.Content" auto-save v-slot="scope">
+            <q-input
+              v-model="scope.value"
+              type="textarea"
+              dense
+              autofocus
+              counter
+              @keyup.enter="scope.set"
+            />
+          </q-popup-edit>
+        </div>
+      </q-scroll-area>
     </div>
 
     <div style="margin-bottom: 10px; margin-top: 10px">
@@ -148,7 +153,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, nextTick } from 'vue';
 import { useAPIStore } from 'stores/APIStore';
 import MiChatCard from './ChatCard.vue';
 import {
@@ -185,6 +190,7 @@ let Loading = ref(false);
 let Waiting = ref(false);
 let MessageKeepNum = ref(5);
 let timeoutId: NodeJS.Timeout | undefined; // 检查延时的计时器ID
+let scrollAreaRef = ref<any>(null);
 
 function exportDialog() {
   let dialog = '';
@@ -239,6 +245,14 @@ function GetGPTMessages() {
   }
 }
 
+function ScrollAtBottom() {
+  const scrollArea = scrollAreaRef.value;
+  scrollArea.setScrollPosition(
+    'vertical',
+    scrollArea.getScrollTarget().scrollHeight
+  );
+}
+
 function RefreshChat(content: string) {
   InputText.value = content;
 }
@@ -256,6 +270,9 @@ async function StreamChat() {
     IncludeSession: true,
     Welcome: false,
   });
+  nextTick(() => {
+    ScrollAtBottom();
+  });
 
   GetGPTMessages();
 
@@ -267,7 +284,9 @@ async function StreamChat() {
     IncludeSession: true,
     Welcome: false,
   });
-
+  nextTick(() => {
+    ScrollAtBottom();
+  });
   let lastMsg = Messages.value[Messages.value.length - 1];
   InputText.value = '';
 
@@ -296,6 +315,9 @@ async function StreamChat() {
     if (value) {
       let text = decoder.decode(value);
       lastMsg.Content = lastMsg.Content + text;
+      nextTick(() => {
+        ScrollAtBottom();
+      });
     }
 
     if (done) {
