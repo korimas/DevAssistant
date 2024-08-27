@@ -16,6 +16,11 @@ export interface RolePlayPrompt {
     dialogGuide: DialogGuide;
 }
 
+export interface ChatItem {
+    id: number;
+    content: string;
+}
+
 function loadRolePlayPrompt() {
     const tmp = localStorage.getItem('RolePlayPrompt');
     if (!tmp) {

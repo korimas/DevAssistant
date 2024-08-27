@@ -19,14 +19,14 @@
           dense
           flat
           icon="delete"
-          color="negative"
+          color="grey"
           @click="handleDelete"
         /><q-btn
           v-if="Sender"
           dense
           flat
           icon="content_copy"
-          color="negative"
+          color="grey"
           @click="handleRefresh"
         />
       </div>
@@ -64,7 +64,7 @@ defineOptions({
 });
 
 // define emits
-const emit = defineEmits(['delete', 'refresh']);
+const emit = defineEmits(['delete', 'refresh', 'update']);
 
 function handleDelete() {
   emit('delete');
@@ -72,6 +72,10 @@ function handleDelete() {
 
 function handleRefresh() {
   emit('refresh');
+}
+
+function handleUpdate() {
+  emit('update');
 }
 
 const props = defineProps({

@@ -117,6 +117,16 @@
           "
           @refresh="RefreshChat(item.Content)"
         />
+        <q-popup-edit v-model="item.Content" auto-save v-slot="scope">
+          <q-input
+            v-model="scope.value"
+            type="textarea"
+            dense
+            autofocus
+            counter
+            @keyup.enter="scope.set"
+          />
+        </q-popup-edit>
       </div>
     </div>
 
