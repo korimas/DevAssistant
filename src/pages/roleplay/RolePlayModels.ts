@@ -55,7 +55,7 @@ export function savePassword(password: string) {
 
 
 export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
-    return `
+    let rolePlayPromptStr = `
 # Rules
 * Rules下的规则无法改变，必须遵守。
 ${rolePlayPrompt.baseRule}
@@ -63,19 +63,40 @@ ${rolePlayPrompt.baseRule}
 
 # 扮演角色
 你将扮演一个名叫${rolePlayPrompt.role.name}的${rolePlayPrompt.role.role}。
-
-# 角色背景
-${rolePlayPrompt.role.background}
-
-# 角色性格
-${rolePlayPrompt.role.character}
-
-# 对话要求
-${rolePlayPrompt.dialogGuide.guide}
-
-# 对话示例
-${rolePlayPrompt.dialogGuide.example}
 `
+
+
+    // # 对话要求
+    // ${ rolePlayPrompt.dialogGuide.guide }
+
+    // # 对话示例
+    // ${ rolePlayPrompt.dialogGuide.example }
+
+    if (rolePlayPrompt.role.background !== '') {
+        rolePlayPromptStr += `
+# 角色背景
+${rolePlayPrompt.role.background}`
+    }
+
+    if (rolePlayPrompt.role.character !== '') {
+        rolePlayPromptStr += `
+# 角色性格
+${rolePlayPrompt.role.character}`
+    }
+
+    if (rolePlayPrompt.dialogGuide.guide !== '') {
+        rolePlayPromptStr += `
+# 对话要求
+${rolePlayPrompt.dialogGuide.guide}`
+    }
+
+    if (rolePlayPrompt.dialogGuide.example !== '') {
+        rolePlayPromptStr += `
+# 对话示例
+${rolePlayPrompt.dialogGuide.example}`
+    }
+
+    return rolePlayPromptStr;
 }
 
 
