@@ -16,6 +16,7 @@
         <q-card class="column q-pa-md">
           <q-input
             dense
+            clearable
             type="textarea"
             label="BaseRule"
             v-model="rolePlayPrompt.baseRule"
@@ -27,6 +28,7 @@
           />
           <q-input
             dense
+            clearable
             label="人物角色"
             v-model="rolePlayPrompt.role.role"
             outlined
@@ -37,6 +39,7 @@
 
           <q-input
             dense
+            clearable
             label="人物名字"
             v-model="rolePlayPrompt.role.name"
             outlined
@@ -46,6 +49,7 @@
           />
           <q-input
             dense
+            clearable
             type="textarea"
             label="人物背景"
             v-model="rolePlayPrompt.role.background"
@@ -56,6 +60,7 @@
           />
           <q-input
             dense
+            clearable
             type="textarea"
             label="人物特点"
             v-model="rolePlayPrompt.role.character"
@@ -67,6 +72,7 @@
 
           <q-input
             dense
+            clearable
             type="textarea"
             label="对话指引"
             v-model="rolePlayPrompt.dialogGuide.guide"
@@ -78,6 +84,7 @@
 
           <q-input
             dense
+            clearable
             type="textarea"
             label="对话示例"
             v-model="rolePlayPrompt.dialogGuide.example"
