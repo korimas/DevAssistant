@@ -74,7 +74,7 @@ ${rolePlayPrompt.baseRule}`
 
     if (rolePlayPrompt.role.role !== '') {
         rolePlayPromptStr += `
-# Role
+## Role
 你将扮演的角色是${rolePlayPrompt.role.role}`
     }
 
@@ -86,25 +86,25 @@ ${rolePlayPrompt.baseRule}`
 
     if (rolePlayPrompt.role.background !== '') {
         rolePlayPromptStr += `
-# Background
+## Background
 ${rolePlayPrompt.role.background}`
     }
 
     if (rolePlayPrompt.role.character !== '') {
         rolePlayPromptStr += `
-# Character
+## Character
 ${rolePlayPrompt.role.character}`
     }
 
     if (rolePlayPrompt.dialogGuide.guide !== '') {
         rolePlayPromptStr += `
-# Dialog Guide
+## Dialog Guide
 ${rolePlayPrompt.dialogGuide.guide}`
     }
 
     if (rolePlayPrompt.dialogGuide.example !== '') {
         rolePlayPromptStr += `
-# Dialog Example
+## Dialog Example
 ${rolePlayPrompt.dialogGuide.example}`
     }
 
