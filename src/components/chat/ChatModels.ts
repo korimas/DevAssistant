@@ -39,13 +39,21 @@ export function getHistory(record: HistoryRecord): ChatHistory | null {
     return JSON.parse(tmp);
 }
 
-export function saveHistory(historys: HistoryRecord[], record: HistoryRecord, systemPrompt: string, messages: Message[]) {
+export function addHistory(historys: HistoryRecord[], record: HistoryRecord, systemPrompt: string, messages: Message[]) {
     localStorage.setItem('Historys', JSON.stringify(historys));
     localStorage.setItem('History_' + record.timestamp, JSON.stringify({
         systemPrompt: systemPrompt,
         messages: messages
     }));
 }
+
+export function updateHistory(record: HistoryRecord, systemPrompt: string, messages: Message[]) {
+    localStorage.setItem('History_' + record.timestamp, JSON.stringify({
+        systemPrompt: systemPrompt,
+        messages: messages
+    }));
+}
+
 
 export function deleteHistory(historys: HistoryRecord[], record: HistoryRecord) {
     localStorage.removeItem('History_' + record.timestamp);

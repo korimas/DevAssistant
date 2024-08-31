@@ -157,8 +157,9 @@ import {
   HistoryRecord,
   // ChatHistory,
   getHistory,
-  saveHistory,
+  addHistory,
   deleteHistory,
+  updateHistory,
 } from './ChatModels';
 import { saveAs } from 'file-saver';
 
@@ -188,6 +189,7 @@ let scrollAreaRef = ref<any>(null);
 let SettingDrawerOpen = ref(false);
 let historyDrawerOpen = ref(false);
 let historyRecords = ref<HistoryRecord[]>(loadHistorys());
+let currentRecord: HistoryRecord | null = null;
 
 let lastScrollHeight = 0;
 
@@ -212,6 +214,7 @@ function restoreChat(record: HistoryRecord) {
   GptMessages.value = [];
   InputText.value = '';
   historyDrawerOpen.value = false;
+  currentRecord = record;
 }
 
 function GetGPTMessages() {
@@ -270,10 +273,10 @@ async function StreamChat() {
   }
 
   // 检查是否是新对话
-  let needSaveHistory = false;
+  let needAddHistory = false;
   let inputSummary = '';
   if (Messages.value.length == 0) {
-    needSaveHistory = true;
+    needAddHistory = true;
     inputSummary = InputText.value.slice(0, 10);
   }
 
@@ -308,7 +311,7 @@ async function StreamChat() {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'gpt-3.5-turbo',
+      model: store.model,
       messages: GptMessages.value,
       temperature: store.temperature,
     }),
@@ -334,19 +337,23 @@ async function StreamChat() {
       // await nextTick();
       // inputCom.value.focus();
 
-      if (needSaveHistory) {
-        let record = {
+      if (needAddHistory) {
+        currentRecord = {
           timestamp: Date.now(),
           inputSummary: inputSummary,
           outputSummary: lastMsg.Content.slice(0, 30),
         };
-        historyRecords.value.push(record);
-        saveHistory(
+        historyRecords.value.push(currentRecord);
+        addHistory(
           historyRecords.value,
-          record,
+          currentRecord,
           props.InputSystemPrompt,
           Messages.value
         );
+      } else {
+        if (currentRecord) {
+          updateHistory(currentRecord, props.InputSystemPrompt, Messages.value);
+        }
       }
 
       break;

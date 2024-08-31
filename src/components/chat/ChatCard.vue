@@ -1,32 +1,44 @@
 <template>
   <div class="column" style="border-bottom: 1px solid #cfcfcf; margin: 5px">
-    <div class="row">
+    <!-- 头像 -->
+    <div class="row items-center">
       <q-avatar
         v-if="messageRef.Sender"
         size="24px"
         color="primary"
         icon="perm_identity"
-      ></q-avatar>
+      />
       <q-avatar v-else size="24px" color="orange" icon="polymer"></q-avatar>
-
-      <div class="text-h7 text-grey" style="margin: 0 0 0 10px">
+      <!-- 昵称 -->
+      <div class="text-h7 text-bold" style="margin: 0 0 0 10px">
         {{ messageRef.Sender ? 'You' : 'DevAssistant' }}
       </div>
 
-      <q-space></q-space>
+      <q-space />
       <div v-if="!messageRef.Welcome">
         <q-btn
           v-if="messageRef.Sender"
           dense
           flat
+          size="0.8em"
           icon="content_copy"
           color="grey"
           @click="handleRefresh"
         />
-        <q-btn dense flat icon="delete" color="grey" @click="handleDelete" />
+        <q-btn
+          dense
+          flat
+          size="0.8em"
+          icon="delete"
+          color="grey"
+          @click="handleDelete"
+        />
       </div>
     </div>
+
+    <!-- 内容 -->
     <div style="margin-top: 5px">
+      <!-- load动画 -->
       <q-circular-progress
         v-if="!messageRef.Content"
         indeterminate
