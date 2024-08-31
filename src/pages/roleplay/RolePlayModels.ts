@@ -68,10 +68,10 @@ export function savePassword(password: string) {
 
 
 export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
-    let rolePlayPromptStr = `
-# Policy
+    let rolePlayPromptStr = `# Policy
 ${rolePlayPrompt.baseRule}`
 
+    console.log(rolePlayPromptStr)
     if (rolePlayPrompt.role.role !== '') {
         rolePlayPromptStr += `
 ## Role

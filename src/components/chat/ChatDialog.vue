@@ -113,7 +113,6 @@ const props = defineProps<Props>();
 const store = useAPIStore();
 let Messages = ref<Message[]>([]);
 let GptMessages = ref<GptMessage[]>([]);
-let SystemPrompt = ref(props.InputSystemPrompt);
 
 let InputText = ref('');
 let Loading = ref(false);
@@ -135,10 +134,10 @@ function exportDialog() {
 function GetGPTMessages() {
   GptMessages.value = [];
 
-  if (SystemPrompt.value != '' && SystemPrompt.value != null) {
+  if (props.InputSystemPrompt != '' && props.InputSystemPrompt != null) {
     GptMessages.value.push({
       role: 'system',
-      content: SystemPrompt.value,
+      content: props.InputSystemPrompt,
     });
   }
 
