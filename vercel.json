@@ -1,6 +1,12 @@
 {
   "outputDirectory": "dist",
   "regions": ["sin1"],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
   "headers": [
     {
       "source": "/api/(.*)",
