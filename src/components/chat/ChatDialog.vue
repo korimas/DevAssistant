@@ -89,6 +89,7 @@ import { ref, nextTick } from 'vue';
 import { useAPIStore } from 'stores/APIStore';
 import MiChatCard from './ChatCard.vue';
 import { Message, GptMessage } from './ChatModels';
+import { saveAs } from 'file-saver';
 
 // import { marked } from 'marked';
 // import 'github-markdown-css';
@@ -128,14 +129,7 @@ function exportDialog() {
   });
 
   const blob = new Blob([textContent], { type: 'text/plain' });
-  const objectUrl = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  document.body.appendChild(a);
-  a.setAttribute('style', 'display:none');
-  a.setAttribute('href', objectUrl);
-  a.setAttribute('download', 'ai-dialog.txt');
-  a.click();
-  URL.revokeObjectURL(objectUrl);
+  saveAs(blob, 'dialog.txt');
 }
 
 function GetGPTMessages() {
