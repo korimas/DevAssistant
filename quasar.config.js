@@ -67,7 +67,7 @@ module.exports = configure(function (/* ctx */) {
       // ignorePublicFolder: true,
       minify: true,
       gzip: true,
-      analyze: true,
+      // analyze: true,
       // polyfillModulePreload: true,
       distDir: 'dist',
 
