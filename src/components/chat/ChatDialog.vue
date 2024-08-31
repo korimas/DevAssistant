@@ -189,6 +189,7 @@ let scrollAreaRef = ref<any>(null);
 let SettingDrawerOpen = ref(false);
 let historyDrawerOpen = ref(false);
 let historyRecords = ref<HistoryRecord[]>(loadHistorys());
+let lastScrollHeight = 0;
 
 function exportDialog() {
   let textContent = '';
@@ -247,10 +248,16 @@ function GetGPTMessages() {
 
 function ScrollAtBottom() {
   const scrollArea = scrollAreaRef.value;
-  scrollArea.setScrollPosition(
-    'vertical',
-    scrollArea.getScrollTarget().scrollHeight
-  );
+  let curScrollHeight = scrollArea.getScrollTarget().scrollHeight;
+  if (curScrollHeight > lastScrollHeight) {
+    lastScrollHeight = curScrollHeight;
+    nextTick(() => {
+      scrollArea.setScrollPosition(
+        'vertical',
+        scrollArea.getScrollTarget().scrollHeight
+      );
+    });
+  }
 }
 
 function RefreshChat(content: string) {
@@ -278,9 +285,7 @@ async function StreamChat() {
     IncludeSession: true,
     Welcome: false,
   });
-  nextTick(() => {
-    ScrollAtBottom();
-  });
+  ScrollAtBottom();
 
   GetGPTMessages();
 
@@ -291,9 +296,6 @@ async function StreamChat() {
     Content: '',
     IncludeSession: true,
     Welcome: false,
-  });
-  nextTick(() => {
-    ScrollAtBottom();
   });
   let lastMsg = Messages.value[Messages.value.length - 1];
   InputText.value = '';
@@ -323,9 +325,7 @@ async function StreamChat() {
     if (value) {
       let text = decoder.decode(value);
       lastMsg.Content = lastMsg.Content + text;
-      nextTick(() => {
-        ScrollAtBottom(); // TODO: 提升性能
-      });
+      ScrollAtBottom();
     }
 
     if (done) {
