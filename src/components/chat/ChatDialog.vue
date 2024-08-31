@@ -112,8 +112,8 @@
     </div>
     <q-separator />
     <q-scroll-area style="height: calc(100% - 66px)">
-      <div class="column q-pa-md">
-        <q-list>
+      <div class="column">
+        <q-list separator>
           <q-item
             v-for="item in historyRecords"
             :key="item.timestamp"
