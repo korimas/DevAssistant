@@ -133,12 +133,14 @@ function exportDialog() {
 }
 
 function GetGPTMessages() {
-  GptMessages.value = [
-    {
+  GptMessages.value = [];
+
+  if (SystemPrompt.value != '' && SystemPrompt.value != null) {
+    GptMessages.value.push({
       role: 'system',
       content: SystemPrompt.value,
-    },
-  ];
+    });
+  }
 
   // 从Messages中获取最新的MessageKeepNum个个消息
   let len = Messages.value.length;
