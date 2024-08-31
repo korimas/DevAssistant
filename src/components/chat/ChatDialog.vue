@@ -122,17 +122,20 @@ let scrollAreaRef = ref<any>(null);
 let SettingDrawerOpen = ref(false);
 
 function exportDialog() {
-  let dialog = '';
+  let textContent = '';
   Messages.value.forEach((msg) => {
-    dialog += msg.Content + '\n';
+    textContent += msg.Content + '\n';
   });
 
-  const blob = new Blob([dialog], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
+  const blob = new Blob([textContent], { type: 'text/plain' });
+  const objectUrl = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url;
-  a.download = 'dialog.txt';
+  document.body.appendChild(a);
+  a.setAttribute('style', 'display:none');
+  a.setAttribute('href', objectUrl);
+  a.setAttribute('download', 'ai-dialog.txt');
   a.click();
+  URL.revokeObjectURL(objectUrl);
 }
 
 function GetGPTMessages() {
