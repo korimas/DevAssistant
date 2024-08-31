@@ -5,8 +5,17 @@
   >
     <div style="overflow: auto">
       <div class="row full-width q-pa-xs q-gutter-xs bg-grey-4">
+        <q-btn unelevated round size="sm" icon="add" @click="newChat" />
+
         <slot name="toolbox-left"></slot>
         <q-space />
+        <q-btn
+          unelevated
+          round
+          size="sm"
+          icon="history"
+          @click="historyDrawerOpen = true"
+        />
         <q-btn
           unelevated
           round
@@ -82,13 +91,75 @@
       </div>
     </q-scroll-area>
   </q-drawer>
+
+  <q-drawer
+    elevated
+    side="right"
+    :width="$q.screen.width > 600 ? 500 : $q.screen.width * 0.8"
+    v-model="historyDrawerOpen"
+    overlay
+  >
+    <div class="q-pa-md row" style="height: 65px">
+      <div class="text-h6">Chat History</div>
+      <q-space></q-space>
+      <q-btn
+        unelevated
+        size="12px"
+        icon="clear"
+        color="red"
+        @click="historyDrawerOpen = false"
+      />
+    </div>
+    <q-separator />
+    <q-scroll-area style="height: calc(100% - 66px)">
+      <div class="column q-pa-md">
+        <q-list>
+          <q-item
+            v-for="item in historyRecords"
+            :key="item.timestamp"
+            clickable
+            @click="restoreChat(item)"
+          >
+            <q-item-section>
+              <q-item-label>{{ item.inputSummary }}</q-item-label>
+              <q-item-label caption lines="2">
+                {{ item.outputSummary }}
+              </q-item-label>
+            </q-item-section>
+
+            <q-item-section side top>
+              <q-item-label caption
+                >{{ new Date(item.timestamp).toLocaleString() }}
+              </q-item-label>
+              <q-btn
+                dense
+                flat
+                icon="delete"
+                color="grey"
+                @click="handleDelete(item)"
+              />
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </div>
+    </q-scroll-area>
+  </q-drawer>
 </template>
 
 <script setup lang="ts">
 import { ref, nextTick } from 'vue';
 import { useAPIStore } from 'stores/APIStore';
 import MiChatCard from './ChatCard.vue';
-import { Message, GptMessage } from './ChatModels';
+import {
+  Message,
+  GptMessage,
+  loadHistorys,
+  HistoryRecord,
+  ChatHistory,
+  getHistory,
+  saveHistory,
+  deleteHistory,
+} from './ChatModels';
 import { saveAs } from 'file-saver';
 
 // import { marked } from 'marked';
@@ -97,11 +168,7 @@ defineOptions({
   name: 'ChatDialog',
 });
 // define emits
-// const emit = defineEmits(['updateSystemPrompt']);
-
-// function handleUpdateSystemPrompt() {
-//   emit('updateSystemPrompt');
-// }
+const emit = defineEmits(['update-system-prompt']);
 
 // define props
 interface Props {
@@ -120,6 +187,8 @@ let Waiting = ref(false);
 let MessageKeepNum = ref(5);
 let scrollAreaRef = ref<any>(null);
 let SettingDrawerOpen = ref(false);
+let historyDrawerOpen = ref(false);
+let historyRecords = ref<HistoryRecord[]>(loadHistorys());
 
 function exportDialog() {
   let textContent = '';
@@ -129,6 +198,19 @@ function exportDialog() {
 
   const blob = new Blob([textContent], { type: 'text/plain' });
   saveAs(blob, 'dialog.txt');
+}
+
+function handleDelete(record: HistoryRecord) {
+  historyRecords.value = deleteHistory(historyRecords.value, record);
+}
+
+function restoreChat(record: HistoryRecord) {
+  let chatHistory = getHistory(record);
+  emit('update-system-prompt', chatHistory?.systemPrompt);
+  Messages.value = chatHistory?.messages ?? [];
+  GptMessages.value = [];
+  InputText.value = '';
+  historyDrawerOpen.value = false;
 }
 
 function GetGPTMessages() {
@@ -178,6 +260,14 @@ function RefreshChat(content: string) {
 async function StreamChat() {
   if (InputText.value == '') {
     return;
+  }
+
+  // 检查是否是新对话
+  let needSaveHistory = false;
+  let inputSummary = '';
+  if (Messages.value.length == 0) {
+    needSaveHistory = true;
+    inputSummary = InputText.value.slice(0, 10);
   }
 
   // 添加输入的消息
@@ -243,6 +333,22 @@ async function StreamChat() {
       // lastMsg.Content = marked(lastMsg.Content);
       // await nextTick();
       // inputCom.value.focus();
+
+      if (needSaveHistory) {
+        let record = {
+          timestamp: Date.now(),
+          inputSummary: inputSummary,
+          outputSummary: lastMsg.Content.slice(0, 30),
+        };
+        historyRecords.value.push(record);
+        saveHistory(
+          historyRecords.value,
+          record,
+          props.InputSystemPrompt,
+          Messages.value
+        );
+      }
+
       break;
     }
   }
@@ -252,5 +358,12 @@ function handleEnter(e: any) {
   if (e.ctrlKey) {
     StreamChat();
   }
+}
+
+function newChat() {
+  Messages.value = [];
+  GptMessages.value = [];
+  InputText.value = '';
+  Waiting.value = false;
 }
 </script>

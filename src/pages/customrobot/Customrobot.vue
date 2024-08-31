@@ -1,6 +1,9 @@
 <template>
   <q-page class="row">
-    <ChatDialog :InputSystemPrompt="InputSystemPrompt">
+    <ChatDialog
+      :InputSystemPrompt="InputSystemPrompt"
+      @update-system-prompt="setSystemPrompt"
+    >
       <template v-slot:setting-drawer>
         <q-input
           dense
@@ -24,8 +27,6 @@
 import { ref } from 'vue';
 import ChatDialog from 'components/chat/ChatDialog.vue';
 import { SystemPrompt, saveSystemPrompt } from './RobotModels';
-// import { marked } from 'marked';
-// import 'github-markdown-css';
 
 let InputSystemPrompt = ref(SystemPrompt);
 let timeoutId: NodeJS.Timeout | undefined;
@@ -34,11 +35,18 @@ defineOptions({
   name: 'CustomRobot',
 });
 
+function setSystemPrompt(prompt: string) {
+  InputSystemPrompt.value = prompt;
+}
+
 function systemPromptUpdate() {
   if (timeoutId) {
     clearTimeout(timeoutId);
   }
   timeoutId = setTimeout(() => {
+    if (InputSystemPrompt.value === null) {
+      InputSystemPrompt.value = '';
+    }
     saveSystemPrompt(InputSystemPrompt.value);
   }, 1000);
 }
