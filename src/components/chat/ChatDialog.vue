@@ -4,113 +4,18 @@
     style="padding: 5px; height: calc(100vh - 55px)"
   >
     <div style="overflow: auto">
-      <q-expansion-item
-        dense
-        class="shadow-1 overflow-hidden"
-        icon="tune"
-        label="AI Configuration"
-        header-class="bg-grey-3"
-        expand-icon-class="text-white"
-        style="margin-bottom: 10px"
-      >
-        <q-card class="column q-pa-md">
-          <q-input
-            dense
-            clearable
-            type="textarea"
-            label="BaseRule"
-            v-model="rolePlayPrompt.baseRule"
-            outlined
-            placeholder="输入基本规则"
-            class="full-width"
-            style="margin-bottom: 10px"
-            @update:model-value="RolePlayPromptUpdate"
-          />
-          <q-input
-            dense
-            clearable
-            label="人物角色"
-            v-model="rolePlayPrompt.role.role"
-            outlined
-            class="full-width"
-            style="margin-bottom: 10px"
-            @update:model-value="RolePlayPromptUpdate"
-          />
-
-          <!-- <q-input
-            dense
-            clearable
-            label="人物名字"
-            v-model="rolePlayPrompt.role.name"
-            outlined
-            class="full-width"
-            style="margin-bottom: 10px"
-            @update:model-value="RolePlayPromptUpdate"
-          /> -->
-          <q-input
-            dense
-            clearable
-            type="textarea"
-            label="人物背景"
-            v-model="rolePlayPrompt.role.background"
-            outlined
-            class="full-width"
-            style="margin-bottom: 10px"
-            @update:model-value="RolePlayPromptUpdate"
-          />
-          <q-input
-            dense
-            clearable
-            type="textarea"
-            label="人物特点"
-            v-model="rolePlayPrompt.role.character"
-            outlined
-            class="full-width"
-            style="margin-bottom: 10px"
-            @update:model-value="RolePlayPromptUpdate"
-          />
-
-          <q-input
-            dense
-            clearable
-            type="textarea"
-            label="对话指引"
-            v-model="rolePlayPrompt.dialogGuide.guide"
-            outlined
-            class="full-width"
-            style="margin-bottom: 10px"
-            @update:model-value="RolePlayPromptUpdate"
-          />
-
-          <q-input
-            dense
-            clearable
-            type="textarea"
-            label="对话示例"
-            v-model="rolePlayPrompt.dialogGuide.example"
-            outlined
-            class="full-width"
-            style="margin-bottom: 10px"
-            @update:model-value="RolePlayPromptUpdate"
-          />
-          <q-input
-            dense
-            label="MaxMessageNumInSession"
-            v-model="MessageKeepNum"
-            style="margin-bottom: 10px"
-            outlined
-            placeholder="会话中最多保留几个消息"
-            class="full-width"
-          />
-          <q-btn
-            label="导出对话"
-            color="green"
-            icon="output"
-            style="margin-right: 5px"
-            @click="exportDialog"
-          />
-        </q-card>
-      </q-expansion-item>
+      <div class="row full-width q-pa-xs q-gutter-xs bg-grey-4">
+        <slot name="toolbox-left"></slot>
+        <q-space />
+        <q-btn
+          unelevated
+          round
+          size="sm"
+          icon="tune"
+          @click="SettingDrawerOpen = true"
+        />
+        <q-btn unelevated round size="sm" icon="output" @click="exportDialog" />
+      </div>
       <q-scroll-area style="height: calc(100vh - 167px)" ref="scrollAreaRef">
         <div
           v-for="item in Messages"
@@ -143,36 +48,78 @@
       </q-input>
     </div>
   </div>
+
+  <q-drawer
+    elevated
+    side="right"
+    :width="$q.screen.width > 600 ? 500 : $q.screen.width * 0.8"
+    v-model="SettingDrawerOpen"
+    overlay
+  >
+    <div class="q-pa-md row" style="height: 65px">
+      <div class="text-h6">AI Configurations</div>
+      <q-space></q-space>
+      <q-btn
+        unelevated
+        size="12px"
+        icon="clear"
+        color="red"
+        @click="SettingDrawerOpen = false"
+      />
+    </div>
+    <q-separator />
+    <q-scroll-area style="height: calc(100% - 66px)">
+      <div class="column q-pa-md">
+        <q-input
+          dense
+          label="MaxMessageNumInSession"
+          v-model="MessageKeepNum"
+          outlined
+          placeholder="会话中最多保留几个消息..."
+          class="full-width q-mb-md"
+        />
+        <slot name="setting-drawer"></slot>
+      </div>
+    </q-scroll-area>
+  </q-drawer>
 </template>
 
 <script setup lang="ts">
 import { ref, nextTick } from 'vue';
 import { useAPIStore } from 'stores/APIStore';
 import MiChatCard from './ChatCard.vue';
-import {
-  ROLE_PLAY_PROMPT,
-  saveRolePlayPrompt,
-  generateRolePlayPromptStr,
-  Message,
-  GptMessage,
-} from './RolePlayModels';
+import { Message, GptMessage } from './ChatModels';
+
 // import { marked } from 'marked';
 // import 'github-markdown-css';
 defineOptions({
   name: 'ChatDialog',
 });
+// define emits
+// const emit = defineEmits(['updateSystemPrompt']);
+
+// function handleUpdateSystemPrompt() {
+//   emit('updateSystemPrompt');
+// }
+
+// define props
+interface Props {
+  InputSystemPrompt: string;
+}
+
+const props = defineProps<Props>();
 
 const store = useAPIStore();
 let Messages = ref<Message[]>([]);
 let GptMessages = ref<GptMessage[]>([]);
+let SystemPrompt = ref(props.InputSystemPrompt);
 
-let rolePlayPrompt = ref(ROLE_PLAY_PROMPT);
 let InputText = ref('');
 let Loading = ref(false);
 let Waiting = ref(false);
 let MessageKeepNum = ref(5);
-let timeoutId: NodeJS.Timeout | undefined; // 检查延时的计时器ID
 let scrollAreaRef = ref<any>(null);
+let SettingDrawerOpen = ref(false);
 
 function exportDialog() {
   let dialog = '';
@@ -188,20 +135,11 @@ function exportDialog() {
   a.click();
 }
 
-function RolePlayPromptUpdate() {
-  if (timeoutId) {
-    clearTimeout(timeoutId);
-  }
-  timeoutId = setTimeout(() => {
-    saveRolePlayPrompt(rolePlayPrompt.value);
-  }, 1000);
-}
-
 function GetGPTMessages() {
   GptMessages.value = [
     {
       role: 'system',
-      content: generateRolePlayPromptStr(rolePlayPrompt.value),
+      content: SystemPrompt.value,
     },
   ];
 
@@ -298,19 +236,15 @@ async function StreamChat() {
       let text = decoder.decode(value);
       lastMsg.Content = lastMsg.Content + text;
       nextTick(() => {
-        ScrollAtBottom();
+        ScrollAtBottom(); // TODO: 提升性能
       });
     }
 
     if (done) {
       Waiting.value = false;
       // lastMsg.Content = marked(lastMsg.Content);
-      //   GptMessages.value.push({
-      //     role: 'assistant',
-      //     content: lastMsg.Content,
-      //   });
-      // await nextTick()
-      // inputCom.value.focus()
+      // await nextTick();
+      // inputCom.value.focus();
       break;
     }
   }

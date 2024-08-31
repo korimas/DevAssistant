@@ -65,7 +65,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Message } from './RolePlayModels';
+import { Message } from './ChatModels';
 
 defineOptions({
   name: 'ChatCard',

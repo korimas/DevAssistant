@@ -1,63 +1,118 @@
 <template>
   <q-page class="row">
-    <!-- <q-dialog v-model="AuthRequire" persistent>
-      <q-card style="min-width: 350px">
-        <q-card-section>
-          <div class="text-h6">请输入密码</div>
-        </q-card-section>
+    <ChatDialog :InputSystemPrompt="InputSystemPrompt">
+      <template v-slot:setting-drawer>
+        <q-input
+          dense
+          clearable
+          autogrow
+          label="基本规则"
+          v-model="rolePlayPrompt.baseRule"
+          outlined
+          placeholder="输入基本规则"
+          class="full-width"
+          style="margin-bottom: 10px"
+          @update:model-value="RolePlayPromptUpdate"
+        />
+        <q-input
+          dense
+          clearable
+          label="人物角色"
+          v-model="rolePlayPrompt.role.role"
+          outlined
+          class="full-width"
+          style="margin-bottom: 10px"
+          @update:model-value="RolePlayPromptUpdate"
+        />
 
-        <q-card-section class="q-pt-none">
-          <q-input
+        <!-- <q-input
             dense
-            type="password"
-            v-model="Password"
-            autofocus
-            @keyup.enter="Auth"
-          />
-          <p class="text-grey text-right">Note: My company name.</p>
-        </q-card-section>
+            clearable
+            label="人物名字"
+            v-model="rolePlayPrompt.role.name"
+            outlined
+            class="full-width"
+            style="margin-bottom: 10px"
+            @update:model-value="RolePlayPromptUpdate"
+          /> -->
+        <q-input
+          dense
+          clearable
+          autogrow
+          label="人物背景"
+          v-model="rolePlayPrompt.role.background"
+          outlined
+          class="full-width"
+          style="margin-bottom: 10px"
+          @update:model-value="RolePlayPromptUpdate"
+        />
+        <q-input
+          dense
+          clearable
+          autogrow
+          label="人物特点"
+          v-model="rolePlayPrompt.role.character"
+          outlined
+          class="full-width"
+          style="margin-bottom: 10px"
+          @update:model-value="RolePlayPromptUpdate"
+        />
 
-        <q-card-actions align="right" class="text-primary">
-          <q-btn flat label="确定" @click="Auth" />
-        </q-card-actions>
-      </q-card>
-    </q-dialog> -->
-    <ChatDialog v-if="AuthSuccess" />
+        <q-input
+          dense
+          clearable
+          autogrow
+          label="对话指引"
+          v-model="rolePlayPrompt.dialogGuide.guide"
+          outlined
+          class="full-width"
+          style="margin-bottom: 10px"
+          @update:model-value="RolePlayPromptUpdate"
+        />
+
+        <q-input
+          dense
+          clearable
+          autogrow
+          label="对话示例"
+          v-model="rolePlayPrompt.dialogGuide.example"
+          outlined
+          class="full-width"
+          style="margin-bottom: 10px"
+          @update:model-value="RolePlayPromptUpdate"
+        />
+      </template>
+    </ChatDialog>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import ChatDialog from './ChatDialog.vue';
+import ChatDialog from 'components/chat/ChatDialog.vue';
 import { ref } from 'vue';
-// import axios from 'axios';
-// import { Password as LocalPassword, savePassword } from './RobotModels';
-// import { useAPIStore } from 'stores/APIStore';
-// import { marked } from 'marked';
-// import 'github-markdown-css';
+import {
+  ROLE_PLAY_PROMPT,
+  saveRolePlayPrompt,
+  generateRolePlayPromptStr,
+} from './RolePlayModels';
 
 defineOptions({
-  name: 'CustomRobot',
+  name: 'RolePlay',
 });
 
-let AuthRequire = ref(false);
-let AuthSuccess = ref(true);
-// let Password = ref(LocalPassword);
+let rolePlayPrompt = ref(ROLE_PLAY_PROMPT);
+let InputSystemPrompt = ref('');
+let timeoutId: NodeJS.Timeout | undefined;
 
-// function Auth() {
-//   axios
-//     .post('/api/auth', { password: Password.value })
-//     .then((response: any) => {
-//       // handle response
-//       if (response && response.data.success) {
-//         AuthRequire.value = false;
-//         AuthSuccess.value = true;
-//         savePassword(Password.value);
-//       }
-//     })
-//     .catch((error: any) => {
-//       // handle error
-//       Password.value = '';
-//       console.error(error);
-//     });
-// }
+// init
+InputSystemPrompt.value = generateRolePlayPromptStr(rolePlayPrompt.value);
+
+function RolePlayPromptUpdate() {
+  if (timeoutId) {
+    clearTimeout(timeoutId);
+  }
+  timeoutId = setTimeout(() => {
+    saveRolePlayPrompt(rolePlayPrompt.value);
+    InputSystemPrompt.value = generateRolePlayPromptStr(rolePlayPrompt.value);
+  }, 1000);
+}
 </script>
