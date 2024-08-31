@@ -155,7 +155,7 @@ import {
   GptMessage,
   loadHistorys,
   HistoryRecord,
-  ChatHistory,
+  // ChatHistory,
   getHistory,
   saveHistory,
   deleteHistory,
@@ -180,7 +180,6 @@ const props = defineProps<Props>();
 const store = useAPIStore();
 let Messages = ref<Message[]>([]);
 let GptMessages = ref<GptMessage[]>([]);
-
 let InputText = ref('');
 let Loading = ref(false);
 let Waiting = ref(false);
@@ -189,6 +188,7 @@ let scrollAreaRef = ref<any>(null);
 let SettingDrawerOpen = ref(false);
 let historyDrawerOpen = ref(false);
 let historyRecords = ref<HistoryRecord[]>(loadHistorys());
+
 let lastScrollHeight = 0;
 
 function exportDialog() {
