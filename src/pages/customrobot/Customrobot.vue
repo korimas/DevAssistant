@@ -8,7 +8,7 @@
         <q-input
           dense
           clearable
-          type="textarea"
+          autogrow
           label="SystemPrompt"
           v-model="InputSystemPrompt"
           outlined

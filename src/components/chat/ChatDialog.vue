@@ -61,7 +61,7 @@
   <q-drawer
     elevated
     side="right"
-    :width="$q.screen.width > 600 ? 500 : $q.screen.width * 0.8"
+    :width="$q.screen.width > 600 ? 500 : $q.screen.width * 0.85"
     v-model="SettingDrawerOpen"
     overlay
   >
@@ -95,7 +95,7 @@
   <q-drawer
     elevated
     side="right"
-    :width="$q.screen.width > 600 ? 500 : $q.screen.width * 0.8"
+    :width="$q.screen.width > 600 ? 500 : $q.screen.width * 0.85"
     v-model="historyDrawerOpen"
     overlay
   >

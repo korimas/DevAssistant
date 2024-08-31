@@ -45,7 +45,7 @@
         <q-popup-edit v-model="messageRef.Content" auto-save v-slot="scope">
           <q-input
             v-model="scope.value"
-            type="textarea"
+            autogrow
             dense
             autofocus
             counter
