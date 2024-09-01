@@ -8,7 +8,7 @@
     >
       <div class="col column" style="min-width: 300px">
         <div
-          class="row full-width col-auto"
+          class="row full-width col-auto input-box"
           style="border-left: 1px solid rgba(0, 0, 0, 0.12)"
         >
           <q-select
@@ -225,6 +225,9 @@ function handleInput() {
 @media (max-width: 632px) {
   .translated-box {
     border-left: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  .input-box {
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
   }
 }
 </style>
