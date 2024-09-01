@@ -70,7 +70,7 @@
     overlay
   >
     <div class="q-pa-md row" style="height: 65px">
-      <div class="text-h6">AI Configurations</div>
+      <div class="text-h6">Chat Config</div>
       <q-space></q-space>
       <q-btn
         unelevated
