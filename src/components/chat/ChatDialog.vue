@@ -332,7 +332,9 @@ async function StreamChat() {
     IncludeSession: true,
     Welcome: false,
   });
-  ScrollAtBottom();
+  nextTick(() => {
+    ScrollAtBottom();
+  });
 
   GetGPTMessages();
 
