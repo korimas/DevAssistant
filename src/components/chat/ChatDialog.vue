@@ -384,8 +384,8 @@ async function StreamChat() {
 
       if (needAddHistory) {
         let tmpOutputSummary = '';
-        if (lastMsg.Content.length > 20) {
-          tmpOutputSummary = lastMsg.Content.slice(0, 20) + '...';
+        if (lastMsg.Content.length > 18) {
+          tmpOutputSummary = lastMsg.Content.slice(0, 18) + '...';
         } else {
           tmpOutputSummary = lastMsg.Content;
         }
