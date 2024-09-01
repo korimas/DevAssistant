@@ -66,12 +66,18 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.12);
           "
         >
-          <div class="col q-ma-md" style="white-space: pre-line">
-            {{ OutputText }}
+          <div class="column col" style="white-space: pre-line">
+            <div class="bg-grey-3 q-px-md q-py-xs">翻译后的内容</div>
+            <div class="q-ma-md">
+              {{ TranslatedText }}
+            </div>
           </div>
           <q-separator horizontal />
-          <div class="col q-ma-md" style="white-space: pre-line">
-            {{ OutputText }}
+          <div class="column col" style="white-space: pre-line">
+            <div class="bg-grey-3 q-px-md q-py-xs">翻译后重新翻译回源语言</div>
+            <div class="q-ma-md">
+              {{ NewOldText }}
+            </div>
           </div>
         </div>
       </div>
@@ -113,14 +119,15 @@ defineOptions({
 });
 
 let InputText = ref('');
-let OutputText = ref('');
-let MarkdownText = ref('');
+let TranslatedText = ref('');
+let NewOldText = ref('');
 let Chatting = ref(false);
 let SrcLanguage = ref('');
 let DstLanguage = ref('');
 let timer: NodeJS.Timeout;
 
 const LanguageOptions = ['中文', '英文'];
+const splitWords = '#-split-#';
 
 function checkLanguage(inputStr: string) {
   let isChinese = /[\u4E00-\u9FA5]+/g.test(inputStr);
@@ -138,9 +145,10 @@ async function StreamTranslate() {
     return;
   }
 
-  OutputText.value = '';
-  MarkdownText.value = '';
+  TranslatedText.value = '';
+  NewOldText.value = '';
   Chatting.value = true;
+  let isNewOld = false;
 
   checkLanguage(InputText.value);
 
@@ -165,10 +173,25 @@ async function StreamTranslate() {
     const { value, done } = await reader.read();
 
     if (value) {
-      OutputText.value = OutputText.value + decoder.decode(value);
+      const decodedValue = decoder.decode(value);
+      if (isNewOld) {
+        NewOldText.value += decodedValue;
+      } else {
+        TranslatedText.value += decodedValue;
+        // find splitwords
+        let splitIndex = TranslatedText.value.indexOf(splitWords);
+        if (splitIndex != -1) {
+          isNewOld = true;
+          const tmp = TranslatedText.value.substring(0, splitIndex);
+          NewOldText.value = TranslatedText.value.substring(
+            splitIndex + splitWords.length
+          );
+          TranslatedText.value = tmp;
+        }
+      }
+
       // MarkdownText.value = marked(OutputText.value);
     }
-
     if (done) {
       Chatting.value = false;
       break;
