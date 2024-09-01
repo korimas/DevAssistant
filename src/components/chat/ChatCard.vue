@@ -37,7 +37,7 @@
     </div>
 
     <!-- 内容 -->
-    <div style="margin-top: 5px" class="full-width">
+    <div class="full-width q-my-sm">
       <!-- load动画 -->
       <q-circular-progress
         v-if="!messageRef.Content"
@@ -49,12 +49,17 @@
         track-color="grey-3"
         center-color="grey-8"
       />
-      <div
-        style="white-space: pre-line"
-        v-else
-        v-html="messageRef.Content"
-        class="markdown-body"
-      ></div>
+      <div v-else>
+        <div v-if="messageRef.Sender" style="white-space: pre-line">
+          {{ messageRef.Content }}
+        </div>
+        <div
+          style="white-space: pre-line"
+          v-else
+          v-html="messageRef.Content"
+          class="markdown-body"
+        ></div>
+      </div>
     </div>
   </div>
 </template>
