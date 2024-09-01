@@ -1,8 +1,8 @@
 <template>
-  <div class="q-pa-md q-gutter-md">
-    <div class="text-h5">中英文翻译</div>
+  <div class="column q-ma-md" style="height: calc(100vh - 82px)">
+    <div class="text-h5 q-my-sm">中英文翻译</div>
     <q-card
-      class="row no-border-radius"
+      class="row no-border-radius col-grow q-mb-md"
       flat
       style="min-height: 500px; border-top: 1px solid rgba(0, 0, 0, 0.12)"
     >
@@ -46,7 +46,7 @@
 
       <div class="col column" style="min-width: 300px">
         <div
-          class="full-width col-auto"
+          class="full-width col-auto translated-box"
           style="border-right: 1px solid rgba(0, 0, 0, 0.12)"
         >
           <q-select
@@ -59,7 +59,7 @@
         </div>
 
         <div
-          class="column full-width col"
+          class="column full-width col translated-box"
           style="
             border-top: 1px solid rgba(0, 0, 0, 0.12);
             border-right: 1px solid rgba(0, 0, 0, 0.12);
@@ -220,3 +220,11 @@ function handleInput() {
   }, 1000); // 延时1s后进行语言检测
 }
 </script>
+
+<style>
+@media (max-width: 632px) {
+  .translated-box {
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+  }
+}
+</style>
