@@ -4,7 +4,7 @@
     <q-card
       class="row no-border-radius col-grow q-mb-md"
       flat
-      style="min-height: 650px; border-top: 1px solid rgba(0, 0, 0, 0.12)"
+      style="min-height: 600px; border-top: 1px solid rgba(0, 0, 0, 0.12)"
     >
       <div class="col column" style="min-width: 300px">
         <div
