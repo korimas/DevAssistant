@@ -124,14 +124,30 @@
             clickable
             @click="restoreChat(item)"
           >
-            <q-item-section>
-              <q-item-label>{{ item.inputSummary }}</q-item-label>
-              <q-item-label caption lines="2">
-                {{ item.outputSummary }}
+            <q-item-section class="column">
+              <q-item-label class="row items-center">
+                <div class="col-grow text-h7 text-weight-bold">
+                  {{ item.inputSummary }}
+                </div>
+                <div class="text-caption text-grey-6">
+                  {{ new Date(item.timestamp).toLocaleString() }}
+                </div>
+              </q-item-label>
+              <q-item-label caption class="row items-center">
+                <div class="col-grow text-grey-6">
+                  {{ item.outputSummary }}
+                </div>
+                <q-btn
+                  dense
+                  flat
+                  icon="delete"
+                  color="grey"
+                  @click="handleDelete(item)"
+                />
               </q-item-label>
             </q-item-section>
 
-            <q-item-section side top>
+            <!-- <q-item-section side top>
               <q-item-label caption
                 >{{ new Date(item.timestamp).toLocaleString() }}
               </q-item-label>
@@ -142,7 +158,7 @@
                 color="grey"
                 @click="handleDelete(item)"
               />
-            </q-item-section>
+            </q-item-section> -->
           </q-item>
         </q-list>
       </div>
@@ -301,7 +317,11 @@ async function StreamChat() {
   let inputSummary = '';
   if (Messages.value.length == 0) {
     needAddHistory = true;
-    inputSummary = InputText.value.slice(0, 10);
+    if (InputText.value.length > 10) {
+      inputSummary = InputText.value.slice(0, 10) + '...';
+    } else {
+      inputSummary = InputText.value;
+    }
   }
 
   // 添加输入的消息
@@ -363,10 +383,17 @@ async function StreamChat() {
       ScrollAtBottom();
 
       if (needAddHistory) {
+        let tmpOutputSummary = '';
+        if (lastMsg.Content.length > 30) {
+          tmpOutputSummary = lastMsg.Content.slice(0, 30) + '...';
+        } else {
+          tmpOutputSummary = lastMsg.Content;
+        }
+
         currentRecord = {
           timestamp: Date.now(),
           inputSummary: inputSummary,
-          outputSummary: lastMsg.Content.slice(0, 30),
+          outputSummary: tmpOutputSummary,
         };
         historyRecords.value.push(currentRecord);
         addHistory(
