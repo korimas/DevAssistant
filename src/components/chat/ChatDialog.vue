@@ -25,7 +25,11 @@
         />
         <q-btn unelevated round size="sm" icon="output" @click="exportDialog" />
       </div>
-      <q-scroll-area style="height: calc(100vh - 167px)" ref="scrollAreaRef">
+      <q-scroll-area
+        class="full-width chat-content"
+        style="height: calc(100vh - 167px)"
+        ref="scrollAreaRef"
+      >
         <div
           v-for="item in Messages"
           :key="item.Id"
