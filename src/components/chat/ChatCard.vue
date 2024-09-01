@@ -49,7 +49,12 @@
         track-color="grey-3"
         center-color="grey-8"
       />
-      <div v-else v-html="messageRef.Content" class="markdown-body"></div>
+      <div
+        style="white-space: pre-line"
+        v-else
+        v-html="messageRef.Content"
+        class="markdown-body"
+      ></div>
     </div>
   </div>
 </template>
