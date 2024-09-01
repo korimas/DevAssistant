@@ -92,8 +92,8 @@ const props = defineProps<Props>();
 let messageRef = ref(props.message);
 </script>
 
-<style>
+<!-- <style>
 .chat-content .q-scrollarea__content {
   width: 100%;
 }
-</style>
+</style> -->
