@@ -134,7 +134,7 @@
                 </div>
               </q-item-label>
               <q-item-label caption class="row items-center">
-                <div class="col-grow text-grey-6">
+                <div class="col-grow text-grey-6" style="overflow: hidden">
                   {{ item.outputSummary }}
                 </div>
                 <q-btn
@@ -384,8 +384,8 @@ async function StreamChat() {
 
       if (needAddHistory) {
         let tmpOutputSummary = '';
-        if (lastMsg.Content.length > 30) {
-          tmpOutputSummary = lastMsg.Content.slice(0, 30) + '...';
+        if (lastMsg.Content.length > 20) {
+          tmpOutputSummary = lastMsg.Content.slice(0, 20) + '...';
         } else {
           tmpOutputSummary = lastMsg.Content;
         }
