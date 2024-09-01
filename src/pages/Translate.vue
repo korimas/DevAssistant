@@ -1,10 +1,10 @@
 <template>
-  <div class="column q-ma-md" style="height: calc(100vh - 82px)">
+  <div class="column q-ma-md">
     <div class="text-h5 q-my-sm">中英文翻译</div>
     <q-card
       class="row no-border-radius col-grow q-mb-md"
       flat
-      style="min-height: 500px; border-top: 1px solid rgba(0, 0, 0, 0.12)"
+      style="min-height: 650px; border-top: 1px solid rgba(0, 0, 0, 0.12)"
     >
       <div class="col column" style="min-width: 300px">
         <div
