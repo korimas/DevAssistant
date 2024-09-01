@@ -162,9 +162,10 @@ import {
   updateHistory,
 } from './ChatModels';
 import { saveAs } from 'file-saver';
+import { marked } from 'marked';
+import 'github-markdown-css';
+import 'highlight.js/styles/github.css';
 
-// import { marked } from 'marked';
-// import 'github-markdown-css';
 defineOptions({
   name: 'ChatDialog',
 });
@@ -333,7 +334,7 @@ async function StreamChat() {
 
     if (done) {
       Waiting.value = false;
-      // lastMsg.Content = marked(lastMsg.Content);
+      lastMsg.Content = marked(lastMsg.Content);
       // await nextTick();
       // inputCom.value.focus();
 

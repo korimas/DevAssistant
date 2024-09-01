@@ -2,7 +2,14 @@
   <div class="q-pa-md q-gutter-md">
     <div class="text-h5">一问一答</div>
     <div class="column">
-      <q-input class="col" autogrow v-model="InputText" label="问题描述" @keydown.enter="handleEnter" :disable="Chatting">
+      <q-input
+        class="col"
+        autogrow
+        v-model="InputText"
+        label="问题描述"
+        @keydown.enter="handleEnter"
+        :disable="Chatting"
+      >
         <template v-slot:after>
           <q-btn flat @click="Chat">
             <div class="column">
@@ -13,8 +20,11 @@
         </template>
       </q-input>
 
-      <div style="margin-top: 10px" v-html="MarkdownText" class="markdown-body"></div>
-
+      <div
+        style="margin-top: 10px"
+        v-html="MarkdownText"
+        class="markdown-body"
+      ></div>
     </div>
   </div>
 </template>
@@ -24,7 +34,7 @@
   border-collapse: collapse;
 }
 
-.md-c. tr {
+.md-c tr {
   border: solid 1px black;
 }
 
@@ -42,26 +52,28 @@
 </style>
 
 <script lang="ts">
-import {defineComponent, ref} from 'vue';
-import {marked} from 'marked';
+import { defineComponent, ref } from 'vue';
+import { marked } from 'marked';
 import 'github-markdown-css';
-import {useAPIStore} from 'stores/APIStore';
+import { useAPIStore } from 'stores/APIStore';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/github.css';
 
 export default defineComponent({
   name: 'OneQOneAPage',
   setup() {
-    let InputText = ref('')
-    let OutputText = ref('')
-    let MarkdownText = ref('')
-    let Chatting = false
+    let InputText = ref('');
+    let OutputText = ref('');
+    let MarkdownText = ref('');
+    let Chatting = false;
     const store = useAPIStore();
 
     marked.setOptions({
       renderer: new marked.Renderer(),
-      highlight: function(code, language) {
-        const validLanguage = hljs.getLanguage(language) ? language : 'plaintext';
+      highlight: function (code, language) {
+        const validLanguage = hljs.getLanguage(language)
+          ? language
+          : 'plaintext';
         return hljs.highlight(validLanguage, code).value;
       },
       pedantic: false,
@@ -70,17 +82,17 @@ export default defineComponent({
       sanitize: false,
       // smartLists: true,
       smartypants: false,
-      xhtml: false
+      xhtml: false,
     });
 
     async function Chat() {
       if (InputText.value == '' || Chatting) {
-        return
+        return;
       }
 
-      OutputText.value = ''
-      MarkdownText.value = ''
-      Chatting = true
+      OutputText.value = '';
+      MarkdownText.value = '';
+      Chatting = true;
 
       // request
       const response = await fetch('/api/stream-api', {
@@ -90,34 +102,34 @@ export default defineComponent({
           //'Authorization': 'Bearer ' + Password.value
         },
         body: JSON.stringify({
-          'model': store.model,
-          'temperature': store.temperature,
-          'question': InputText.value,
-        })
-      })
+          model: store.model,
+          temperature: store.temperature,
+          question: InputText.value,
+        }),
+      });
 
-      const reader = response.body!.getReader()
-      const decoder = new TextDecoder('utf-8')
+      const reader = response.body!.getReader();
+      const decoder = new TextDecoder('utf-8');
 
       while (true) {
-        const {value, done} = await reader.read()
+        const { value, done } = await reader.read();
 
         if (value) {
-          OutputText.value = OutputText.value + decoder.decode(value)
-          MarkdownText.value = marked(OutputText.value)
+          OutputText.value = OutputText.value + decoder.decode(value);
+          MarkdownText.value = marked(OutputText.value);
         }
 
         if (done) {
-          Chatting = false
-          break
+          Chatting = false;
+          break;
         }
       }
     }
 
     function handleEnter(e: any) {
       if (e.ctrlKey) {
-        Chat()
-        console.log('send')
+        Chat();
+        console.log('send');
       }
     }
 
@@ -127,12 +139,10 @@ export default defineComponent({
       MarkdownText,
       handleEnter,
       Chatting,
-      Chat
-    }
-  }
+      Chat,
+    };
+  },
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

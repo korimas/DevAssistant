@@ -53,7 +53,8 @@
         v-else
         style="white-space: pre-line; margin-left: 5px; margin-bottom: 5px"
       >
-        {{ messageRef.Content }}
+        <!-- {{ messageRef.Content }} -->
+        <div v-html="messageRef.Content" class="markdown-body"></div>
         <q-popup-edit v-model="messageRef.Content" auto-save v-slot="scope">
           <q-input
             v-model="scope.value"
@@ -65,12 +66,6 @@
           />
         </q-popup-edit>
       </div>
-      <!-- <div
-        v-else
-        style="margin-top: 10px"
-        v-html="Content"
-        class="markdown-body"
-      ></div> -->
     </div>
   </div>
 </template>
