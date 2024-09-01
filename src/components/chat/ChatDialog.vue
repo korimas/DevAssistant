@@ -337,6 +337,7 @@ async function StreamChat() {
       lastMsg.Content = marked(lastMsg.Content);
       // await nextTick();
       // inputCom.value.focus();
+      ScrollAtBottom();
 
       if (needAddHistory) {
         currentRecord = {
