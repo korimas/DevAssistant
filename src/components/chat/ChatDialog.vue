@@ -166,10 +166,10 @@ import {
   updateHistory,
 } from './ChatModels';
 import { saveAs } from 'file-saver';
-import { marked } from 'marked';
-import 'github-markdown-css';
-import hljs from 'highlight.js';
-import 'highlight.js/styles/github.css';
+// import { marked } from 'marked';
+// import 'github-markdown-css';
+// import hljs from 'highlight.js';
+// import 'highlight.js/styles/github.css';
 
 defineOptions({
   name: 'ChatDialog',
@@ -199,23 +199,23 @@ let currentRecord: HistoryRecord | null = null;
 
 let lastScrollHeight = 0;
 
-function init() {
-  marked.setOptions({
-    renderer: new marked.Renderer(),
-    highlight: function (code, language) {
-      const validLanguage = hljs.getLanguage(language) ? language : 'plaintext';
-      return hljs.highlight(validLanguage, code).value;
-    },
-    pedantic: false,
-    gfm: true,
-    breaks: false,
-    sanitize: false,
-    // smartLists: true,
-    smartypants: false,
-    xhtml: false,
-  });
-}
-init();
+// function init() {
+//   marked.setOptions({
+//     renderer: new marked.Renderer(),
+//     highlight: function (code, language) {
+//       const validLanguage = hljs.getLanguage(language) ? language : 'plaintext';
+//       return hljs.highlight(validLanguage, code).value;
+//     },
+//     pedantic: false,
+//     gfm: true,
+//     breaks: false,
+//     sanitize: false,
+//     // smartLists: true,
+//     smartypants: false,
+//     xhtml: false,
+//   });
+// }
+// init();
 
 function exportDialog() {
   let textContent = '';
@@ -357,7 +357,7 @@ async function StreamChat() {
 
     if (done) {
       Waiting.value = false;
-      lastMsg.Content = marked(lastMsg.Content);
+      // lastMsg.Content = marked(lastMsg.Content);
       // await nextTick();
       // inputCom.value.focus();
       ScrollAtBottom();

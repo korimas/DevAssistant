@@ -50,15 +50,15 @@
         center-color="grey-8"
       />
       <div v-else>
-        <div v-if="messageRef.Sender" style="white-space: pre-line">
+        <div style="white-space: pre-line">
           {{ messageRef.Content }}
         </div>
-        <div
+        <!-- <div
           style="white-space: pre-line"
           v-else
           v-html="messageRef.Content"
           class="markdown-body"
-        ></div>
+        ></div> -->
       </div>
     </div>
   </div>
