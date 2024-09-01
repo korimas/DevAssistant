@@ -25,7 +25,7 @@
             color="primary"
             label="翻译"
             style="margin: 10px"
-            @click="RequirementAnasys"
+            @click="StreamTranslate"
             :loading="Chatting"
           />
         </div>
@@ -57,11 +57,23 @@
             label="目标语言"
           />
         </div>
-        <q-card flat bordered class="full-width col no-border-radius">
-          <q-card-section>
-            <div v-html="MarkdownText" class="markdown-body"></div>
-          </q-card-section>
-        </q-card>
+
+        <div
+          class="column full-width col"
+          style="
+            border-top: 1px solid rgba(0, 0, 0, 0.12);
+            border-right: 1px solid rgba(0, 0, 0, 0.12);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+          "
+        >
+          <div class="col q-ma-md" style="white-space: pre-line">
+            {{ OutputText }}
+          </div>
+          <q-separator horizontal />
+          <div class="col q-ma-md" style="white-space: pre-line">
+            {{ OutputText }}
+          </div>
+        </div>
       </div>
     </q-card>
   </div>
@@ -76,7 +88,7 @@
   height: 100%;
 }
 
-.md-c. tr {
+.md-c tr {
   border: solid 1px black;
 }
 
@@ -93,10 +105,12 @@
 }
 </style>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { marked } from 'marked';
-import 'github-markdown-css';
+<script setup lang="ts">
+import { ref } from 'vue';
+
+defineOptions({
+  name: 'TranslatePage',
+});
 
 let InputText = ref('');
 let OutputText = ref('');
@@ -119,7 +133,7 @@ function checkLanguage(inputStr: string) {
   }
 }
 
-async function RequirementAnasys() {
+async function StreamTranslate() {
   if (InputText.value == '' || Chatting.value) {
     return;
   }
@@ -152,7 +166,7 @@ async function RequirementAnasys() {
 
     if (value) {
       OutputText.value = OutputText.value + decoder.decode(value);
-      MarkdownText.value = marked(OutputText.value);
+      // MarkdownText.value = marked(OutputText.value);
     }
 
     if (done) {
@@ -164,18 +178,18 @@ async function RequirementAnasys() {
 
 function handleEnter(e: any) {
   if (e.ctrlKey) {
-    RequirementAnasys();
+    StreamTranslate();
     console.log('send');
   }
 }
 
-function handleInput(value: string) {
+function handleInput() {
   if (timer) {
     clearTimeout(timer); // 当用户连续输入时，清除上一次的定时器
   }
 
   timer = setTimeout(() => {
-    checkLanguage(value);
+    checkLanguage(InputText.value);
   }, 1000); // 延时1s后进行语言检测
 }
 </script>
