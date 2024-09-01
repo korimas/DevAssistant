@@ -113,6 +113,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useAPIStore } from 'stores/APIStore';
 
 defineOptions({
   name: 'TranslatePage',
@@ -128,6 +129,7 @@ let timer: NodeJS.Timeout;
 
 const LanguageOptions = ['中文', '英文'];
 const splitWords = '#-split-#';
+const store = useAPIStore();
 
 function checkLanguage(inputStr: string) {
   let isChinese = /[\u4E00-\u9FA5]+/g.test(inputStr);
@@ -163,6 +165,8 @@ async function StreamTranslate() {
       requirement: InputText.value,
       src: SrcLanguage.value,
       dst: DstLanguage.value,
+      model: store.model,
+      temperature: store.temperature,
     }),
   });
 
