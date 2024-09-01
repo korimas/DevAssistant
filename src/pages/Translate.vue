@@ -1,34 +1,61 @@
 <template>
   <div class="q-pa-md q-gutter-md">
     <div class="text-h5">中英文翻译</div>
-    <q-card class="row no-border-radius" flat style="min-height: 500px;border-top:1px solid rgba(0, 0, 0, 0.12);">
+    <q-card
+      class="row no-border-radius"
+      flat
+      style="min-height: 500px; border-top: 1px solid rgba(0, 0, 0, 0.12)"
+    >
       <div class="col column" style="min-width: 300px">
-        <div class="row full-width col-auto"
-             style="border-left:1px solid rgba(0, 0, 0, 0.12);">
-          <q-select borderless style="width: 120px; margin-left: 20px" v-model="SrcLanguage" :options="LanguageOptions"
-                    label="检测源语言"/>
+        <div
+          class="row full-width col-auto"
+          style="border-left: 1px solid rgba(0, 0, 0, 0.12)"
+        >
+          <q-select
+            borderless
+            style="width: 120px; margin-left: 20px"
+            v-model="SrcLanguage"
+            :options="LanguageOptions"
+            label="检测源语言"
+          />
           <q-space></q-space>
 
-          <q-btn unelevated color="primary" label="翻译" style="margin: 10px" @click="RequirementAnasys"
-                 :loading="Chatting"/>
+          <q-btn
+            unelevated
+            color="primary"
+            label="翻译"
+            style="margin: 10px"
+            @click="RequirementAnasys"
+            :loading="Chatting"
+          />
         </div>
         <div class="full-width col">
-          <q-input square outlined type="textarea"
-                   v-model="InputText"
-                   label="原文"
-                   class="fit"
-                   @keydown.enter="handleEnter"
-                   @update:model-value="handleInput"
+          <q-input
+            square
+            outlined
+            type="textarea"
+            v-model="InputText"
+            label="原文"
+            class="fit"
+            @keydown.enter="handleEnter"
+            @update:model-value="handleInput"
           >
           </q-input>
         </div>
       </div>
 
       <div class="col column" style="min-width: 300px">
-        <div class="full-width col-auto" style="border-right:1px solid rgba(0, 0, 0, 0.12);">
-          <q-select borderless style="width: 120px; margin-left: 20px" v-model="DstLanguage"
-                    :options="LanguageOptions"
-                    label="目标语言"/>
+        <div
+          class="full-width col-auto"
+          style="border-right: 1px solid rgba(0, 0, 0, 0.12)"
+        >
+          <q-select
+            borderless
+            style="width: 120px; margin-left: 20px"
+            v-model="DstLanguage"
+            :options="LanguageOptions"
+            label="目标语言"
+          />
         </div>
         <q-card flat bordered class="full-width col no-border-radius">
           <q-card-section>
@@ -36,8 +63,6 @@
           </q-card-section>
         </q-card>
       </div>
-
-
     </q-card>
   </div>
 </template>
@@ -69,110 +94,88 @@
 </style>
 
 <script lang="ts">
-import {defineComponent, ref} from 'vue';
-import {marked} from 'marked';
+import { defineComponent, ref } from 'vue';
+import { marked } from 'marked';
 import 'github-markdown-css';
 
-export default defineComponent({
-  name: 'TranslatePage',
-  setup() {
-    let InputText = ref('')
-    let OutputText = ref('')
-    let MarkdownText = ref('')
-    let Chatting = ref(false)
-    let SrcLanguage = ref('')
-    let DstLanguage = ref('')
-    let timer: NodeJS.Timeout;
+let InputText = ref('');
+let OutputText = ref('');
+let MarkdownText = ref('');
+let Chatting = ref(false);
+let SrcLanguage = ref('');
+let DstLanguage = ref('');
+let timer: NodeJS.Timeout;
 
-    const LanguageOptions = ['中文', '英文']
+const LanguageOptions = ['中文', '英文'];
 
-    function checkLanguage(inputStr: string) {
-      let isChinese = /[\u4E00-\u9FA5]+/g.test(inputStr)
-      if (isChinese) {
-        SrcLanguage.value = '中文'
-        DstLanguage.value = '英文'
-      } else {
-        SrcLanguage.value = '英文'
-        DstLanguage.value = '中文'
-      }
+function checkLanguage(inputStr: string) {
+  let isChinese = /[\u4E00-\u9FA5]+/g.test(inputStr);
+  if (isChinese) {
+    SrcLanguage.value = '中文';
+    DstLanguage.value = '英文';
+  } else {
+    SrcLanguage.value = '英文';
+    DstLanguage.value = '中文';
+  }
+}
+
+async function RequirementAnasys() {
+  if (InputText.value == '' || Chatting.value) {
+    return;
+  }
+
+  OutputText.value = '';
+  MarkdownText.value = '';
+  Chatting.value = true;
+
+  checkLanguage(InputText.value);
+
+  // request
+  const response = await fetch('/api/stream-translate', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      //'Authorization': 'Bearer ' + Password.value
+    },
+    body: JSON.stringify({
+      requirement: InputText.value,
+      src: SrcLanguage.value,
+      dst: DstLanguage.value,
+    }),
+  });
+
+  const reader = response.body!.getReader();
+  const decoder = new TextDecoder('utf-8');
+
+  while (true) {
+    const { value, done } = await reader.read();
+
+    if (value) {
+      OutputText.value = OutputText.value + decoder.decode(value);
+      MarkdownText.value = marked(OutputText.value);
     }
 
-    async function RequirementAnasys() {
-      if (InputText.value == '' || Chatting.value) {
-        return
-      }
-
-      OutputText.value = ''
-      MarkdownText.value = ''
-      Chatting.value = true
-
-      checkLanguage(InputText.value)
-
-      // request
-      const response = await fetch('/api/stream-zh-to-en', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          //'Authorization': 'Bearer ' + Password.value
-        },
-        body: JSON.stringify({
-          'requirement': InputText.value,
-          'src': SrcLanguage.value,
-          'dst': DstLanguage.value
-        })
-      })
-
-      const reader = response.body!.getReader()
-      const decoder = new TextDecoder('utf-8')
-
-      while (true) {
-        const {value, done} = await reader.read()
-
-        if (value) {
-          OutputText.value = OutputText.value + decoder.decode(value)
-          MarkdownText.value = marked(OutputText.value)
-        }
-
-        if (done) {
-          Chatting.value = false
-          break
-        }
-      }
-    }
-
-    function handleEnter(e: any) {
-      if (e.ctrlKey) {
-        RequirementAnasys()
-        console.log('send')
-      }
-    }
-
-    function handleInput(value: string) {
-      if (timer) {
-        clearTimeout(timer); // 当用户连续输入时，清除上一次的定时器
-      }
-
-      timer = setTimeout(() => {
-        checkLanguage(value)
-      }, 1000); // 延时1s后进行语言检测
-    }
-
-    return {
-      InputText,
-      OutputText,
-      MarkdownText,
-      handleEnter,
-      RequirementAnasys,
-      LanguageOptions,
-      SrcLanguage,
-      DstLanguage,
-      handleInput,
-      Chatting
+    if (done) {
+      Chatting.value = false;
+      break;
     }
   }
-});
+}
+
+function handleEnter(e: any) {
+  if (e.ctrlKey) {
+    RequirementAnasys();
+    console.log('send');
+  }
+}
+
+function handleInput(value: string) {
+  if (timer) {
+    clearTimeout(timer); // 当用户连续输入时，清除上一次的定时器
+  }
+
+  timer = setTimeout(() => {
+    checkLanguage(value);
+  }, 1000); // 延时1s后进行语言检测
+}
 </script>
-
-<style scoped>
-
-</style>
