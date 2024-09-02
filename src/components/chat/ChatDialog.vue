@@ -26,7 +26,7 @@
         <q-btn unelevated round size="sm" icon="output" @click="exportDialog" />
       </div>
       <q-scroll-area
-        class="full-width chat-content"
+        class="full-width"
         style="height: calc(100vh - 167px)"
         ref="scrollAreaRef"
       >
@@ -115,9 +115,9 @@
       />
     </div>
     <q-separator />
-    <q-scroll-area style="height: calc(100% - 66px)">
+    <q-scroll-area style="height: calc(100% - 66px)" class="chat-history">
       <div class="column">
-        <q-list separator>
+        <q-list separator class="full-width">
           <q-item
             v-for="item in historyRecords"
             :key="item.timestamp"
@@ -125,22 +125,36 @@
             @click="restoreChat(item)"
           >
             <div class="column full-width">
-              <div class="row items-center full-width">
-                <div class="col-grow text-h7 text-weight-bold">
+              <div class="row items-center no-wrap full-width">
+                <div
+                  class="col-grow text-weight-bold"
+                  style="
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    flex: 1 1 auto;
+                  "
+                >
                   {{ item.inputSummary }}
                 </div>
-                <div class="text-caption text-grey-6">
+                <div class="text-caption text-grey-6 text-no-wrap q-ms-sm">
                   {{ new Date(item.timestamp).toLocaleString() }}
                 </div>
               </div>
-              <div caption class="row items-center">
+              <div caption class="row items-center no-wrap full-width">
                 <div
-                  class="col-grow text-grey-6 text-caption"
-                  style="overflow: hidden"
+                  class="col-grow text-grey-6 text-caption full-width"
+                  style="
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    flex: 1 1 auto;
+                  "
                 >
                   {{ item.outputSummary }}
                 </div>
                 <q-btn
+                  class="q-ml-sm"
                   dense
                   size="0.8em"
                   flat
@@ -321,11 +335,7 @@ async function StreamChat() {
   let inputSummary = '';
   if (Messages.value.length == 0) {
     needAddHistory = true;
-    if (InputText.value.length > 10) {
-      inputSummary = InputText.value.slice(0, 10) + '...';
-    } else {
-      inputSummary = InputText.value;
-    }
+    inputSummary = InputText.value.slice(0, 100);
   }
 
   // 添加输入的消息
@@ -389,17 +399,10 @@ async function StreamChat() {
       ScrollAtBottom();
 
       if (needAddHistory) {
-        let tmpOutputSummary = '';
-        if (lastMsg.Content.length > 18) {
-          tmpOutputSummary = lastMsg.Content.slice(0, 18) + '...';
-        } else {
-          tmpOutputSummary = lastMsg.Content;
-        }
-
         currentRecord = {
           timestamp: Date.now(),
           inputSummary: inputSummary,
-          outputSummary: tmpOutputSummary,
+          outputSummary: lastMsg.Content.slice(0, 100),
         };
         historyRecords.value.push(currentRecord);
         addHistory(
@@ -432,3 +435,9 @@ function newChat() {
   Waiting.value = false;
 }
 </script>
+
+<style>
+.chat-history .q-scrollarea__content {
+  width: 100%;
+}
+</style>
