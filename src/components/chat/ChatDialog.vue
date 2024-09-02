@@ -124,28 +124,32 @@
             clickable
             @click="restoreChat(item)"
           >
-            <q-item-section class="column">
-              <q-item-label class="row items-center">
+            <div class="column full-width">
+              <div class="row items-center full-width">
                 <div class="col-grow text-h7 text-weight-bold">
                   {{ item.inputSummary }}
                 </div>
                 <div class="text-caption text-grey-6">
                   {{ new Date(item.timestamp).toLocaleString() }}
                 </div>
-              </q-item-label>
-              <q-item-label caption class="row items-center">
-                <div class="col-grow text-grey-6" style="overflow: hidden">
+              </div>
+              <div caption class="row items-center">
+                <div
+                  class="col-grow text-grey-6 text-caption"
+                  style="overflow: hidden"
+                >
                   {{ item.outputSummary }}
                 </div>
                 <q-btn
                   dense
+                  size="0.8em"
                   flat
                   icon="delete"
                   color="grey"
                   @click="handleDelete(item)"
                 />
-              </q-item-label>
-            </q-item-section>
+              </div>
+            </div>
 
             <!-- <q-item-section side top>
               <q-item-label caption
