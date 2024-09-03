@@ -40,7 +40,7 @@
             @delete="
               () => (Messages = Messages.filter((msg) => msg.Id !== item.Id))
             "
-            @refresh="RefreshChat(item.Content)"
+            @paste="PasteInput(item.Content)"
           />
         </div>
       </q-scroll-area>
@@ -164,19 +164,6 @@
                 />
               </div>
             </div>
-
-            <!-- <q-item-section side top>
-              <q-item-label caption
-                >{{ new Date(item.timestamp).toLocaleString() }}
-              </q-item-label>
-              <q-btn
-                dense
-                flat
-                icon="delete"
-                color="grey"
-                @click="handleDelete(item)"
-              />
-            </q-item-section> -->
           </q-item>
         </q-list>
       </div>
@@ -278,6 +265,7 @@ function restoreChat(record: HistoryRecord) {
 function GetGPTMessages() {
   GptMessages.value = [];
 
+  // put system prompt
   if (props.InputSystemPrompt != '' && props.InputSystemPrompt != null) {
     GptMessages.value.push({
       role: 'system',
@@ -285,24 +273,24 @@ function GetGPTMessages() {
     });
   }
 
-  // 从Messages中获取最新的MessageKeepNum个个消息
-  let len = Messages.value.length;
-  let start = len - MessageKeepNum.value;
-  if (start < 0) {
-    start = 0;
-  }
-  for (let i = start; i < len; i++) {
+  let added = 0;
+  for (let i = Messages.value.length - 1; i >= 0; i--) {
     let msg = Messages.value[i];
-    if (msg.Sender) {
-      GptMessages.value.push({
-        role: 'user',
+
+    // add last serval messages
+    if (added < MessageKeepNum.value) {
+      GptMessages.value.unshift({
+        role: msg.Sender ? 'user' : 'assistant',
         content: msg.Content,
       });
+      added++;
     } else {
-      GptMessages.value.push({
-        role: 'assistant',
-        content: msg.Content,
-      });
+      if (msg.Pinned) {
+        GptMessages.value.unshift({
+          role: msg.Sender ? 'user' : 'assistant',
+          content: msg.Content,
+        });
+      }
     }
   }
 }
@@ -321,7 +309,7 @@ function ScrollAtBottom() {
   }
 }
 
-function RefreshChat(content: string) {
+function PasteInput(content: string) {
   InputText.value = content;
 }
 
@@ -345,6 +333,7 @@ async function StreamChat() {
     Content: InputText.value,
     IncludeSession: true,
     Welcome: false,
+    Pinned: false,
   });
   nextTick(() => {
     ScrollAtBottom();
@@ -359,6 +348,7 @@ async function StreamChat() {
     Content: '',
     IncludeSession: true,
     Welcome: false,
+    Pinned: false,
   });
   let lastMsg = Messages.value[Messages.value.length - 1];
   InputText.value = '';

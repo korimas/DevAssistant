@@ -21,9 +21,17 @@
           dense
           flat
           size="0.8em"
-          icon="content_copy"
+          icon="draw"
           color="grey"
-          @click="handleRefresh"
+          @click="handlePaste"
+        />
+        <q-btn
+          dense
+          flat
+          size="0.8em"
+          icon="push_pin"
+          :color="messageRef.Pinned ? 'green-5' : 'grey'"
+          @click="messageRef.Pinned = !messageRef.Pinned"
         />
         <q-btn
           dense
@@ -73,14 +81,14 @@ defineOptions({
 });
 
 // define emits
-const emit = defineEmits(['delete', 'refresh']);
+const emit = defineEmits(['delete', 'paste']);
 
 function handleDelete() {
   emit('delete');
 }
 
-function handleRefresh() {
-  emit('refresh');
+function handlePaste() {
+  emit('paste');
 }
 
 interface Props {

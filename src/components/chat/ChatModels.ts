@@ -4,6 +4,7 @@ export interface Message {
     Sender: boolean;
     IncludeSession: boolean;
     Welcome: boolean;
+    Pinned: boolean;
 };
 
 export interface GptMessage {
