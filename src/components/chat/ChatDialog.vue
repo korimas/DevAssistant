@@ -14,14 +14,14 @@
           round
           size="sm"
           icon="history"
-          @click="historyDrawerOpen = true"
+          @click="historyDrawerModel.open = true"
         />
         <q-btn
           unelevated
           round
           size="sm"
           icon="tune"
-          @click="SettingDrawerOpen = true"
+          @click="configDrawerModel.open = true"
         />
         <q-btn unelevated round size="sm" icon="output" @click="exportDialog" />
       </div>
@@ -62,26 +62,8 @@
     </div>
   </div>
 
-  <q-drawer
-    elevated
-    side="right"
-    :width="$q.screen.width > 600 ? 500 : $q.screen.width * 0.85"
-    v-model="SettingDrawerOpen"
-    overlay
-  >
-    <div class="q-pa-md row" style="height: 65px">
-      <div class="text-h6">Chat Config</div>
-      <q-space></q-space>
-      <q-btn
-        unelevated
-        size="12px"
-        icon="clear"
-        color="red"
-        @click="SettingDrawerOpen = false"
-      />
-    </div>
-    <q-separator />
-    <q-scroll-area style="height: calc(100% - 66px)">
+  <MIDrawer :drawer="configDrawerModel">
+    <template v-slot:drawer-content>
       <div class="column q-pa-md">
         <q-input
           dense
@@ -93,29 +75,11 @@
         />
         <slot name="setting-drawer"></slot>
       </div>
-    </q-scroll-area>
-  </q-drawer>
+    </template>
+  </MIDrawer>
 
-  <q-drawer
-    elevated
-    side="right"
-    :width="$q.screen.width > 600 ? 500 : $q.screen.width * 0.85"
-    v-model="historyDrawerOpen"
-    overlay
-  >
-    <div class="q-pa-md row" style="height: 65px">
-      <div class="text-h6">Chat History</div>
-      <q-space></q-space>
-      <q-btn
-        unelevated
-        size="12px"
-        icon="clear"
-        color="red"
-        @click="historyDrawerOpen = false"
-      />
-    </div>
-    <q-separator />
-    <q-scroll-area style="height: calc(100% - 66px)" class="chat-history">
+  <MIDrawer :drawer="historyDrawerModel" class="chat-history">
+    <template v-slot:drawer-content>
       <div class="column">
         <q-list separator class="full-width">
           <q-item
@@ -167,14 +131,15 @@
           </q-item>
         </q-list>
       </div>
-    </q-scroll-area>
-  </q-drawer>
+    </template>
+  </MIDrawer>
 </template>
 
 <script setup lang="ts">
 import { ref, nextTick } from 'vue';
-import { useAPIStore } from 'stores/APIStore';
 import MiChatCard from './ChatCard.vue';
+import MIDrawer from '../base/MIDrawer.vue';
+import { DrawerModel } from '../base/BaseModels';
 import {
   Message,
   GptMessage,
@@ -187,6 +152,7 @@ import {
   updateHistory,
 } from './ChatModels';
 import { saveAs } from 'file-saver';
+import { useAPIStore } from 'stores/APIStore';
 // import { marked } from 'marked';
 // import 'github-markdown-css';
 // import hljs from 'highlight.js';
@@ -213,10 +179,18 @@ let Loading = ref(false);
 let Waiting = ref(false);
 let MessageKeepNum = ref(9); // i think it's enough
 let scrollAreaRef = ref<any>(null);
-let SettingDrawerOpen = ref(false);
-let historyDrawerOpen = ref(false);
 let historyRecords = ref<HistoryRecord[]>(loadHistorys());
 let currentRecord: HistoryRecord | null = null;
+let configDrawerModel = ref<DrawerModel>({
+  open: false,
+  side: 'right',
+  title: 'Chat Config',
+});
+let historyDrawerModel = ref<DrawerModel>({
+  open: false,
+  side: 'right',
+  title: 'Chat History',
+});
 
 let lastScrollHeight = 0;
 
@@ -258,7 +232,7 @@ function restoreChat(record: HistoryRecord) {
   Messages.value = chatHistory?.messages ?? [];
   GptMessages.value = [];
   InputText.value = '';
-  historyDrawerOpen.value = false;
+  historyDrawerModel.value.open = false;
   currentRecord = record;
 }
 
