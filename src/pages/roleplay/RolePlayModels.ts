@@ -39,15 +39,15 @@ export function savePassword(password: string) {
 
 
 export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
-    const rolePlayPromptStr = `命令区（ChatGPT你需要遵循的主要命令）{
+    const rolePlayPromptStr = `规则区（你必须遵循的规则）{
 ${rolePlayPrompt.rulesArea}
 }
 
-记忆区（基于ChatGPT你无法记住2条以上的内容，所以我建立了记忆区，它起到记录相应关键信息的作用）{
+记忆区（记录关键信息）{
 ${rolePlayPrompt.memoryArea}
 }
 
-回顾区（回顾区存放着ChatGPT你上一次交互过程中的响应）{
+回顾区（你与我的交互历史，包含对话上下文）{
 ${rolePlayPrompt.reviewArea}
 ${rolePlayPrompt.reviewArea2}
 

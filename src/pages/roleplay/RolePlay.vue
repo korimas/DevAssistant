@@ -82,8 +82,6 @@ defineOptions({
 let rolePlayPrompt = ref(ROLE_PLAY_PROMPT);
 let InputSystemPrompt = ref('');
 let timeoutId: NodeJS.Timeout | undefined;
-let lastInputContent = '';
-let lastOutputContent = '';
 
 // init
 InputSystemPrompt.value = generateRolePlayPromptStr(rolePlayPrompt.value);
