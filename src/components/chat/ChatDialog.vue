@@ -162,13 +162,12 @@ defineOptions({
   name: 'ChatDialog',
 });
 // define emits
-const emit = defineEmits(['update-system-prompt']);
+const emit = defineEmits(['update-system-prompt', 'update-new-chat']);
 
 // define props
 interface Props {
   InputSystemPrompt: string;
 }
-
 const props = defineProps<Props>();
 
 const store = useAPIStore();
@@ -295,16 +294,17 @@ async function StreamChat() {
   // 检查是否是新对话
   let needAddHistory = false;
   let inputSummary = '';
+  const inputContent = InputText.value;
   if (Messages.value.length == 0) {
     needAddHistory = true;
-    inputSummary = InputText.value.slice(0, 100);
+    inputSummary = inputContent.slice(0, 100);
   }
 
   // 添加输入的消息
   Messages.value.push({
     Id: Date.now(),
     Sender: true,
-    Content: InputText.value,
+    Content: inputContent,
     IncludeSession: true,
     Welcome: false,
     Pinned: false,
@@ -361,6 +361,7 @@ async function StreamChat() {
       // await nextTick();
       // inputCom.value.focus();
       ScrollAtBottom();
+      emit('update-new-chat', inputContent, lastMsg.Content);
 
       if (needAddHistory) {
         currentRecord = {

@@ -1,49 +1,18 @@
-
-export interface DialogGuide {
-    guide: string;
-    example: string;
-}
-
-export interface Role {
-    name: string;
-    role: string;
-    background: string;
-    character: string;
-}
 export interface RolePlayPrompt {
-    baseRule: string;
-    role: Role;
-    dialogGuide: DialogGuide;
+    rulesArea: string;
+    memoryArea: string;
+    reviewArea: string;
+    roleState: string;
 }
 
-export interface Message {
-    Id: number;
-    Content: string;
-    Sender: boolean;
-    IncludeSession: boolean;
-    Welcome: boolean;
-};
-
-export interface GptMessage {
-    role: string;
-    content: string;
-};
-
-function loadRolePlayPrompt() {
+function loadRolePlayPrompt(): RolePlayPrompt {
     const tmp = localStorage.getItem('RolePlayPrompt');
     if (!tmp) {
         return {
-            baseRule: '',
-            role: {
-                name: '',
-                role: '',
-                background: '',
-                character: ''
-            },
-            dialogGuide: {
-                guide: '',
-                example: ''
-            }
+            rulesArea: "",
+            memoryArea: "",
+            reviewArea: "",
+            roleState: ""
         };
     }
     const rolePlayPromptObj = JSON.parse(tmp);
@@ -68,45 +37,21 @@ export function savePassword(password: string) {
 
 
 export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
-    let rolePlayPromptStr = `# Policy
-${rolePlayPrompt.baseRule}`
+    const rolePlayPromptStr = `命令区（ChatGPT你需要遵循的主要命令）{
+${rolePlayPrompt.rulesArea}
+}
 
+记忆区（基于ChatGPT你无法记住2条以上的内容，所以我建立了记忆区，它起到记录相应关键信息的作用）{
+${rolePlayPrompt.memoryArea}
+}
+
+回顾区（回顾区存放着ChatGPT你上一次交互过程中的响应）{
+${rolePlayPrompt.reviewArea}
+
+[角色状态] 
+${rolePlayPrompt.roleState}
+}`
     console.log(rolePlayPromptStr)
-    if (rolePlayPrompt.role.role !== '') {
-        rolePlayPromptStr += `
-## Role
-你将扮演的角色是${rolePlayPrompt.role.role}`
-    }
-
-    // # 对话要求
-    // ${ rolePlayPrompt.dialogGuide.guide }
-
-    // # 对话示例
-    // ${ rolePlayPrompt.dialogGuide.example }
-
-    if (rolePlayPrompt.role.background !== '') {
-        rolePlayPromptStr += `
-## Background
-${rolePlayPrompt.role.background}`
-    }
-
-    if (rolePlayPrompt.role.character !== '') {
-        rolePlayPromptStr += `
-## Character
-${rolePlayPrompt.role.character}`
-    }
-
-    if (rolePlayPrompt.dialogGuide.guide !== '') {
-        rolePlayPromptStr += `
-## Dialog Guide
-${rolePlayPrompt.dialogGuide.guide}`
-    }
-
-    if (rolePlayPrompt.dialogGuide.example !== '') {
-        rolePlayPromptStr += `
-## Dialog Example
-${rolePlayPrompt.dialogGuide.example}`
-    }
 
     return rolePlayPromptStr;
 }
