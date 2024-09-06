@@ -243,14 +243,6 @@ function restoreChat(record: HistoryRecord) {
 function GetGPTMessages() {
   GptMessages.value = [];
 
-  // put system prompt
-  if (props.InputSystemPrompt != '' && props.InputSystemPrompt != null) {
-    GptMessages.value.push({
-      role: 'system',
-      content: props.InputSystemPrompt,
-    });
-  }
-
   let added = 0;
   for (let i = Messages.value.length - 1; i >= 0; i--) {
     let msg = Messages.value[i];
@@ -280,6 +272,13 @@ function GetGPTMessages() {
       GptMessages.value.unshift({
         role: 'user',
         content: props.exampleInput,
+      });
+    }
+    // put system prompt
+    if (props.InputSystemPrompt != '' && props.InputSystemPrompt != null) {
+      GptMessages.value.push({
+        role: 'system',
+        content: props.InputSystemPrompt,
       });
     }
   }

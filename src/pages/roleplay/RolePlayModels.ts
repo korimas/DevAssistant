@@ -1,4 +1,6 @@
 export interface RolePlayPrompt {
+    roleName: string;
+    myName: string;
     rulesArea: string;
     memoryArea: string;
     reviewArea: string;
@@ -13,6 +15,8 @@ function loadRolePlayPrompt(): RolePlayPrompt {
     const tmp = localStorage.getItem('RolePlayPrompt');
     if (!tmp) {
         return {
+            roleName: "",
+            myName: "",
             rulesArea: "",
             memoryArea: "",
             reviewArea: "",
@@ -52,6 +56,7 @@ export function savePassword(password: string) {
 
 export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
     const rolePlayPromptStr = `规则区（你必须遵循的规则）{
+你叫${rolePlayPrompt.myName}，我叫${rolePlayPrompt.roleName}
 ${rolePlayPrompt.rulesArea}
 }
 

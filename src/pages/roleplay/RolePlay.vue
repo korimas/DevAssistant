@@ -13,6 +13,28 @@
           dense
           clearable
           autogrow
+          label="人物名称"
+          v-model="rolePlayPrompt.roleName"
+          outlined
+          class="full-width"
+          style="margin-bottom: 10px"
+          @update:model-value="RolePlayPromptUpdate"
+        />
+        <q-input
+          dense
+          clearable
+          autogrow
+          label="我的名称"
+          v-model="rolePlayPrompt.myName"
+          outlined
+          class="full-width"
+          style="margin-bottom: 10px"
+          @update:model-value="RolePlayPromptUpdate"
+        />
+        <q-input
+          dense
+          clearable
+          autogrow
           label="命令区"
           v-model="rolePlayPrompt.rulesArea"
           outlined
@@ -141,8 +163,8 @@ function handleNewChat(inputContent: string, outputContent: string) {
   }
 
   if (inputContent !== '' && outputContent !== '') {
-    rolePlayPrompt.value.reviewArea2 = `桐谷华: ${inputContent}
-桐谷绫: ${outputContent}`;
+    rolePlayPrompt.value.reviewArea2 = `${rolePlayPrompt.value.myName}: ${inputContent}
+${rolePlayPrompt.value.roleName}: ${outputContent}`;
   }
   saveRolePlayPrompt(rolePlayPrompt.value);
   InputSystemPrompt.value = generateRolePlayPromptStr(rolePlayPrompt.value);
