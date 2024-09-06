@@ -106,7 +106,7 @@ function handleNewChat(inputContent: string, outputContent: string) {
   // split role state
   let splitIndex = outputContent.indexOf('[角色状态]');
   if (splitIndex != -1) {
-    rolePlayPrompt.value.roleState = outputContent.slice(1, splitIndex + 6);
+    rolePlayPrompt.value.roleState = outputContent.slice(splitIndex + 6);
     outputContent = outputContent.slice(0, splitIndex);
   }
   if (
