@@ -52,21 +52,20 @@ export function savePassword(password: string) {
 
 
 export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
-    const rolePlayPromptStr = `# 规则区（你必须遵循的规则）{
+    const rolePlayPromptStr = `规则区（你必须遵循的规则）{
 ${rolePlayPrompt.rulesArea}
 }
 
-# 记忆区（记录关键信息）{
+记忆区（记录关键信息）{
 ${rolePlayPrompt.memoryArea}
 }
 
-# 回顾区（你与我的交互历史，包含对话上下文）{
+回顾区（你与我的交互历史，包含对话上下文）{
 ${rolePlayPrompt.reviewArea}
 ${rolePlayPrompt.reviewArea2}}
 
-# 角色状态（你的角色当前状态，每次需要更新）{
-${rolePlayPrompt.roleState}
-}`
+[角色状态]
+${rolePlayPrompt.roleState}`
     console.log(rolePlayPromptStr)
     return rolePlayPromptStr;
 }
