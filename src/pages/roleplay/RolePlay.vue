@@ -43,6 +43,17 @@
           dense
           clearable
           autogrow
+          label="回顾区2"
+          v-model="rolePlayPrompt.reviewArea2"
+          outlined
+          class="full-width"
+          style="margin-bottom: 10px"
+          @update:model-value="RolePlayPromptUpdate"
+        />
+        <q-input
+          dense
+          clearable
+          autogrow
           label="人物状态"
           v-model="rolePlayPrompt.roleState"
           outlined
@@ -95,20 +106,22 @@ function handleNewChat(inputContent: string, outputContent: string) {
   // split role state
   let splitIndex = outputContent.indexOf('[角色状态]');
   if (splitIndex != -1) {
-    rolePlayPrompt.value.roleState = outputContent.slice(splitIndex + 6);
+    rolePlayPrompt.value.roleState = outputContent.slice(1, splitIndex + 6);
     outputContent = outputContent.slice(0, splitIndex);
   }
-
-  rolePlayPrompt.value.reviewArea = ``;
-  if (lastInputContent !== '' && lastOutputContent !== '') {
-    rolePlayPrompt.value.reviewArea = `桐谷华: ${lastInputContent}
-桐谷绫: ${lastOutputContent}`;
+  if (
+    rolePlayPrompt.value.reviewArea2 !== '' &&
+    rolePlayPrompt.value.reviewArea2 !== 'undefined' &&
+    rolePlayPrompt.value.reviewArea2 !== null
+  ) {
+    rolePlayPrompt.value.reviewArea = rolePlayPrompt.value.reviewArea2;
   }
-  lastInputContent = inputContent;
-  lastOutputContent = outputContent;
 
-  rolePlayPrompt.value.reviewArea += `桐谷华: ${inputContent}
+  if (inputContent !== '' && outputContent !== '') {
+    rolePlayPrompt.value.reviewArea2 = `桐谷华: ${inputContent}
 桐谷绫: ${outputContent}`;
+  }
+  saveRolePlayPrompt(rolePlayPrompt.value);
   InputSystemPrompt.value = generateRolePlayPromptStr(rolePlayPrompt.value);
 }
 </script>

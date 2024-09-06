@@ -2,6 +2,7 @@ export interface RolePlayPrompt {
     rulesArea: string;
     memoryArea: string;
     reviewArea: string;
+    reviewArea2: string;
     roleState: string;
 }
 
@@ -12,6 +13,7 @@ function loadRolePlayPrompt(): RolePlayPrompt {
             rulesArea: "",
             memoryArea: "",
             reviewArea: "",
+            reviewArea2: "",
             roleState: ""
         };
     }
@@ -47,6 +49,7 @@ ${rolePlayPrompt.memoryArea}
 
 回顾区（回顾区存放着ChatGPT你上一次交互过程中的响应）{
 ${rolePlayPrompt.reviewArea}
+${rolePlayPrompt.reviewArea2}
 
 [角色状态] 
 ${rolePlayPrompt.roleState}
