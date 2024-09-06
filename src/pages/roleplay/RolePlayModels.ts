@@ -30,7 +30,6 @@ function loadRolePlayPrompt(): RolePlayPrompt {
         }
         rolePlayPromptObj['maxNum'] = 1;
     }
-    console.log(rolePlayPromptObj)
     return rolePlayPromptObj;
 }
 
