@@ -4,6 +4,9 @@ export interface RolePlayPrompt {
     reviewArea: string;
     reviewArea2: string;
     roleState: string;
+    exampleInput: string;
+    exampleOutput: string;
+    maxNum: number;
 }
 
 function loadRolePlayPrompt(): RolePlayPrompt {
@@ -14,10 +17,20 @@ function loadRolePlayPrompt(): RolePlayPrompt {
             memoryArea: "",
             reviewArea: "",
             reviewArea2: "",
-            roleState: ""
+            roleState: "",
+            exampleInput: "",
+            exampleOutput: "",
+            maxNum: 1
         };
     }
     const rolePlayPromptObj = JSON.parse(tmp);
+    for (const key in rolePlayPromptObj) {
+        if (rolePlayPromptObj[key] === null || rolePlayPromptObj[key] === undefined) {
+            rolePlayPromptObj[key] = '';
+        }
+        rolePlayPromptObj['maxNum'] = 1;
+    }
+    console.log(rolePlayPromptObj)
     return rolePlayPromptObj;
 }
 
@@ -39,19 +52,19 @@ export function savePassword(password: string) {
 
 
 export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
-    const rolePlayPromptStr = `规则区（你必须遵循的规则）{
+    const rolePlayPromptStr = `# 规则区（你必须遵循的规则）{
 ${rolePlayPrompt.rulesArea}
 }
 
-记忆区（记录关键信息）{
+# 记忆区（记录关键信息）{
 ${rolePlayPrompt.memoryArea}
 }
 
-回顾区（你与我的交互历史，包含对话上下文）{
+# 回顾区（你与我的交互历史，包含对话上下文）{
 ${rolePlayPrompt.reviewArea}
-${rolePlayPrompt.reviewArea2}
+${rolePlayPrompt.reviewArea2}}
 
-[角色状态] 
+# 角色状态（你的角色当前状态，每次需要更新）{
 ${rolePlayPrompt.roleState}
 }`
     console.log(rolePlayPromptStr)

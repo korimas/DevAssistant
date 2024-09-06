@@ -167,8 +167,13 @@ const emit = defineEmits(['update-system-prompt', 'update-new-chat']);
 // define props
 interface Props {
   InputSystemPrompt: string;
+  exampleInput?: string;
+  exampleOutput?: string;
+  maxNumber?: number;
 }
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  maxNumber: 9, // Set your default value here
+});
 
 const store = useAPIStore();
 let Messages = ref<Message[]>([]);
@@ -176,7 +181,7 @@ let GptMessages = ref<GptMessage[]>([]);
 let InputText = ref('');
 let Loading = ref(false);
 let Waiting = ref(false);
-let MessageKeepNum = ref(9); // i think it's enough
+let MessageKeepNum = ref(props.maxNumber); // i think it's enough
 let scrollAreaRef = ref<any>(null);
 let historyRecords = ref<HistoryRecord[]>(loadHistorys());
 let currentRecord: HistoryRecord | null = null;
@@ -250,20 +255,32 @@ function GetGPTMessages() {
   for (let i = Messages.value.length - 1; i >= 0; i--) {
     let msg = Messages.value[i];
 
-    // add last serval messages
     if (added < MessageKeepNum.value) {
+      // add last serval messages
       GptMessages.value.unshift({
         role: msg.Sender ? 'user' : 'assistant',
         content: msg.Content,
       });
       added++;
     } else {
+      // add pinned message
       if (msg.Pinned) {
         GptMessages.value.unshift({
           role: msg.Sender ? 'user' : 'assistant',
           content: msg.Content,
         });
       }
+    }
+    // add example messages
+    if (props.exampleInput && props.exampleOutput) {
+      GptMessages.value.unshift({
+        role: 'assistant',
+        content: props.exampleOutput,
+      });
+      GptMessages.value.unshift({
+        role: 'user',
+        content: props.exampleInput,
+      });
     }
   }
 }

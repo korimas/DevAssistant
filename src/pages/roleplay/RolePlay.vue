@@ -2,6 +2,9 @@
   <q-page class="row">
     <ChatDialog
       :InputSystemPrompt="InputSystemPrompt"
+      :example-input="rolePlayPrompt.exampleInput"
+      :example-output="rolePlayPrompt.exampleOutput"
+      :max-number="rolePlayPrompt.maxNum"
       @update-system-prompt="setSystemPrompt"
       @update-new-chat="handleNewChat"
     >
@@ -61,6 +64,28 @@
           style="margin-bottom: 10px"
           @update:model-value="RolePlayPromptUpdate"
         />
+        <q-input
+          dense
+          clearable
+          autogrow
+          label="示例输入"
+          v-model="rolePlayPrompt.exampleInput"
+          outlined
+          class="full-width"
+          style="margin-bottom: 10px"
+          @update:model-value="RolePlayPromptUpdate"
+        />
+        <q-input
+          dense
+          clearable
+          autogrow
+          label="示例输出"
+          v-model="rolePlayPrompt.exampleOutput"
+          outlined
+          class="full-width"
+          style="margin-bottom: 10px"
+          @update:model-value="RolePlayPromptUpdate"
+        />
       </template>
     </ChatDialog>
   </q-page>
@@ -102,10 +127,10 @@ function setSystemPrompt(prompt: string) {
 
 function handleNewChat(inputContent: string, outputContent: string) {
   // split role state
-  let splitIndex = outputContent.indexOf('[角色状态]');
+  let splitIndex = outputContent.indexOf('角色状态');
   if (splitIndex != -1) {
-    rolePlayPrompt.value.roleState = outputContent.slice(splitIndex + 6);
-    outputContent = outputContent.slice(0, splitIndex);
+    rolePlayPrompt.value.roleState = outputContent.slice(splitIndex + 5);
+    outputContent = outputContent.slice(0, splitIndex - 1);
   }
   if (
     rolePlayPrompt.value.reviewArea2 !== '' &&
