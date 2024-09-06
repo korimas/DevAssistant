@@ -52,7 +52,6 @@ ${rolePlayPrompt.reviewArea}
 ${rolePlayPrompt.roleState}
 }`
     console.log(rolePlayPromptStr)
-
     return rolePlayPromptStr;
 }
 
