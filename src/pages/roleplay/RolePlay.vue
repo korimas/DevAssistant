@@ -149,7 +149,9 @@ function handleNewChat(inputContent: string, outputContent: string) {
   // split role state
   let splitIndex = outputContent.indexOf('角色状态');
   if (splitIndex != -1) {
-    rolePlayPrompt.value.roleState = outputContent.slice(splitIndex + 5);
+    rolePlayPrompt.value.roleState = outputContent
+      .slice(splitIndex + 5)
+      .trimStart();
     outputContent = outputContent.slice(0, splitIndex - 1);
   }
   if (
@@ -159,7 +161,7 @@ function handleNewChat(inputContent: string, outputContent: string) {
   ) {
     rolePlayPrompt.value.reviewArea = rolePlayPrompt.value.reviewArea2;
   }
-
+  outputContent = outputContent.trimEnd();
   if (inputContent !== '' && outputContent !== '') {
     rolePlayPrompt.value.reviewArea2 = `${rolePlayPrompt.value.myName}: ${inputContent}
 ${rolePlayPrompt.value.roleName}: ${outputContent}`;
