@@ -56,7 +56,7 @@ export function savePassword(password: string) {
 
 export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
     const rolePlayPromptStr = `# Rules Area (the rules you must follow)
-我叫${rolePlayPrompt.myName}，你叫${rolePlayPrompt.roleName}
+我是${rolePlayPrompt.myName}，你是${rolePlayPrompt.roleName}
 ${rolePlayPrompt.rulesArea}
 
 # Memory zone (record key information, you must remember it in every conversation)
