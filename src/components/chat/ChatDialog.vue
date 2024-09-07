@@ -274,13 +274,14 @@ function GetGPTMessages() {
         content: props.exampleInput,
       });
     }
-    // put system prompt
-    if (props.InputSystemPrompt != '' && props.InputSystemPrompt != null) {
-      GptMessages.value.push({
-        role: 'system',
-        content: props.InputSystemPrompt,
-      });
-    }
+  }
+
+  // put system prompt
+  if (props.InputSystemPrompt != '' && props.InputSystemPrompt != null) {
+    GptMessages.value.unshift({
+      role: 'system',
+      content: props.InputSystemPrompt,
+    });
   }
 }
 

@@ -2,8 +2,6 @@
   <q-page class="row">
     <ChatDialog
       :InputSystemPrompt="InputSystemPrompt"
-      :example-input="rolePlayPrompt.exampleInput"
-      :example-output="rolePlayPrompt.exampleOutput"
       :max-number="rolePlayPrompt.maxNum"
       @update-system-prompt="setSystemPrompt"
       @update-new-chat="handleNewChat"

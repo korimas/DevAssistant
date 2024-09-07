@@ -55,21 +55,24 @@ export function savePassword(password: string) {
 
 
 export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
-    const rolePlayPromptStr = `规则区（你必须遵循的规则）{
-你叫${rolePlayPrompt.myName}，我叫${rolePlayPrompt.roleName}
+    const rolePlayPromptStr = `# Rules Area (the rules you must follow)
+我叫${rolePlayPrompt.myName}，你叫${rolePlayPrompt.roleName}
 ${rolePlayPrompt.rulesArea}
-}
 
-记忆区（记录关键信息）{
+
+# Memory zone (record key information, you must remember it in every conversation)
 ${rolePlayPrompt.memoryArea}
-}
 
-回顾区（你与我的交互历史，包含对话上下文）{
+# Review Area (the history of interactions between you and me, including the context of the conversation)
 ${rolePlayPrompt.reviewArea}
-${rolePlayPrompt.reviewArea2}}
+${rolePlayPrompt.reviewArea2}
 
-[角色状态]
-${rolePlayPrompt.roleState}`
+# Character status (your current character status, you need to update it reasonably based on the dialogue)
+${rolePlayPrompt.roleState}
+
+# Output example (your output must follow this format)
+${rolePlayPrompt.exampleOutput}
+`
     console.log(rolePlayPromptStr)
     return rolePlayPromptStr;
 }
