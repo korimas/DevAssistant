@@ -84,7 +84,7 @@
           style="margin-bottom: 10px"
           @update:model-value="RolePlayPromptUpdate"
         />
-        <q-input
+        <!-- <q-input
           dense
           clearable
           autogrow
@@ -94,7 +94,7 @@
           class="full-width"
           style="margin-bottom: 10px"
           @update:model-value="RolePlayPromptUpdate"
-        />
+        /> -->
         <q-input
           dense
           clearable

@@ -59,24 +59,24 @@ export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
 我叫${rolePlayPrompt.myName}，你叫${rolePlayPrompt.roleName}
 ${rolePlayPrompt.rulesArea}
 
-
 # Memory zone (record key information, you must remember it in every conversation)
 ${rolePlayPrompt.memoryArea}
 
 # Review Area (the history of interactions between you and me, including the context of the conversation)
+---
 ${rolePlayPrompt.reviewArea}
+---
 ${rolePlayPrompt.reviewArea2}
+---
 
 # Character status (your current character status, you need to update it reasonably based on the dialogue)
 ${rolePlayPrompt.roleState}
 
 # Output example (your output must follow this format)
-${rolePlayPrompt.exampleOutput}
-`
+${rolePlayPrompt.exampleOutput}`
     console.log(rolePlayPromptStr)
     return rolePlayPromptStr;
 }
-
 
 export const Password = loadPassword();
 export const ROLE_PLAY_PROMPT = loadRolePlayPrompt();
