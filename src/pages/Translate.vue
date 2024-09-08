@@ -66,15 +66,17 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.12);
           "
         >
-          <div class="column col" style="white-space: pre-line">
-            <div class="bg-grey-3 q-px-md q-py-xs">翻译后的内容</div>
+          <div class="column col full-width" style="white-space: pre-line">
+            <div class="bg-grey-3 q-px-md q-py-xs full-width">翻译后的内容</div>
             <div class="q-ma-md">
               {{ TranslatedText }}
             </div>
           </div>
           <q-separator horizontal />
-          <div class="column col" style="white-space: pre-line">
-            <div class="bg-grey-3 q-px-md q-py-xs">翻译后重新翻译回源语言</div>
+          <div class="column col full-width" style="white-space: pre-line">
+            <div class="bg-grey-3 q-px-md q-py-xs full-width">
+              翻译后重新翻译回源语言
+            </div>
             <div class="q-ma-md">
               {{ NewOldText }}
             </div>

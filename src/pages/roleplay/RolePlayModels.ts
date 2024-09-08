@@ -55,24 +55,42 @@ export function savePassword(password: string) {
 
 
 export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
-    const rolePlayPromptStr = `# Rules Area (the rules you must follow)
-我是${rolePlayPrompt.myName}，你是${rolePlayPrompt.roleName}
+    const rolePlayPromptStr = `# Rules Zone
+* You are ${rolePlayPrompt.roleName}, i am ${rolePlayPrompt.myName}
+* Dialogue content should be enclosed in ""
+* Actions, behaviors, and thoughts should be described in ()
+* Body parts should be described in []
+* Strictly adhere to character settings and maintain consistency
+* Each reply must update and output the character status at the end
+* Ensure that the character's status is consistent with the current conversation content.
+* Changes in the character's status should be gradual unless a major event occurs.
+* The content of each reply (excluding character status) must be no less than 100 words.
 ${rolePlayPrompt.rulesArea}
 
-# Memory zone (record key information, you must remember it in every conversation)
+# Memory Zone (key information you must remember)
 ${rolePlayPrompt.memoryArea}
 
-# Review Area (the history of interactions between you and me, including the context of the conversation)
+# Review Zone (the history of interactions)
 ---
 ${rolePlayPrompt.reviewArea}
 ---
 ${rolePlayPrompt.reviewArea2}
 ---
 
-# Character status (your current character status, you need to update it reasonably based on the dialogue)
+# Character status
 ${rolePlayPrompt.roleState}
 
-# Output example (your output must follow this format)
+# Output Requirements
+* Generate dialogue based on input, Memory Zone, and Review Zone
+* Keep a light, casual tone, as if chatting with a friend
+* While responding to input, actively guide the direction of the conversation
+* Rich expression, try to make each reply as detailed and vivid as possible
+* Every response must update and display character status
+* Character status should reflect changes brought by the current conversation
+* Ensure that each response (excluding character status) contains at least 100 words
+* If the response is less than 100 words, you should supplement with details, describe emotions, or expand on the topic to meet the word count requirement.
+
+# Output example
 ${rolePlayPrompt.exampleOutput}`
     console.log(rolePlayPromptStr)
     return rolePlayPromptStr;
