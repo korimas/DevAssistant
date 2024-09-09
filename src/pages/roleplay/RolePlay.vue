@@ -33,7 +33,7 @@
           dense
           clearable
           autogrow
-          label="命令区"
+          label="规则区"
           v-model="rolePlayPrompt.rulesArea"
           outlined
           class="full-width"

@@ -76,7 +76,7 @@ ${rolePlayPrompt.reviewArea}
 ${rolePlayPrompt.reviewArea2}
 ---
 
-# 4. 输出要求 (Output Requirements)
+# 4. 输出要求
 - 基于输入、记忆区和回顾区生成对话
 - 每次回复必须包含多个行为动作和身体部位描述
 - 行为和身体描述应与对话内容紧密结合，反映角色的情感和状态
