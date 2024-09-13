@@ -3,8 +3,6 @@ export interface RolePlayPrompt {
     myName: string;
     rulesArea: string;
     memoryArea: string;
-    reviewArea: string;
-    reviewArea2: string;
     roleState: string;
     exampleInput: string;
     exampleOutput: string;
@@ -20,8 +18,6 @@ function loadRolePlayPrompt(): RolePlayPrompt {
             myName: "",
             rulesArea: "",
             memoryArea: "",
-            reviewArea: "",
-            reviewArea2: "",
             roleState: "",
             exampleInput: "",
             exampleOutput: "",
