@@ -170,11 +170,11 @@ interface Props {
   exampleInput?: string;
   exampleOutput?: string;
   maxNumber?: number;
+  fourceModel?: string;
 }
 const props = withDefaults(defineProps<Props>(), {
   maxNumber: 9, // Set your default value here
 });
-
 const store = useAPIStore();
 let Messages = ref<Message[]>([]);
 let GptMessages = ref<GptMessage[]>([]);
@@ -352,7 +352,7 @@ async function StreamChat() {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      model: store.model,
+      model: props.fourceModel ?? store.model,
       messages: GptMessages.value,
       temperature: store.temperature,
     }),

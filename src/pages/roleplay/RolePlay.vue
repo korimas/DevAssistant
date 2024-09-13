@@ -3,10 +3,21 @@
     <ChatDialog
       :InputSystemPrompt="InputSystemPrompt"
       :max-number="rolePlayPrompt.maxNum"
+      fource-model="gpt-3.5-turbo"
       @update-system-prompt="setSystemPrompt"
       @update-new-chat="handleNewChat"
     >
       <template v-slot:setting-drawer>
+        <q-input
+          dense
+          clearable
+          autogrow
+          label="回顾区大小"
+          v-model="maxReviewItemsNum"
+          outlined
+          class="full-width"
+          style="margin-bottom: 10px"
+        />
         <q-input
           dense
           clearable
@@ -52,27 +63,20 @@
           @update:model-value="RolePlayPromptUpdate"
         />
         <q-input
+          v-for="(item, index) in rolePlayPrompt.reviewItems"
+          :key="index"
           dense
           clearable
           autogrow
-          label="回顾区"
-          v-model="rolePlayPrompt.reviewArea"
+          :label="'回顾区' + (index + 1)"
+          v-model="rolePlayPrompt.reviewItems[index]"
           outlined
           class="full-width"
           style="margin-bottom: 10px"
+          @clear="clearReviewItem(index)"
           @update:model-value="RolePlayPromptUpdate"
         />
-        <q-input
-          dense
-          clearable
-          autogrow
-          label="回顾区2"
-          v-model="rolePlayPrompt.reviewArea2"
-          outlined
-          class="full-width"
-          style="margin-bottom: 10px"
-          @update:model-value="RolePlayPromptUpdate"
-        />
+
         <q-input
           dense
           clearable
@@ -84,17 +88,6 @@
           style="margin-bottom: 10px"
           @update:model-value="RolePlayPromptUpdate"
         />
-        <!-- <q-input
-          dense
-          clearable
-          autogrow
-          label="示例输入"
-          v-model="rolePlayPrompt.exampleInput"
-          outlined
-          class="full-width"
-          style="margin-bottom: 10px"
-          @update:model-value="RolePlayPromptUpdate"
-        /> -->
         <q-input
           dense
           clearable
@@ -127,6 +120,7 @@ defineOptions({
 let rolePlayPrompt = ref(ROLE_PLAY_PROMPT);
 let InputSystemPrompt = ref('');
 let timeoutId: NodeJS.Timeout | undefined;
+let maxReviewItemsNum = ref(2);
 
 // init
 InputSystemPrompt.value = generateRolePlayPromptStr(rolePlayPrompt.value);
@@ -154,18 +148,25 @@ function handleNewChat(inputContent: string, outputContent: string) {
       .trimStart();
     outputContent = outputContent.slice(0, splitIndex - 1);
   }
-  if (
-    rolePlayPrompt.value.reviewArea2 !== '' &&
-    rolePlayPrompt.value.reviewArea2 !== 'undefined' &&
-    rolePlayPrompt.value.reviewArea2 !== null
-  ) {
-    rolePlayPrompt.value.reviewArea = rolePlayPrompt.value.reviewArea2;
+
+  rolePlayPrompt.value.reviewItems.push(
+    `${rolePlayPrompt.value.myName}：${inputContent}\n${
+      rolePlayPrompt.value.roleName
+    }：${outputContent.trimEnd()}`
+  );
+  if (maxReviewItemsNum.value <= 0) {
+    rolePlayPrompt.value.reviewItems = [];
+  } else {
+    rolePlayPrompt.value.reviewItems = rolePlayPrompt.value.reviewItems.slice(
+      -maxReviewItemsNum.value
+    );
   }
-  outputContent = outputContent.trimEnd();
-  if (inputContent !== '' && outputContent !== '') {
-    rolePlayPrompt.value.reviewArea2 = `${rolePlayPrompt.value.myName}: ${inputContent}
-${rolePlayPrompt.value.roleName}: ${outputContent}`;
-  }
+  saveRolePlayPrompt(rolePlayPrompt.value);
+  InputSystemPrompt.value = generateRolePlayPromptStr(rolePlayPrompt.value);
+}
+
+function clearReviewItem(index: number) {
+  rolePlayPrompt.value.reviewItems.splice(index, 1);
   saveRolePlayPrompt(rolePlayPrompt.value);
   InputSystemPrompt.value = generateRolePlayPromptStr(rolePlayPrompt.value);
 }
