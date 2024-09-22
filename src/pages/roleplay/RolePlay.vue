@@ -76,18 +76,29 @@
           @clear="clearReviewItem(index)"
           @update:model-value="RolePlayPromptUpdate"
         />
+        <div class="row">
+          <q-checkbox
+            left-label
+            v-model="rolePlayPrompt.rolePlayConfig.enableRoleState"
+            label="开启角色状态(Beta)"
+            checked-icon="task_alt"
+            unchecked-icon="highlight_off"
+            @update:model-value="RolePlayPromptUpdate"
+          />
+          <q-input
+            v-if="rolePlayPrompt.rolePlayConfig.enableRoleState"
+            dense
+            clearable
+            autogrow
+            label="角色状态"
+            v-model="rolePlayPrompt.roleState"
+            outlined
+            class="full-width"
+            style="margin-bottom: 10px"
+            @update:model-value="RolePlayPromptUpdate"
+          />
+        </div>
 
-        <q-input
-          dense
-          clearable
-          autogrow
-          label="人物状态"
-          v-model="rolePlayPrompt.roleState"
-          outlined
-          class="full-width"
-          style="margin-bottom: 10px"
-          @update:model-value="RolePlayPromptUpdate"
-        />
         <q-input
           dense
           clearable
@@ -141,12 +152,14 @@ function setSystemPrompt(prompt: string) {
 
 function handleNewChat(inputContent: string, outputContent: string) {
   // split role state
-  let splitIndex = outputContent.indexOf('角色状态');
-  if (splitIndex != -1) {
-    rolePlayPrompt.value.roleState = outputContent
-      .slice(splitIndex + 5)
-      .trimStart();
-    outputContent = outputContent.slice(0, splitIndex - 1);
+  if (rolePlayPrompt.value.rolePlayConfig.enableRoleState) {
+    let splitIndex = outputContent.indexOf('角色状态');
+    if (splitIndex != -1) {
+      rolePlayPrompt.value.roleState = outputContent
+        .slice(splitIndex + 5)
+        .trimStart();
+      outputContent = outputContent.slice(0, splitIndex - 1);
+    }
   }
 
   rolePlayPrompt.value.reviewItems.push(

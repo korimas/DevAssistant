@@ -8,6 +8,11 @@ export interface RolePlayPrompt {
     exampleOutput: string;
     maxNum: number;
     reviewItems: string[];
+    rolePlayConfig: RolePlayConfig;
+}
+
+export interface RolePlayConfig {
+    enableRoleState: boolean;
 }
 
 function loadRolePlayPrompt(): RolePlayPrompt {
@@ -23,12 +28,20 @@ function loadRolePlayPrompt(): RolePlayPrompt {
             exampleOutput: "",
             maxNum: 1,
             reviewItems: [],
+            rolePlayConfig: {
+                enableRoleState: true
+            }
         };
     }
     const rolePlayPromptObj = JSON.parse(tmp);
     rolePlayPromptObj['maxNum'] = 1;
     if (rolePlayPromptObj['reviewItems'] === null || rolePlayPromptObj['reviewItems'] === undefined) {
         rolePlayPromptObj['reviewItems'] = [];
+    }
+    if (rolePlayPromptObj['rolePlayConfig'] === null || rolePlayPromptObj['rolePlayConfig'] === undefined) {
+        rolePlayPromptObj['rolePlayConfig'] = {
+            enableRoleState: true
+        };
     }
     return rolePlayPromptObj;
 }
@@ -56,16 +69,18 @@ export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
         reviewAreaStr += item + '\n';
     }
 
-    const rolePlayPromptStr = `# 1. 规则区
+    let rolePlayPromptStr = `# 1. 规则区
 - 你是${rolePlayPrompt.roleName}, 我是${rolePlayPrompt.myName}
 - 对白使用引号""包裹
 - 动作、行为和心理活动使用圆括号()包裹
 - 身体部位描述使用方括号[]包裹
 - 严格遵守角色设定，言行和角色保持一致
 - 每次回复须包含丰富的行为动作和身体部位描述
-- 行为动作和身体描述应占回复内容的40%-60%
-- 每次回复必须在最后更新并输出角色状态
-${rolePlayPrompt.rulesArea}
+- 行为动作和身体描述应占回复内容的40%-60%\n`
+    if (rolePlayPrompt.rolePlayConfig.enableRoleState) {
+        rolePlayPromptStr += `- 每次回复必须在最后更新并输出角色状态，角色状态应反映当前对话带来的变化\n`
+    }
+    rolePlayPromptStr += `${rolePlayPrompt.rulesArea}
 
 # 2. 记忆区（在每次对话中都必须关注的关键信息）
 ${rolePlayPrompt.memoryArea}
@@ -80,16 +95,18 @@ ${reviewAreaStr}
 - 保持轻松、随意的语气，如同与朋友聊天
 - 回复的同时，主动引导对话方向
 - 确保回复内容丰富、生动，但避免冗长或重复
-- 每次回复后必须更新并输出角色状态
-- 角色状态应反映当前对话带来的变化
-- 如果发现即将结束回复但尚未包含角色状态，立即添加它
 
-# 5. 角色状态
-${rolePlayPrompt.roleState}
+`
+    if (rolePlayPrompt.rolePlayConfig.enableRoleState) {
+        rolePlayPromptStr += `# 5. 角色状态\n${rolePlayPrompt.roleState}\n`
+    }
 
+    if (rolePlayPrompt.exampleInput !== null && rolePlayPrompt.exampleInput !== '') {
+        rolePlayPromptStr += `
 # 6. 输出示例
-${rolePlayPrompt.exampleOutput}`
-    // console.log(rolePlayPromptStr)
+${rolePlayPrompt.exampleOutput} `
+    }
+    console.log(rolePlayPromptStr)
     return rolePlayPromptStr;
 }
 
