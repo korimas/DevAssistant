@@ -2,11 +2,11 @@
   <div class="column q-ma-md">
     <div class="text-h5 q-my-sm">中英文翻译</div>
     <q-card
-      class="row no-border-radius col-grow q-mb-md"
+      class="translate-container no-border-radius col-grow q-mb-md"
       flat
       style="min-height: 600px; border-top: 1px solid rgba(0, 0, 0, 0.12)"
     >
-      <div class="col column" style="min-width: 300px">
+      <div class="col column t-input-container" style="min-width: 300px">
         <div
           class="row full-width col-auto input-box"
           style="border-left: 1px solid rgba(0, 0, 0, 0.12)"
@@ -224,12 +224,24 @@ function handleInput() {
 </script>
 
 <style>
+.translate-container {
+  display: flex;
+  flex-direction: row;
+}
+
 @media (max-width: 632px) {
   .translated-box {
     border-left: 1px solid rgba(0, 0, 0, 0.12);
   }
   .input-box {
     border-right: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  .translate-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .t-input-container {
+    flex: 0 0 auto;
   }
 }
 </style>
