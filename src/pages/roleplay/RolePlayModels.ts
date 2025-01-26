@@ -75,8 +75,7 @@ export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
 - 动作、行为和心理活动使用圆括号()包裹
 - 身体部位描述使用方括号[]包裹
 - 严格遵守角色设定，言行和角色保持一致
-- 每次回复须包含丰富的行为动作和身体部位描述
-- 行为动作和身体描述应占回复内容的40%-60%\n`
+- 每次回复须包含丰富的行为动作和身体部位描述\n`
     if (rolePlayPrompt.rolePlayConfig.enableRoleState) {
         rolePlayPromptStr += `- 每次回复必须在最后更新并输出角色状态，角色状态应反映当前对话带来的变化\n`
     }
@@ -85,7 +84,7 @@ export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
 # 2. 记忆区（在每次对话中都必须关注的关键信息）
 ${rolePlayPrompt.memoryArea}
 
-# 3. 回顾区（每次对话发生时的上下文）
+# 3. 回顾区（本次对话前所有的聊天记录，你的回复须承接之前的聊天内容）
 ${reviewAreaStr}
 
 # 4. 输出要求
