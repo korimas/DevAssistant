@@ -69,42 +69,53 @@ export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
         reviewAreaStr += item + '\n';
     }
 
-    let rolePlayPromptStr = `# 1. 规则区
-- 你是${rolePlayPrompt.roleName}, 我是${rolePlayPrompt.myName}
-- 对白使用引号""包裹
-- 动作、行为和心理活动使用圆括号()包裹
-- 身体部位描述使用方括号[]包裹
-- 严格遵守角色设定，言行和角色保持一致
-- 每次回复须包含丰富的行为动作和身体部位描述\n`
+    let rolePlayPromptStr = `
+我们即将进行一场角色扮演游戏，你将扮演${rolePlayPrompt.roleName}，我将扮演${rolePlayPrompt.myName}。
+在游戏中，我们将通过对话来互动，你需要根据我的回复和你的记忆，继续对话并输出回复。游戏规则如下：
+
+# 规则区（角色扮演过程中必须遵守的规则）
+## 符号使用规则
+- 对白使用中文引号""
+- 动作、行为和心理活动使用圆括号()
+- 身体部位描述使用方括号[]
+- 符号使用目的：增强表达的层次感和情感细节
+
+## 角色扮演规则
+- 保持角色一致性和真实性
+- 根据角色背景和personality调整语言风格
+- 对话要自然流畅，避免生硬和刻意
+- 每次回复须包含丰富的行为动作和身体部位描述，行为和身体描述必须与对话内容紧密相关，真实反映角色情感状态，丰富且有细节感
+- 保持轻松、随意的语气，如同与朋友聊天
+- 回复的同时，主动引导对话方向
+- 确保回复内容丰富、生动，但避免冗长或重复
+`
     if (rolePlayPrompt.rolePlayConfig.enableRoleState) {
         rolePlayPromptStr += `- 每次回复必须在最后更新并输出角色状态，角色状态应反映当前对话带来的变化\n`
     }
     rolePlayPromptStr += `${rolePlayPrompt.rulesArea}
 
-# 2. 记忆区（在每次对话中都必须关注的关键信息）
+# 记忆区（在每次对话中都必须关注的关键信息）
+
+## 重要信息
 ${rolePlayPrompt.memoryArea}
 
-# 3. 回顾区（本次对话前所有的聊天记录，你的回复须承接之前的聊天内容）
+## 历史对话
 ${reviewAreaStr}
-
-# 4. 输出要求
-- 基于输入、记忆区和回顾区生成回复
-- 每次回复必须包含多个行为动作和身体部位描述
-- 行为和身体描述应与对话内容紧密结合，反映角色的情感和状态
-- 保持轻松、随意的语气，如同与朋友聊天
-- 回复的同时，主动引导对话方向
-- 确保回复内容丰富、生动，但避免冗长或重复
 
 `
     if (rolePlayPrompt.rolePlayConfig.enableRoleState) {
-        rolePlayPromptStr += `# 5. 角色状态\n${rolePlayPrompt.roleState}\n`
+        rolePlayPromptStr += `## 角色状态\n${rolePlayPrompt.roleState}\n`
     }
 
     if (rolePlayPrompt.exampleInput !== null && rolePlayPrompt.exampleInput !== '') {
         rolePlayPromptStr += `
-# 6. 输出示例
+# 输出示例
 ${rolePlayPrompt.exampleOutput} `
     }
+
+    rolePlayPromptStr += `
+    我们开始吧，下面我会对你说：`
+
     console.log(rolePlayPromptStr)
     return rolePlayPromptStr;
 }
