@@ -26,7 +26,7 @@
 
         <q-input dense clearable autogrow label="示例输出" v-model="rolePlayPrompt.exampleOutput" outlined
           class="full-width" style="margin-bottom: 10px" @update:model-value="RolePlayPromptUpdate" />
-        <span> {{ InputSystemPrompt }}</span>
+        <span style="white-space: pre-wrap;"> {{ InputSystemPrompt }}</span>
       </template>
     </ChatDialog>
   </q-page>
