@@ -82,12 +82,11 @@ export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
 
 ## 角色扮演规则
 - 保持角色一致性和真实性
-- 根据角色背景和personality调整语言风格
-- 对话要自然流畅，避免生硬和刻意
+- 遵循"show, don't tell"原则（重要）
+- 通过细节展现情感和状态
+- 保持对话的自然性和即兴性
+- 主动引导对话，但不失真实感
 - 每次回复须包含丰富的行为动作和身体部位描述，行为和身体描述必须与对话内容紧密相关，真实反映角色情感状态，丰富且有细节感
-- 保持轻松、随意的语气，如同与朋友聊天
-- 回复的同时，主动引导对话方向
-- 确保回复内容丰富、生动，但避免冗长或重复
 `
     if (rolePlayPrompt.rolePlayConfig.enableRoleState) {
         rolePlayPromptStr += `- 每次回复必须在最后更新并输出角色状态，角色状态应反映当前对话带来的变化\n`
@@ -99,7 +98,7 @@ export function generateRolePlayPromptStr(rolePlayPrompt: RolePlayPrompt) {
 ## 重要信息
 ${rolePlayPrompt.memoryArea}
 
-## 历史对话
+## 最近的对话
 ${reviewAreaStr}
 
 `
@@ -114,7 +113,7 @@ ${rolePlayPrompt.exampleOutput} `
     }
 
     rolePlayPromptStr += `
-    我们开始吧，下面我会对你说：`
+我们开始吧，下面我会对你说：`
 
     console.log(rolePlayPromptStr)
     return rolePlayPromptStr;
