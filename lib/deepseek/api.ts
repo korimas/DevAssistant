@@ -24,7 +24,7 @@ export async function RequestStream(payload: GPTAPIRequest) {
     throw new Error('Missing env var from DeepSeek');
   }
 
-  payload.model = 'deepseek-chat';
+  payload.model = 'deepseek-reasoner';
 
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
