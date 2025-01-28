@@ -219,6 +219,11 @@ function GetGPTMessages() {
   // put system prompt
   if (props.InputSystemPrompt != '' && props.InputSystemPrompt != null) {
     GptMessages.value.unshift({
+      role: 'assistant',
+      content: "我明白了你的要求，我会尽力回答。",
+    });
+
+    GptMessages.value.unshift({
       role: 'user',
       content: props.InputSystemPrompt,
     });
