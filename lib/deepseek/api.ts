@@ -25,6 +25,7 @@ export async function RequestStream(payload: GPTAPIRequest) {
   }
 
   payload.model = 'deepseek-reasoner';
+  payload.temperature = 1.3;
 
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
