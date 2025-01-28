@@ -219,7 +219,7 @@ function GetGPTMessages() {
   // put system prompt
   if (props.InputSystemPrompt != '' && props.InputSystemPrompt != null) {
     GptMessages.value.unshift({
-      role: 'system',
+      role: 'user',
       content: props.InputSystemPrompt,
     });
   }
