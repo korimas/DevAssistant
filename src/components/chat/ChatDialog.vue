@@ -30,7 +30,7 @@
   <MIDrawer :drawer="configDrawerModel">
     <template v-slot:drawer-content>
       <div class="column q-pa-md">
-        <q-input dense label="MaxMessageNumInSession" v-model="MessageKeepNum" outlined placeholder="会话中最多保留几个消息..."
+        <q-input dense label="MaxMessageNumInSession" v-model="MessageKeepNum" outlined placeholder="会话中最多保留几轮对话..."
           class="full-width q-mb-md" />
         <slot name="setting-drawer"></slot>
       </div>
@@ -187,7 +187,7 @@ function GetGPTMessages() {
   for (let i = Messages.value.length - 1; i >= 0; i--) {
     let msg = Messages.value[i];
 
-    if (added < MessageKeepNum.value) {
+    if (added < MessageKeepNum.value * 2 + 1) { // 对话为单位，一条对话包含两条消息，加上当前输入的消息
       // add last serval messages
       GptMessages.value.unshift({
         role: msg.Sender ? 'user' : 'assistant',
