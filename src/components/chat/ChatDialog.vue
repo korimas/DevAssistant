@@ -184,6 +184,7 @@ function GetGPTMessages() {
   GptMessages.value = [];
 
   let added = 0;
+  console.log(Messages.value)
   for (let i = Messages.value.length - 1; i >= 0; i--) {
     let msg = Messages.value[i];
 
@@ -218,13 +219,13 @@ function GetGPTMessages() {
 
   // put system prompt
   if (props.InputSystemPrompt != '' && props.InputSystemPrompt != null) {
-    GptMessages.value.unshift({
-      role: 'assistant',
-      content: "我明白了你的要求，我会尽力回答。",
-    });
+    // GptMessages.value.unshift({
+    //   role: 'assistant',
+    //   content: "我明白了你的要求，我会尽力回答。",
+    // });
 
     GptMessages.value.unshift({
-      role: 'user',
+      role: 'system',
       content: props.InputSystemPrompt,
     });
   }
@@ -291,7 +292,7 @@ async function StreamChat() {
 
   // 流式聊天
   Loading.value = true;
-  const response = await fetch('/api/deepseek-stream-api', {
+  const response = await fetch('/api/stream-api', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
