@@ -19,8 +19,6 @@ export interface GPTAPIRequest {
   n?: number
 }
 
-const OPENAI_URL = 'https://api.openai.com/v1/chat/completions'
-const DeepSeek_URL = 'https://api.deepseek.com/chat/completions'
 
 export async function RequestStream(payload: GPTAPIRequest) {
   if (!process.env.OPENAI_API_KEY) {
@@ -29,23 +27,36 @@ export async function RequestStream(payload: GPTAPIRequest) {
 
   const encoder = new TextEncoder()
   const decoder = new TextDecoder()
+  let counter = 0
+
   // default to OpenAI
   let API_KEY = process.env.OPENAI_API_KEY
-  let API_URL = OPENAI_URL
+  let API_URL = 'https://api.openai.com/v1/chat/completions'
+  let provider = 'openai'
 
   if (payload.model.startsWith('deepseek')) {
     API_KEY = process.env.DEEPSEEK_API_KEY || ''
-    API_URL = DeepSeek_URL || ''
+    API_URL = 'https://api.deepseek.com/chat/completions'
+    provider = 'deepseek'
+  } else if (payload.model.startsWith('gemini')) {
+    API_KEY = process.env.GEMINI_API_KEY || ''
+    API_URL = `https://generativelanguage.googleapis.com/v1beta/openai/chat/completions`
+    provider = 'google'
   }
 
-  let counter = 0
+  // generate header
+  const headers: { [key: string]: string } = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${API_KEY}`,
+  }
+
+  // generate payload
+  let body = JSON.stringify(payload)
+
   const res = await fetch(API_URL, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${API_KEY}`,
-    },
+    headers: headers,
     method: 'POST',
-    body: JSON.stringify(payload),
+    body: body,
   })
 
   if (!res.ok) {
