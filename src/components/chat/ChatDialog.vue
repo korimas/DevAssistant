@@ -1,25 +1,60 @@
 <template>
-  <div class="column justify-between no-wrap full-width" style="padding: 5px; height: calc(100vh - 55px)">
+  <div
+    class="column justify-between no-wrap full-width"
+    style="padding: 5px; height: calc(100vh - 55px)"
+  >
     <div style="overflow: auto">
       <div class="row full-width q-pa-xs q-gutter-xs bg-grey-4">
         <q-btn unelevated round size="sm" icon="add" @click="newChat" />
 
         <slot name="toolbox-left"></slot>
         <q-space />
-        <q-btn unelevated round size="sm" icon="history" @click="historyDrawerModel.open = true" />
-        <q-btn unelevated round size="sm" icon="tune" @click="configDrawerModel.open = true" />
+        <q-btn
+          unelevated
+          round
+          size="sm"
+          icon="history"
+          @click="historyDrawerModel.open = true"
+        />
+        <q-btn
+          unelevated
+          round
+          size="sm"
+          icon="tune"
+          @click="configDrawerModel.open = true"
+        />
         <q-btn unelevated round size="sm" icon="output" @click="exportDialog" />
       </div>
-      <q-scroll-area class="full-width" style="height: calc(100vh - 167px)" ref="scrollAreaRef">
-        <div v-for="item in Messages" :key="item.Id" class="caption doc-content">
-          <MiChatCard :message="item" @delete="() => (Messages = Messages.filter((msg) => msg.Id !== item.Id))
-            " @paste="PasteInput(item.Content)" />
+      <q-scroll-area
+        class="full-width"
+        style="height: calc(100vh - 167px)"
+        ref="scrollAreaRef"
+      >
+        <div
+          v-for="item in Messages"
+          :key="item.Id"
+          class="caption doc-content"
+        >
+          <MiChatCard
+            :message="item"
+            @delete="
+              () => (Messages = Messages.filter((msg) => msg.Id !== item.Id))
+            "
+            @paste="PasteInput(item.Content)"
+          />
         </div>
       </q-scroll-area>
     </div>
 
     <div style="margin-bottom: 10px; margin-top: 10px">
-      <q-input dense autogrow v-model="InputText" outlined placeholder="输入任何问题，与AI互动..." @keydown.enter="handleEnter">
+      <q-input
+        dense
+        autogrow
+        v-model="InputText"
+        outlined
+        placeholder="输入任何问题，与AI互动..."
+        @keydown.enter="handleEnter"
+      >
         <template v-slot:append>
           <q-btn dense flat icon="send" @click="StreamChat" />
         </template>
@@ -30,8 +65,14 @@
   <MIDrawer :drawer="configDrawerModel">
     <template v-slot:drawer-content>
       <div class="column q-pa-md">
-        <q-input dense label="MaxMessageNumInSession" v-model="MessageKeepNum" outlined placeholder="会话中最多保留几轮对话..."
-          class="full-width q-mb-md" />
+        <q-input
+          dense
+          label="MaxMessageNumInSession"
+          v-model="MessageKeepNum"
+          outlined
+          placeholder="会话中最多保留几轮对话..."
+          class="full-width q-mb-md"
+        />
         <slot name="setting-drawer"></slot>
       </div>
     </template>
@@ -41,15 +82,23 @@
     <template v-slot:drawer-content>
       <div class="column">
         <q-list separator class="full-width">
-          <q-item v-for="item in historyRecords" :key="item.timestamp" clickable @click="restoreChat(item)">
+          <q-item
+            v-for="item in historyRecords"
+            :key="item.timestamp"
+            clickable
+            @click="restoreChat(item)"
+          >
             <div class="column full-width">
               <div class="row items-center no-wrap full-width">
-                <div class="col-grow text-weight-bold" style="
+                <div
+                  class="col-grow text-weight-bold"
+                  style="
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
                     flex: 1 1 auto;
-                  ">
+                  "
+                >
                   {{ item.inputSummary }}
                 </div>
                 <div class="text-caption text-grey-6 text-no-wrap q-ms-sm">
@@ -57,15 +106,26 @@
                 </div>
               </div>
               <div caption class="row items-center no-wrap full-width">
-                <div class="col-grow text-grey-6 text-caption full-width" style="
+                <div
+                  class="col-grow text-grey-6 text-caption full-width"
+                  style="
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
                     flex: 1 1 auto;
-                  ">
+                  "
+                >
                   {{ item.outputSummary }}
                 </div>
-                <q-btn class="q-ml-sm" dense size="0.8em" flat icon="delete" color="grey" @click="handleDelete(item)" />
+                <q-btn
+                  class="q-ml-sm"
+                  dense
+                  size="0.8em"
+                  flat
+                  icon="delete"
+                  color="grey"
+                  @click="handleDelete(item)"
+                />
               </div>
             </div>
           </q-item>
@@ -184,11 +244,12 @@ function GetGPTMessages() {
   GptMessages.value = [];
 
   let added = 0;
-  console.log(Messages.value)
+  console.log(Messages.value);
   for (let i = Messages.value.length - 1; i >= 0; i--) {
     let msg = Messages.value[i];
 
-    if (added < MessageKeepNum.value * 2 + 1) { // 对话为单位，一条对话包含两条消息，加上当前输入的消息
+    if (added < MessageKeepNum.value * 2 + 1) {
+      // 对话为单位，一条对话包含两条消息，加上当前输入的消息
       // add last serval messages
       GptMessages.value.unshift({
         role: msg.Sender ? 'user' : 'assistant',
@@ -219,11 +280,6 @@ function GetGPTMessages() {
 
   // put system prompt
   if (props.InputSystemPrompt != '' && props.InputSystemPrompt != null) {
-    // GptMessages.value.unshift({
-    //   role: 'assistant',
-    //   content: "我明白了你的要求，我会尽力回答。",
-    // });
-
     GptMessages.value.unshift({
       role: 'system',
       content: props.InputSystemPrompt,
@@ -231,10 +287,10 @@ function GetGPTMessages() {
   }
 }
 
-function ScrollAtBottom() {
+function ScrollAtBottom(focus?: boolean) {
   const scrollArea = scrollAreaRef.value;
   let curScrollHeight = scrollArea.getScrollTarget().scrollHeight;
-  if (curScrollHeight > lastScrollHeight) {
+  if (curScrollHeight > lastScrollHeight || focus) {
     lastScrollHeight = curScrollHeight;
     nextTick(() => {
       scrollArea.setScrollPosition(
@@ -298,7 +354,7 @@ async function StreamChat() {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      model: props.fourceModel ?? store.model,
+      model: props.fourceModel ?? store.model.model,
       messages: GptMessages.value,
       temperature: store.temperature,
     }),

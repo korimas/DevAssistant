@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { DrawerModel } from './BaseModels';
+import type { DrawerModel } from './BaseModels';
 defineOptions({
   name: 'MIDrawer',
 });
@@ -37,5 +37,5 @@ interface Props {
 
 const props = defineProps<Props>();
 
-let drawerModel = ref<DrawerModel>(props.drawer);
+const drawerModel = ref<DrawerModel>(props.drawer);
 </script>

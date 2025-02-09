@@ -145,7 +145,7 @@ async function generateWeeklyReport() {
       //'Authorization': 'Bearer ' + Password.value
     },
     body: JSON.stringify({
-      model: store.model,
+      model: store.model.model,
       weeklyWork: JSON.stringify(weeklyWork.value),
       temperature: store.temperature,
     }),

@@ -28,7 +28,7 @@
       <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
         <q-list padding>
           <EssentialLink
-            v-for="link in essentialLinks"
+            v-for="link in linksList"
             :key="link.title"
             v-bind="link"
           />
@@ -58,16 +58,41 @@
 
       <q-scroll-area
         style="height: calc(100% - 66px)"
-        :horizontal-thumb-style="{ opacity: 0 }"
+        :horizontal-thumb-style="{ opacity: '0' }"
       >
         <div class="q-pa-md q-gutter-md">
           <div style="min-width: 100px">
-            <q-select
-              filled
-              v-model="store.model"
-              :options="store.modelOptions"
-              label="Model"
-            />
+            <q-select dense filled v-model="store.model" :options="AIModels">
+              <template v-slot:option="scope">
+                <q-item v-bind="scope.itemProps">
+                  <q-item-section avatar>
+                    <div
+                      style="padding-left: 0px"
+                      class="q-gutter-xs row items-center"
+                    >
+                      <q-avatar square style="width: 16px; height: 16px">
+                        <img :src="'/aimodels/' + scope.opt.icon" />
+                      </q-avatar>
+
+                      <span>{{ scope.opt.name }}</span>
+                    </div>
+                  </q-item-section>
+                </q-item>
+              </template>
+
+              <template v-slot:selected-item="scope">
+                <div
+                  style="padding-left: 0px"
+                  class="q-gutter-xs row items-center"
+                >
+                  <q-avatar square style="width: 16px; height: 16px">
+                    <img :src="'/aimodels/' + scope.opt.icon" />
+                  </q-avatar>
+
+                  <span>{{ scope.opt.name }}</span>
+                </div>
+              </template>
+            </q-select>
           </div>
           <div style="min-width: 130px">
             <!-- <q-badge color="secondary">
@@ -104,10 +129,11 @@
   </q-layout>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { defineComponent, ref } from 'vue';
 import { useAPIStore } from 'stores/APIStore';
 import EssentialLink from 'components/EssentialLink.vue';
+import { AIModels } from 'src/service/common/constances';
 
 const linksList = [
   {
@@ -164,32 +190,16 @@ const linksList = [
   },
 ];
 
-export default defineComponent({
-  name: 'MainLayout',
+const leftDrawerOpen = ref(false);
+const settingDrawerOpen = ref(false);
+const store = useAPIStore();
+const miniState = ref(true);
 
-  components: {
-    EssentialLink,
-  },
+function toggleLeftDrawer() {
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+}
 
-  setup() {
-    const leftDrawerOpen = ref(false);
-    const settingDrawerOpen = ref(false);
-    const store = useAPIStore();
-    const miniState = ref(true);
-
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      miniState,
-      store,
-      settingDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
-      toggleSettingDrawer() {
-        settingDrawerOpen.value = !settingDrawerOpen.value;
-      },
-    };
-  },
-});
+function toggleSettingDrawer() {
+  settingDrawerOpen.value = !settingDrawerOpen.value;
+}
 </script>

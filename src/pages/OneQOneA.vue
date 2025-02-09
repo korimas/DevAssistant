@@ -102,7 +102,7 @@ export default defineComponent({
           //'Authorization': 'Bearer ' + Password.value
         },
         body: JSON.stringify({
-          model: store.model,
+          model: store.model.model,
           temperature: store.temperature,
           question: InputText.value,
         }),

@@ -167,7 +167,7 @@ async function StreamTranslate() {
       requirement: InputText.value,
       src: SrcLanguage.value,
       dst: DstLanguage.value,
-      model: store.model,
+      model: store.model.model,
       temperature: store.temperature,
     }),
   });
