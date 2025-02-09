@@ -39,4 +39,13 @@ export const AIModels = [
     model: 'deepseek-chat',
     icon: 'deepseek.svg',
   },
+  {
+    name: 'Gemini-1.5-Flash',
+    model: 'gemini-1.5-flash',
+    icon: 'gemini.svg',
+  }, {
+    name: 'Gemini-2.0-Flash',
+    model: 'gemini-2.0-flash',
+    icon: 'gemini.svg',
+  }
 ]
