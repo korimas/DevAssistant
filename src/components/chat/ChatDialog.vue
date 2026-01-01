@@ -290,15 +290,15 @@ function GetGPTMessages() {
 function ScrollAtBottom(focus?: boolean) {
   const scrollArea = scrollAreaRef.value;
   let curScrollHeight = scrollArea.getScrollTarget().scrollHeight;
-  if (curScrollHeight > lastScrollHeight || focus) {
-    lastScrollHeight = curScrollHeight;
-    nextTick(() => {
-      scrollArea.setScrollPosition(
-        'vertical',
-        scrollArea.getScrollTarget().scrollHeight
-      );
-    });
-  }
+  // if (curScrollHeight > lastScrollHeight || focus) {
+  //   lastScrollHeight = curScrollHeight;
+  //   nextTick(() => {
+  //     scrollArea.setScrollPosition(
+  //       'vertical',
+  //       scrollArea.getScrollTarget().scrollHeight
+  //     );
+  //   });
+  // }
 }
 
 function PasteInput(content: string) {
