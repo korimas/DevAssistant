@@ -47,5 +47,9 @@ export const AIModels = [
     name: 'Gemini-2.0-Flash',
     model: 'gemini-2.0-flash',
     icon: 'gemini.svg',
+  }, {
+    name: 'gemini-2.5-flash-preview-05-20',
+    model: 'gemini-2.5-flash-preview-05-20',
+    icon: 'gemini.svg',
   }
 ]

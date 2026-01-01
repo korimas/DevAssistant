@@ -4,9 +4,9 @@ export const useAPIStore = defineStore('api', {
   state: () => ({
     model:
     {
-      name: 'GPT-4o',
-      model: 'gpt-4o',
-      icon: 'openai.svg',
+      name: 'gemini-2.5-flash-preview-05-20',
+      model: 'gemini-2.5-flash-preview-05-20',
+      icon: 'gemini.svg',
     },
     temperatureOptions: Array.from({ length: 21 }, (_, index) => 2.0 - (index * 0.1)),
     temperature: 1
